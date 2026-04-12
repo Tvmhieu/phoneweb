@@ -802,7 +802,35 @@ export default function AdminDashboard() {
                                                   }
                                                 });
                                              }} />
-                                             <label htmlFor="multiUpload" className="btn btn-outline-primary fw-bold w-100"><i className="bi bi-plus-circle me-1"></i>Thêm ảnh vào bộ sưu tập</label>
+                                             <label htmlFor="multiUpload" className="btn btn-outline-primary fw-bold w-100"><i className="bi bi-plus-circle me-1"></i>Tải ảnh từ máy</label>
+                                         </div>
+                                         <div className="input-group mb-2">
+                                             <input type="text" className="form-control" placeholder="Hoặc dán link URL ảnh (https://...)" id="imgUrlInput" onKeyDown={(e) => {
+                                               if (e.key === 'Enter') {
+                                                 e.preventDefault();
+                                                 const url = (e.target as HTMLInputElement).value.trim();
+                                                 if (!url) return;
+                                                 setEditingProduct(prev => {
+                                                   if (!prev) return prev;
+                                                   const currentImages = prev.allImages || [];
+                                                   if (currentImages.length >= 10) return prev;
+                                                   return { ...prev, allImages: [...currentImages, url], imageUrl: prev.imageUrl || url };
+                                                 });
+                                                 (e.target as HTMLInputElement).value = '';
+                                               }
+                                             }} />
+                                             <button type="button" className="btn btn-outline-secondary" onClick={() => {
+                                               const input = document.getElementById('imgUrlInput') as HTMLInputElement;
+                                               const url = input?.value?.trim();
+                                               if (!url) return;
+                                               setEditingProduct(prev => {
+                                                 if (!prev) return prev;
+                                                 const currentImages = prev.allImages || [];
+                                                 if (currentImages.length >= 10) return prev;
+                                                 return { ...prev, allImages: [...currentImages, url], imageUrl: prev.imageUrl || url };
+                                               });
+                                               input.value = '';
+                                             }}><i className="bi bi-link-45deg"></i> Thêm URL</button>
                                          </div>
                                          <div className="d-flex flex-wrap gap-2">
                                             {(editingProduct?.allImages || []).map((url: string, idx: number) => {

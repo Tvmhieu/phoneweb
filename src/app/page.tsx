@@ -114,7 +114,7 @@ export default async function HomePage() {
               </h1>
               <p className="lead fs-4 mb-5 opacity-90">
                 ABC XYZ cung cấp cấu hình máy chủ, máy trạm và hạ tầng mạng theo yêu cầu ngắn hạn và dài hạn. 
-                Hỗ trợ linh hoạt hình thức <strong>Mua dứt</strong> hoặc <strong>Cho thuê dự án</strong>.
+                Hỗ trợ linh hoạt hình thức <strong>Mua</strong> hoặc <strong>Cho thuê dự án</strong>.
               </p>
               <div className="d-flex gap-3">
                 <Link href="/products" className="btn btn-light btn-lg btn-premium text-primary">Xem Sản phẩm</Link>
