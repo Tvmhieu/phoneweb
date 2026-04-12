@@ -1,6 +1,8 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 const fallbackProducts = [
   { id: 1, name: "Máy Chủ Dell PowerEdge R440", brand: "Dell", category: "SERVER", price: 45000000, isRentable: true, rentalPricePerDay: 500000, imageUrl: "" },
   { id: 2, name: "Máy In HP LaserJet Pro", brand: "HP", category: "PRINTER", price: 4200000, isRentable: false, rentalPricePerDay: null, imageUrl: "" },
