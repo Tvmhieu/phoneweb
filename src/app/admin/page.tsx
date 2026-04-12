@@ -32,7 +32,7 @@ type Stats = {
   totalCustomers: number;
   chartData: RevenuePoint[];
 } | null;
-type Product = { id: number; name: string; brand: string; category: string; price: number; stock: number; isRentable: boolean; rentalPricePerDay: number; warrantyMonths: number; description?: string; imageUrl?: string; images?: {url: string}[], allImages?: string[] };
+type Product = { id: number; name: string; brand: string; category: string; price: number; stock: number; isRentable: boolean; rentalPricePerDay: number; warrantyMonths: number; description?: string; imageUrl?: string; images?: {url: string}[], allImages?: string[], isVisible?: boolean };
 type Warranty = { 
   id: number; 
   productId: number; 
@@ -1006,8 +1006,8 @@ export default function AdminDashboard() {
                                          <td className="text-center fw-bold">{p.stock}</td>
                                          <td className="text-center">{p.isRentable ? <span className="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-1"><i className="bi bi-clock-history me-1"></i> {p.rentalPricePerDay?.toLocaleString()}đ/n</span> : <span className="text-muted small">—</span>}</td>
                                          <td className="text-end px-4">
-                                             <button className={`btn btn-sm ${p.isVisible ? 'btn-outline-success' : 'btn-outline-secondary'} me-2`} title={p.isVisible ? "Đang hiển thị - Nhấn để ẩn" : "Đang ẩn - Nhấn để hiện"} onClick={() => toggleProductVisibility(p.id, !!p.isVisible)}>
-                                               <i className={`bi ${p.isVisible ? 'bi-eye-fill' : 'bi-eye-slash-fill'}`}></i>
+                                             <button className={`btn btn-sm ${p.isVisible !== false ? 'btn-outline-success' : 'btn-outline-secondary'} me-2`} title={p.isVisible !== false ? "Đang hiển thị - Nhấn để ẩn" : "Đang ẩn - Nhấn để hiện"} onClick={() => toggleProductVisibility(p.id, p.isVisible !== false)}>
+                                               <i className={`bi ${p.isVisible !== false ? 'bi-eye-fill' : 'bi-eye-slash-fill'}`}></i>
                                              </button>
                                              <button className="btn btn-sm btn-outline-primary me-2" onClick={() => {
                                               const pWithImages: Partial<Product> = { ...p, allImages: p.images?.map((i:any) => i.url) || [] };

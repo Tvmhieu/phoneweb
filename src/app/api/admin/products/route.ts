@@ -60,21 +60,23 @@ export async function POST(req: Request) {
         const p = await prisma.product.update({
             where: { id: data.id },
             data: {
-               name: data.name,
-               brand: data.brand,
-               category: data.category,
-               description: data.description,
-               imageUrl,
-               stock,
-               price,
-               warrantyMonths,
-               isRentable: !!data.isRentable,
-               rentalPricePerDay,
-               isVisible: data.isVisible !== undefined ? !!data.isVisible : true,
-               images: {
-                 deleteMany: {},
-                 create: imagesData.map((url: string) => ({ url }))
-               }
+               ...(data.name !== undefined && { name: data.name }),
+               ...(data.brand !== undefined && { brand: data.brand }),
+               ...(data.category !== undefined && { category: data.category }),
+               ...(data.description !== undefined && { description: data.description }),
+               ...(imageUrl !== undefined && { imageUrl }),
+               ...(data.stock !== undefined && { stock: Number(data.stock) }),
+               ...(data.price !== undefined && { price: Number(data.price) }),
+               ...(data.warrantyMonths !== undefined && { warrantyMonths: Number(data.warrantyMonths) }),
+               ...(data.isRentable !== undefined && { isRentable: !!data.isRentable }),
+               ...(data.rentalPricePerDay !== undefined && { rentalPricePerDay: data.rentalPricePerDay ? Number(data.rentalPricePerDay) : null }),
+               ...(data.isVisible !== undefined && { isVisible: !!data.isVisible }),
+               ...(Array.isArray(data.allImages) && {
+                 images: {
+                   deleteMany: {},
+                   create: imagesData.map((url: string) => ({ url }))
+                 }
+               })
             }
         });
         return NextResponse.json({ success: true, product: p });
