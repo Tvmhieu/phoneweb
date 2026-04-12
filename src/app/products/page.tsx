@@ -1,5 +1,8 @@
 import prisma from "@/lib/prisma";
 import ProductCatalog from "@/components/ProductCatalog";
+import { Suspense } from "react";
+
+export const dynamic = "force-dynamic";
 
 const fallbackProducts = [
   { id: 1, name: "Máy Chủ Dell PowerEdge R440", brand: "Dell", category: "SERVER", price: 45000000, rentalPricePerDay: 500000, isRentable: true, stock: 5, imageUrl: "/assets/server.jpg" },
@@ -19,5 +22,9 @@ export default async function ProductsPage() {
     products = fallbackProducts;
   }
 
-  return <ProductCatalog initialProducts={products} />;
+  return (
+    <Suspense fallback={<div className="text-center py-5"><div className="spinner-border text-primary"></div></div>}>
+      <ProductCatalog initialProducts={products} />
+    </Suspense>
+  );
 }
