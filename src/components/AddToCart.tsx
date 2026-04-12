@@ -114,7 +114,7 @@ export default function AddToCart({ product }: AddToCartProps) {
         {product.isRentable && (
           <div className="d-flex gap-2 mb-4">
             <button onClick={() => setRentMode(false)} className={`btn flex-fill py-2 fw-bold ${!rentMode ? "btn-primary" : "btn-outline-primary"}`}>
-              <i className="bi bi-cart-check me-1"></i> Mua Đứt
+              <i className="bi bi-cart-check me-1"></i> Mua Ngay
             </button>
             <button onClick={() => setRentMode(true)} className={`btn flex-fill py-2 fw-bold ${rentMode ? "btn-warning text-dark" : "btn-outline-warning text-dark"}`}>
               <i className="bi bi-calendar-event me-1"></i> Thuê Máy (Event/Dự án)
