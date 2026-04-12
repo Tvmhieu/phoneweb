@@ -899,6 +899,11 @@ export default function AdminDashboard() {
                                             <input type="number" className="form-control border-primary bg-primary bg-opacity-10 fw-bold text-primary" value={editingProduct.rentalPricePerDay || ""} onChange={e => setEditingProduct({...editingProduct, rentalPricePerDay: parseInt(e.target.value)})} required/>
                                          </div>
                                      )}
+                                     <div className="col-12 mt-3">
+                                         <label className="form-label small fw-bold"><i className="bi bi-file-text me-1"></i>Mô tả sản phẩm & Giới thiệu chức năng</label>
+                                         <textarea className="form-control" rows={6} value={editingProduct.description || ""} onChange={e => setEditingProduct({...editingProduct, description: e.target.value})} placeholder="Nhập mô tả chi tiết, giới thiệu chức năng, thông số kỹ thuật (xuống dòng để trình bày đẹp)..."></textarea>
+                                         <div className="form-text">Mô tả này sẽ hiển thị trực tiếp tại trang chi tiết sản phẩm.</div>
+                                     </div>
                                      <div className="col-12 mt-4 text-end">
                                          <button type="button" className="btn btn-light border me-2 px-4 shadow-sm" onClick={() => setEditingProduct(null)}>Hủy bỏ</button>
                                          <button type="submit" className="btn btn-primary fw-bold px-5 shadow-sm">LƯU CƠ SỞ DỮ LIỆU</button>
