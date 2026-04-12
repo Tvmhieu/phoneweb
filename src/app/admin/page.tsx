@@ -904,39 +904,46 @@ export default function AdminDashboard() {
                                             })}
                                          </div>
                                      </div>
-                                     <div className="col-md-3">
-                                         <label className="form-label small fw-bold">Thương hiệu</label>
-                                         <input type="text" className="form-control" value={editingProduct.brand || ""} onChange={e => setEditingProduct({...editingProduct, brand: e.target.value})} required placeholder="Dell, HP, Cisco..."/>
-                                     </div>
-                                     <div className="col-md-3">
-                                         <label className="form-label small fw-bold">Loại Máy</label>
-                                         <select className="form-select" value={editingProduct.category || "SERVER"} onChange={e => setEditingProduct({...editingProduct, category: e.target.value})}>
-                                             <option value="SERVER">SERVER</option>
-                                             <option value="LAPTOP">LAPTOP</option>
-                                             <option value="PRINTER">PRINTER</option>
-                                             <option value="NETWORK">NETWORK</option>
-                                             <option value="POS">POS</option>
-                                         </select>
-                                     </div>
-                                     <div className="col-md-3">
-                                         <label className="form-label small fw-bold text-success">Giá Bán Niêm Yết (VNĐ)</label>
-                                         <input type="number" className="form-control fw-bold text-success" value={editingProduct.price || ""} onChange={e => setEditingProduct({...editingProduct, price: parseInt(e.target.value)})} required/>
-                                     </div>
-                                     <div className="col-md-2">
-                                         <label className="form-label small fw-bold">Tồn kho</label>
-                                         <input type="number" className="form-control" value={editingProduct.stock || 0} onChange={e => setEditingProduct({...editingProduct, stock: parseInt(e.target.value)})} required/>
-                                     </div>
-                                     <div className="col-md-2">
-                                         <label className="form-label small fw-bold">Bảo hành (T)</label>
-                                         <input type="number" className="form-control" value={editingProduct.warrantyMonths || 12} onChange={e => setEditingProduct({...editingProduct, warrantyMonths: parseInt(e.target.value)})} required/>
-                                     </div>
-                                     <div className="col-md-2 d-flex align-items-end mb-2">
-                                         <div className="form-check form-switch fs-5">
-                                           <input className="form-check-input" type="checkbox" role="switch" checked={editingProduct.isRentable || false} onChange={e => setEditingProduct({...editingProduct, isRentable: e.target.checked})} />
-                                           <label className="form-check-label fs-6 fw-bold text-primary">Dịch vụ Cho Thuê</label>
-                                         </div>
-                                     </div>
-                                     {editingProduct.isRentable && (
+                                      <div className="col-md-3">
+                                          <label className="form-label small fw-bold">Thương hiệu</label>
+                                          <input type="text" className="form-control" value={editingProduct.brand || ""} onChange={e => setEditingProduct({...editingProduct, brand: e.target.value})} required placeholder="Dell, HP, Cisco..."/>
+                                      </div>
+                                      <div className="col-md-3">
+                                          <label className="form-label small fw-bold">Loại Máy</label>
+                                          <select className="form-select" value={editingProduct.category || "SERVER"} onChange={e => setEditingProduct({...editingProduct, category: e.target.value})}>
+                                              <option value="SERVER">SERVER</option>
+                                              <option value="LAPTOP">LAPTOP</option>
+                                              <option value="PRINTER">PRINTER</option>
+                                              <option value="NETWORK">NETWORK</option>
+                                              <option value="POS">POS</option>
+                                          </select>
+                                      </div>
+                                      <div className="col-md-3">
+                                          <label className="form-label small fw-bold text-info">Hiển thị Storefront</label>
+                                          <select className="form-select border-info fw-bold" value={editingProduct.isVisible !== false ? "SHOW" : "HIDE"} onChange={e => setEditingProduct({...editingProduct, isVisible: e.target.value === "SHOW"})}>
+                                              <option value="SHOW">Hiển thị</option>
+                                              <option value="HIDE">Ẩn</option>
+                                          </select>
+                                      </div>
+                                      <div className="col-md-3">
+                                          <label className="form-label small fw-bold text-success">Giá Bán Niêm Yết (VNĐ)</label>
+                                          <input type="number" className="form-control fw-bold text-success" value={editingProduct.price || ""} onChange={e => setEditingProduct({...editingProduct, price: parseInt(e.target.value)})} required/>
+                                      </div>
+                                      <div className="col-md-2">
+                                          <label className="form-label small fw-bold">Tồn kho</label>
+                                          <input type="number" className="form-control" value={editingProduct.stock || 0} onChange={e => setEditingProduct({...editingProduct, stock: parseInt(e.target.value)})} required/>
+                                      </div>
+                                      <div className="col-md-2">
+                                          <label className="form-label small fw-bold">Bảo hành (T)</label>
+                                          <input type="number" className="form-control" value={editingProduct.warrantyMonths || 12} onChange={e => setEditingProduct({...editingProduct, warrantyMonths: parseInt(e.target.value)})} required/>
+                                      </div>
+                                      <div className="col-md-2 d-flex align-items-end mb-2">
+                                          <div className="form-check form-switch fs-5">
+                                            <input className="form-check-input" type="checkbox" role="switch" checked={editingProduct.isRentable || false} onChange={e => setEditingProduct({...editingProduct, isRentable: e.target.checked})} />
+                                            <label className="form-check-label fs-6 fw-bold text-primary">Cho Thuê</label>
+                                          </div>
+                                      </div>
+                                      {editingProduct.isRentable && (
                                          <div className="col-md-3">
                                             <label className="form-label small fw-bold text-primary">Giá Thuê / Ngày (VNĐ)</label>
                                             <input type="number" className="form-control border-primary bg-primary bg-opacity-10 fw-bold text-primary" value={editingProduct.rentalPricePerDay || ""} onChange={e => setEditingProduct({...editingProduct, rentalPricePerDay: parseInt(e.target.value)})} required/>
@@ -1006,9 +1013,14 @@ export default function AdminDashboard() {
                                          <td className="text-center fw-bold">{p.stock}</td>
                                          <td className="text-center">{p.isRentable ? <span className="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-1"><i className="bi bi-clock-history me-1"></i> {p.rentalPricePerDay?.toLocaleString()}đ/n</span> : <span className="text-muted small">—</span>}</td>
                                          <td className="text-end px-4">
-                                             <button className={`btn btn-sm ${p.isVisible !== false ? 'btn-outline-success' : 'btn-outline-secondary'} me-2`} title={p.isVisible !== false ? "Đang hiển thị - Nhấn để ẩn" : "Đang ẩn - Nhấn để hiện"} onClick={() => toggleProductVisibility(p.id, p.isVisible !== false)}>
-                                               <i className={`bi ${p.isVisible !== false ? 'bi-eye-fill' : 'bi-eye-slash-fill'}`}></i>
-                                             </button>
+                                             <select 
+                                               className={`form-select form-select-sm d-inline-block w-auto me-2 border-2 ${p.isVisible !== false ? 'border-success text-success' : 'border-secondary text-secondary'} fw-bold`}
+                                               value={p.isVisible !== false ? "SHOW" : "HIDE"}
+                                               onChange={(e) => toggleProductVisibility(p.id, e.target.value === "HIDE")}
+                                             >
+                                               <option value="SHOW">Hiển thị</option>
+                                               <option value="HIDE">Chế độ Ẩn</option>
+                                             </select>
                                              <button className="btn btn-sm btn-outline-primary me-2" onClick={() => {
                                               const pWithImages: Partial<Product> = { ...p, allImages: p.images?.map((i:any) => i.url) || [] };
                                               setEditingProduct(pWithImages);
