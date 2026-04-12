@@ -1250,7 +1250,7 @@ export default function AdminDashboard() {
                                       </td>
                                       <td className="text-end px-4">
                                           <button className="btn btn-sm btn-outline-secondary me-2" onClick={() => setSelectedRental(r)}>Chi tiết</button>
-                                          <button className="btn btn-dark btn-sm fw-bold" onClick={() => setReturningRental({ ...r, returnDate: new Date().toISOString().split('T')[0], returnNote: "", hasIssue: false, issueProductId: r.items?.[0]?.productId })}>
+                                          <button className="btn btn-dark btn-sm fw-bold" onClick={() => setReturningRental({ ...r, returnDate: new Date().toISOString().split('T')[0], returnNote: "", hasIssue: false, issueProductId: r.items?.[0]?.product?.id })}>
                                             <i className="bi bi-box-arrow-in-left me-1"></i> Xác nhận TRẢ MÁY
                                           </button>
                                       </td>
