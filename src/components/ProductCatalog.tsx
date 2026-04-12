@@ -254,8 +254,8 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: a
                   
                   {/* Ảnh sản phẩm (Cập nhật: Hiện ảnh nếu có, ngược lại hiện ID) */}
                   <div className="bg-light text-center rounded-top d-flex align-items-center justify-content-center border-bottom overflow-hidden" style={{ height: "220px" }}>
-                    {p.imageUrl ? (
-                      <img src={p.imageUrl} alt={p.name} className="w-100 h-100 product-image-zoom" style={{ objectFit: "cover" }} />
+                    {(p.imageUrl || p.images?.[0]?.url) ? (
+                      <img src={p.imageUrl || p.images?.[0]?.url} alt={p.name} className="w-100 h-100 product-image-zoom" style={{ objectFit: "cover" }} />
                     ) : (
                       <div className="text-center">
                         <i className={`bi ${p.category === 'SERVER' ? 'bi-hdd-network-fill' : p.category === 'PRINTER' ? 'bi-printer-fill' : p.category === 'LAPTOP' ? 'bi-laptop' : p.category === 'POS' ? 'bi-phone' : 'bi-router-fill'} d-block mb-2`} style={{ fontSize: "4rem", color: "#adb5bd" }}></i>

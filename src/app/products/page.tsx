@@ -15,7 +15,9 @@ const fallbackProducts = [
 export default async function ProductsPage() {
   let products = [];
   try {
-    products = await prisma.product.findMany();
+    products = await prisma.product.findMany({
+      include: { images: { select: { url: true } } }
+    });
     if (products.length === 0) products = fallbackProducts;
   } catch (error) {
     console.error("Lỗi kết nối CSDL:", error);

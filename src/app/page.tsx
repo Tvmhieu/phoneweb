@@ -15,7 +15,8 @@ export default async function HomePage() {
   try {
     featuredProducts = await prisma.product.findMany({
       take: 8,
-      orderBy: { id: 'desc' }
+      orderBy: { id: 'desc' },
+      include: { images: { select: { url: true } } }
     });
     if (featuredProducts.length === 0) featuredProducts = fallbackProducts;
   } catch (error) {
@@ -217,8 +218,8 @@ export default async function HomePage() {
               <div className="col-md-3" key={p.id}>
                 <div className="card h-100 shadow-sm product-card border-0">
                   <div className="position-relative overflow-hidden bg-light d-flex align-items-center justify-content-center" style={{ height: "200px" }}>
-                    {p.imageUrl ? (
-                      <img src={p.imageUrl} className="w-100 h-100" style={{ objectFit: "cover" }} alt={p.name} />
+                    {(p.imageUrl || p.images?.[0]?.url) ? (
+                      <img src={p.imageUrl || p.images?.[0]?.url} className="w-100 h-100" style={{ objectFit: "cover" }} alt={p.name} />
                     ) : (
                       <i className={`bi ${p.category === 'SERVER' ? 'bi-hdd-network' : p.category === 'PRINTER' ? 'bi-printer' : 'bi-laptop'} display-3 text-muted`}></i>
                     )}
