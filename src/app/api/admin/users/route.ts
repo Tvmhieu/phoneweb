@@ -6,7 +6,8 @@ export async function GET(req: Request) {
   try {
     const users = await prisma.user.findMany({
       where: {
-        role: { in: ["ADMIN", "MANAGER", "EMPLOYEE", "CUSTOMER"] }
+        role: { in: ["ADMIN", "MANAGER", "EMPLOYEE", "CUSTOMER"] },
+        isDeleted: false
       },
       orderBy: { createdAt: "desc" }
     });
@@ -74,8 +75,11 @@ export async function DELETE(req: Request) {
     const id = searchParams.get("id");
     if (!id) return NextResponse.json({ success: false, message: "Thiếu ID" }, { status: 400 });
 
-    await prisma.user.delete({ where: { id: parseInt(id) } });
-    return NextResponse.json({ success: true, message: "Đã xóa người dùng" });
+    await prisma.user.update({ 
+      where: { id: parseInt(id) },
+      data: { isDeleted: true }
+    });
+    return NextResponse.json({ success: true, message: "Đã xóa người dùng khỏi danh sách hoạt động" });
   } catch (error) {
     return NextResponse.json({ success: false, message: "Lỗi xóa người dùng (Có thể user này đã có đơn hàng)" }, { status: 500 });
   }

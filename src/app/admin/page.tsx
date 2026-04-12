@@ -312,9 +312,15 @@ export default function AdminDashboard() {
   // =============== CÁC HÀM XỬ LÝ ACTION ===============
   const [uploading, setUploading] = useState(false);
 
-  const formatCustomer = (sale: Sale) => {
-    const name = sale.user?.companyName || sale.user?.name || "Khách hàng";
-    const contact = [sale.user?.email, sale.user?.phone].filter(Boolean).join(" • ");
+  const formatCustomer = (order: any) => {
+    if (!order.user || order.user.isDeleted) {
+      return { 
+        name: order.user?.name ? `${order.user.name} (Đã xóa)` : "Người dùng đã xóa", 
+        contact: order.user?.email || "Không có thông tin" 
+      };
+    }
+    const name = order.user?.companyName || order.user?.name || "Khách hàng";
+    const contact = [order.user?.email, order.user?.phone].filter(Boolean).join(" • ");
     return { name, contact: contact || "Chưa có thông tin liên hệ" };
   };
 
@@ -393,6 +399,32 @@ export default function AdminDashboard() {
       if (data.success) {
         alert("Đã xóa!");
         loadUsers();
+        loadStats();
+      } else alert(data.message);
+    } catch(e) {}
+  };
+
+  const deleteSaleOrder = async (id: number) => {
+    if (!confirm("Bạn có chắc chắn muốn xóa hóa đơn bán hàng này?")) return;
+    try {
+      const res = await fetch(`/api/admin/sales?id=${id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (data.success) {
+        alert("Đã xóa hóa đơn!");
+        loadSales();
+        loadStats();
+      } else alert(data.message);
+    } catch(e) {}
+  };
+
+  const deleteRentalOrder = async (id: number) => {
+    if (!confirm("Bạn có chắc chắn muốn xóa lịch sử thuê này?")) return;
+    try {
+      const res = await fetch(`/api/admin/rentals?id=${id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (data.success) {
+        alert("Đã xóa!");
+        loadRentals();
         loadStats();
       } else alert(data.message);
     } catch(e) {}
@@ -1036,7 +1068,8 @@ export default function AdminDashboard() {
                                              <button className="btn btn-success btn-sm fw-bold me-2" onClick={() => updateSaleStatus(s.id, "PAID")}>
                                                <i className="bi bi-check-circle me-1"></i> Xác nhận Thanh toán
                                              </button>
-                                             <button className="btn btn-outline-danger btn-sm" onClick={() => updateSaleStatus(s.id, "CANCELLED")}>Hủy đơn</button>
+                                             <button className="btn btn-outline-danger btn-sm me-2" onClick={() => updateSaleStatus(s.id, "CANCELLED")}>Hủy đơn</button>
+                                             <button className="btn btn-sm btn-outline-danger" title="Xóa vĩnh viễn" onClick={() => deleteSaleOrder(s.id)}><i className="bi bi-trash"></i></button>
                                          </td>
                                      </tr>
                                    );
@@ -1083,9 +1116,10 @@ export default function AdminDashboard() {
                                         <td><small className="text-muted">{new Date(s.createdAt).toLocaleString('vi-VN')}</small></td>
                                         <td className="text-end px-4">
                                             <button className="btn btn-outline-secondary btn-sm me-2" onClick={() => setSelectedSale(s)}>Chi tiết</button>
-                                            <button className="btn btn-primary btn-sm fw-bold" onClick={() => updateSaleStatus(s.id, "DELIVERED")}>
+                                            <button className="btn btn-primary btn-sm fw-bold me-2" onClick={() => updateSaleStatus(s.id, "DELIVERED")}>
                                               <i className="bi bi-box-seam me-1"></i> Xác nhận Đã giao
                                             </button>
+                                            <button className="btn btn-sm btn-outline-danger" title="Xóa vĩnh viễn" onClick={() => deleteSaleOrder(s.id)}><i className="bi bi-trash"></i></button>
                                         </td>
                                     </tr>
                                   );
@@ -1139,7 +1173,8 @@ export default function AdminDashboard() {
                                         <td><small className="text-muted">{new Date(s.createdAt).toLocaleString('vi-VN')}</small></td>
                                         <td className="text-end px-4">
                                           <button className="btn btn-outline-secondary btn-sm me-2" onClick={() => setSelectedSale(s)}>Chi tiết</button>
-                                          <span className="badge bg-success-subtle text-success border border-success-subtle px-3 py-2">Hoàn thành</span>
+                                          <span className="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 me-2">Hoàn thành</span>
+                                          <button className="btn btn-sm btn-outline-danger" title="Xóa vĩnh viễn" onClick={() => deleteSaleOrder(s.id)}><i className="bi bi-trash"></i></button>
                                         </td>
                                     </tr>
                                   );

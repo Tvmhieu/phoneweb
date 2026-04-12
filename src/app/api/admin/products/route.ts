@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma";
 export async function GET(req: Request) {
   try {
     const products = await prisma.product.findMany({
+        where: { isDeleted: false },
         orderBy: { id: "desc" },
         select: {
           id: true,
@@ -24,6 +25,7 @@ export async function GET(req: Request) {
           }
         }
     });
+// ... (rest of GET)
     const normalizedProducts = products.map((product) => ({
       ...product,
       allImages: product.images.map((image) => image.url)
@@ -106,8 +108,11 @@ export async function DELETE(req: Request) {
     const id = searchParams.get("id");
     if (!id) return NextResponse.json({ success: false, message: "Thiếu ID" }, { status: 400 });
 
-    await prisma.product.delete({ where: { id: parseInt(id) } });
-    return NextResponse.json({ success: true, message: "Đã xóa sản phẩm khỏi kho" });
+    await prisma.product.update({ 
+      where: { id: parseInt(id) },
+      data: { isDeleted: true }
+    });
+    return NextResponse.json({ success: true, message: "Đã xóa sản phẩm khỏi danh sách hiển thị" });
   } catch (error) {
     return NextResponse.json({ success: false, message: "Lỗi xóa sản phẩm. Có thể sản phẩm này đang nằm trong đơn hàng." }, { status: 500 });
   }

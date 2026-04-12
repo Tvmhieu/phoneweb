@@ -37,3 +37,19 @@ export async function PUT(req: Request) {
     return NextResponse.json({ success: false, message: "Lỗi cập nhật đơn thuê: " + error.message }, { status: 500 });
   }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+    if (!id) return NextResponse.json({ success: false, message: "Thiếu ID" }, { status: 400 });
+
+    const orderId = parseInt(id);
+    await prisma.rentalOrderItem.deleteMany({ where: { orderId } });
+    await prisma.rentalOrder.delete({ where: { id: orderId } });
+    
+    return NextResponse.json({ success: true, message: "Đã xóa lịch sử thuê máy" });
+  } catch (error) {
+    return NextResponse.json({ success: false, message: "Lỗi xóa đơn thuê" }, { status: 500 });
+  }
+}

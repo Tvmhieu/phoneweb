@@ -25,3 +25,19 @@ export async function PUT(req: Request) {
     return NextResponse.json({ success: false, message: "Lỗi cập nhật đơn bán" }, { status: 500 });
   }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+    if (!id) return NextResponse.json({ success: false, message: "Thiếu ID" }, { status: 400 });
+
+    const orderId = parseInt(id);
+    await prisma.saleOrderItem.deleteMany({ where: { orderId } });
+    await prisma.saleOrder.delete({ where: { id: orderId } });
+    
+    return NextResponse.json({ success: true, message: "Đã xóa hóa đơn bán hàng" });
+  } catch (error) {
+    return NextResponse.json({ success: false, message: "Lỗi xóa hóa đơn" }, { status: 500 });
+  }
+}
