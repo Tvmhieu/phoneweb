@@ -46,8 +46,11 @@ export async function POST(req: Request) {
     const warrantyMonths = Number(data.warrantyMonths) || 12;
     const rentalPricePerDay = Number(data.rentalPricePerDay) || null;
     
-    // Mảng link ảnh (tối đa 10)
-    const imagesData = Array.isArray(data.allImages) ? data.allImages.slice(0, 10) : [];
+    // Mảng link ảnh (tối đa 10) — lọc bỏ link rỗng
+    const imagesData = Array.isArray(data.allImages) ? data.allImages.filter((u: string) => u && u.trim()).slice(0, 10) : [];
+    
+    // Tự động lấy ảnh đầu tiên làm ảnh chính nếu chưa có
+    const imageUrl = data.imageUrl?.trim() || imagesData[0] || null;
 
     if (isUpdating) {
         // Cập nhật sản phẩm và xóa ảnh cũ để thay bằng ảnh mới (đơn giản hóa)
@@ -58,7 +61,7 @@ export async function POST(req: Request) {
                brand: data.brand,
                category: data.category,
                description: data.description,
-               imageUrl: data.imageUrl || null,
+               imageUrl,
                stock,
                price,
                warrantyMonths,
@@ -78,7 +81,7 @@ export async function POST(req: Request) {
                brand: data.brand,
                category: data.category,
                description: data.description,
-               imageUrl: data.imageUrl || null,
+               imageUrl,
                stock,
                price,
                warrantyMonths,
