@@ -18,6 +18,7 @@ export async function GET(req: Request) {
           warrantyMonths: true,
           isRentable: true,
           rentalPricePerDay: true,
+          isVisible: true,
           createdAt: true,
           updatedAt: true,
           images: {
@@ -67,8 +68,9 @@ export async function POST(req: Request) {
                stock,
                price,
                warrantyMonths,
-               isRentable: data.isRentable,
+               isRentable: !!data.isRentable,
                rentalPricePerDay,
+               isVisible: data.isVisible !== undefined ? !!data.isVisible : true,
                images: {
                  deleteMany: {},
                  create: imagesData.map((url: string) => ({ url }))
@@ -87,8 +89,9 @@ export async function POST(req: Request) {
                stock,
                price,
                warrantyMonths,
-               isRentable: data.isRentable,
+               isRentable: !!data.isRentable,
                rentalPricePerDay,
+               isVisible: data.isVisible !== undefined ? !!data.isVisible : true,
                images: {
                  create: imagesData.map((url: string) => ({ url }))
                }

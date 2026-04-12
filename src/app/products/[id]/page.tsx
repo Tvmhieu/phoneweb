@@ -8,8 +8,12 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const { id } = await params;
   let product: any = null;
   try {
-    product = await prisma.product.findUnique({
-      where: { id: parseInt(id) },
+    product = await prisma.product.findFirst({
+      where: { 
+        id: parseInt(id),
+        isVisible: true,
+        isDeleted: false
+      },
       include: { images: true }
     });
   } catch (error) {

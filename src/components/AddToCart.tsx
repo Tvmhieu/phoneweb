@@ -10,6 +10,7 @@ type AddToCartProps = {
     isRentable: boolean;
     rentalPricePerDay: number | null;
     imageUrl: string;
+    stock: number;
   }
 };
 
@@ -73,7 +74,12 @@ export default function AddToCart({ product }: AddToCartProps) {
   const deposit = Math.round((product.price * quantity) * 0.5); 
 
   const handleAdd = () => {
+    if (quantity > (product.stock || 0)) {
+      alert(`Số lượng yêu cầu (${quantity}) vượt quá số lượng tồn kho (${product.stock || 0})!`);
+      return;
+    }
     if (rentMode) {
+// ...
       if (!endDate || numberOfDays < 1) {
         alert("Vui lòng chọn thời gian thuê hợp lệ!");
         return;
@@ -121,9 +127,10 @@ export default function AddToCart({ product }: AddToCartProps) {
           <label className="form-label small text-muted fw-bold">Số lượng:</label>
           <div className="input-group" style={{ maxWidth: "160px" }}>
             <button className="btn btn-outline-secondary" onClick={() => setQuantity(Math.max(1, quantity - 1))}>−</button>
-            <input type="number" className="form-control text-center fw-bold" value={quantity} min={1} onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))} />
-            <button className="btn btn-outline-secondary" onClick={() => setQuantity(quantity + 1)}>+</button>
+            <input type="number" className="form-control text-center fw-bold" value={quantity} min={1} max={product.stock} onChange={(e) => setQuantity(Math.max(1, Math.min(product.stock, parseInt(e.target.value) || 1)))} />
+            <button className="btn btn-outline-secondary" onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}>+</button>
           </div>
+          {quantity >= product.stock && <div className="text-danger x-small mt-1 fw-bold"><i className="bi bi-exclamation-triangle"></i> Đã đạt giới hạn linh kiện trong kho</div>}
         </div>
 
         {/* ===== DATE PICKER CHO THUÊ ĐÃ CẬP NHẬT ===== */}
@@ -200,9 +207,14 @@ export default function AddToCart({ product }: AddToCartProps) {
           </div>
         )}
 
-        <button onClick={handleAdd} className="btn w-100 fw-bold py-2 fs-5" style={{ backgroundColor: rentMode ? "#ffc107" : "#0D6EFD", color: rentMode ? "#000" : "#fff" }}>
-          <i className={`bi ${rentMode ? "bi-calendar-check" : "bi-cart-plus-fill"} me-2`}></i> 
-          {rentMode ? `THUÊ MÁY (Cọc: ${deposit.toLocaleString("vi-VN")} đ)` : "THÊM VÀO GIỎ HÀNG"}
+        <button 
+          onClick={handleAdd} 
+          disabled={product.stock <= 0}
+          className="btn w-100 fw-bold py-2 fs-5" 
+          style={{ backgroundColor: product.stock <= 0 ? "#dee2e6" : (rentMode ? "#ffc107" : "#0D6EFD"), color: product.stock <= 0 ? "#adb5bd" : (rentMode ? "#000" : "#fff") }}
+        >
+          <i className={`bi ${product.stock <= 0 ? "bi-x-circle" : (rentMode ? "bi-calendar-check" : "bi-cart-plus-fill")} me-2`}></i> 
+          {product.stock <= 0 ? "HẾT HÀNG TẠM THỜI" : (rentMode ? `THUÊ MÁY (Cọc: ${deposit.toLocaleString("vi-VN")} đ)` : "THÊM VÀO GIỎ HÀNG")}
         </button>
       </div>
     </div>

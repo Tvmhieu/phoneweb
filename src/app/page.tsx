@@ -14,6 +14,12 @@ export default async function HomePage() {
   let featuredProducts = [];
   try {
     featuredProducts = await prisma.product.findMany({
+      where: {
+        AND: [
+          { isVisible: true },
+          { isDeleted: false }
+        ]
+      },
       take: 8,
       orderBy: { id: 'desc' },
       include: { images: { select: { url: true } } }

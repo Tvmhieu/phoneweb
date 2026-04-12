@@ -16,6 +16,12 @@ export default async function ProductsPage() {
   let products = [];
   try {
     products = await prisma.product.findMany({
+      where: {
+        AND: [
+          { isVisible: true },
+          { isDeleted: false }
+        ]
+      },
       include: { images: { select: { url: true } } }
     });
     if (products.length === 0) products = fallbackProducts;

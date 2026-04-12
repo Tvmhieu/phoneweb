@@ -374,6 +374,17 @@ export default function AdminDashboard() {
     } catch(e) {}
   };
 
+  const toggleProductVisibility = async (id: number, currentVisibility: boolean) => {
+    try {
+      const res = await fetch("/api/admin/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, isVisible: !currentVisibility })
+      });
+      if (res.ok) loadProducts();
+    } catch(e) {}
+  };
+
   const saveUser = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -995,8 +1006,11 @@ export default function AdminDashboard() {
                                          <td className="text-center fw-bold">{p.stock}</td>
                                          <td className="text-center">{p.isRentable ? <span className="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-1"><i className="bi bi-clock-history me-1"></i> {p.rentalPricePerDay?.toLocaleString()}đ/n</span> : <span className="text-muted small">—</span>}</td>
                                          <td className="text-end px-4">
+                                             <button className={`btn btn-sm ${p.isVisible ? 'btn-outline-success' : 'btn-outline-secondary'} me-2`} title={p.isVisible ? "Đang hiển thị - Nhấn để ẩn" : "Đang ẩn - Nhấn để hiện"} onClick={() => toggleProductVisibility(p.id, !!p.isVisible)}>
+                                               <i className={`bi ${p.isVisible ? 'bi-eye-fill' : 'bi-eye-slash-fill'}`}></i>
+                                             </button>
                                              <button className="btn btn-sm btn-outline-primary me-2" onClick={() => {
-                                              const pWithImages: Partial<Product> = { ...p, allImages: p.images?.map(i => i.url) || [] };
+                                              const pWithImages: Partial<Product> = { ...p, allImages: p.images?.map((i:any) => i.url) || [] };
                                               setEditingProduct(pWithImages);
                                              }}><i className="bi bi-pencil-square"></i></button>
                                              <button className="btn btn-sm btn-outline-danger" onClick={() => deleteProduct(p.id)}><i className="bi bi-trash"></i></button>
