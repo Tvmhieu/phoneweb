@@ -1,0 +1,177 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
+  password     String
+  name         String?
+  companyName  String?
+  phone        String?
+  address      String?
+  role         String        @default("CUSTOMER") // "ADMIN", "MANAGER", "EMPLOYEE", "CUSTOMER"
+  
+  saleOrders   SaleOrder[]
+  rentalOrders RentalOrder[]
+  warrantyClaims WarrantyClaim[]
+  cart         Cart?
+  
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Product {
+  id               Int                @id @default(autoincrement())
+  name             String
+  brand            String
+  category         String             
+  description      String?            @db.Text
+  imageUrl         String?            // Ảnh đại diện chính
+  images           ProductImage[]     // Danh sách nhiều ảnh
+  
+  stock            Int                @default(0) 
+  
+  // Thông tin Bán & Bảo hành
+  price            Int             
+  warrantyMonths   Int                @default(12) // Thời gian bảo hành (Tháng)
+  
+  // Thông tin Cho thuê
+  isRentable       Boolean            @default(false)
+  rentalPricePerDay Int?            
+  
+  saleItems        SaleOrderItem[]
+  rentalItems      RentalOrderItem[]
+  cartItems        CartItem[]
+  warrantyClaims   WarrantyClaim[]
+  
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+}
+
+model ProductImage {
+  id        Int     @id @default(autoincrement())
+  url       String
+  productId Int
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Promotion {
+  id          Int      @id @default(autoincrement())
+  code        String   @unique
+  discount    Float
+  type        String   @default("PERCENTAGE") 
+  validUntil  DateTime
+  createdAt   DateTime @default(now())
+}
+
+// ======================================
+// NGHIỆP VỤ BÁN HÀNG
+// ======================================
+model SaleOrder {
+  id         Int              @id @default(autoincrement())
+  userId     Int
+  user       User             @relation(fields: [userId], references: [id])
+  total      Float
+  status     String           @default("PENDING") 
+  items      SaleOrderItem[]
+  adminNotes String?          @db.VarChar(1000) // Ghi chú nội bộ cho quản trị viên
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+}
+
+model SaleOrderItem {
+  id        Int      @id @default(autoincrement())
+  orderId   Int
+  order     SaleOrder @relation(fields: [orderId], references: [id])
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+}
+
+// ======================================
+// NGHIỆP VỤ CHO THUÊ
+// ======================================
+model RentalOrder {
+  id          Int                @id @default(autoincrement())
+  userId      Int
+  user        User               @relation(fields: [userId], references: [id])
+  deposit     Float              
+  totalRental Float              
+  status      String             @default("PENDING") 
+  startDate   DateTime
+  endDate     DateTime
+  items       RentalOrderItem[]
+  adminNotes  String?            @db.VarChar(1000) // Ghi chú nội bộ cho quản trị viên
+  returnDate  DateTime?          // Ngày trả máy thực tế
+  returnNote  String?            @db.VarChar(1000) // Tình trạng máy khi trả
+  isDepositRefunded Boolean @default(false)    // Đã hoàn cọc cho khách chưa?
+  depositRefundDate DateTime?                 // Ngày hoàn cọc thực tế
+  
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
+
+model RentalOrderItem {
+  id          Int         @id @default(autoincrement())
+  orderId     Int
+  order       RentalOrder @relation(fields: [orderId], references: [id])
+  productId   Int
+  product     Product     @relation(fields: [productId], references: [id])
+  quantity    Int
+  pricePerDay Float
+}
+
+// ======================================
+// BẢO HÀNH & LIÊN HỆ YÊU CẦU
+// ======================================
+model WarrantyClaim {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+  productId   Int
+  product     Product   @relation(fields: [productId], references: [id])
+  issueDetail String    @db.Text
+  resolution  String?   @db.Text    // Hướng giải quyết
+  techNote    String?   @db.Text    // Ghi chú kỹ thuật cụ thể
+  status      String    @default("PENDING") // PENDING, CHECKING, PROCESSING, DONE, CANCELLED
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  phone     String?
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+// ======================================
+// GIỎ HÀNG
+// ======================================
+model Cart {
+  id        Int        @id @default(autoincrement())
+  userId    Int        @unique
+  user      User       @relation(fields: [userId], references: [id])
+  items     CartItem[]
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  cartId    Int
+  cart      Cart     @relation(fields: [cartId], references: [id])
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  isRental  Boolean  @default(false) 
+}
