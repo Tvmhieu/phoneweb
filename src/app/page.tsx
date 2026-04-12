@@ -219,7 +219,7 @@ export default async function HomePage() {
                 <div className="card h-100 shadow-sm product-card border-0">
                   <div className="position-relative overflow-hidden bg-light d-flex align-items-center justify-content-center" style={{ height: "200px" }}>
                     {(p.imageUrl || p.images?.[0]?.url) ? (
-                      <img src={p.imageUrl || p.images?.[0]?.url} className="w-100 h-100" style={{ objectFit: "cover" }} alt={p.name} />
+                      <img src={p.imageUrl || p.images?.[0]?.url} className="w-100 h-100" style={{ objectFit: "cover", width: '100%', height: '100%' }} alt={p.name} />
                     ) : (
                       <i className={`bi ${p.category === 'SERVER' ? 'bi-hdd-network' : p.category === 'PRINTER' ? 'bi-printer' : 'bi-laptop'} display-3 text-muted`}></i>
                     )}
