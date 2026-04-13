@@ -1284,9 +1284,10 @@ export default function AdminDashboard() {
                                       </td>
                                       <td className="text-end px-4">
                                           <button className="btn btn-sm btn-outline-secondary me-2" onClick={() => setSelectedRental(r)}>Chi tiết</button>
-                                          <button className="btn btn-warning btn-sm fw-bold shadow-sm" onClick={() => updateRentalStatus(r.id, "PAID")}>
+                                          <button className="btn btn-warning btn-sm fw-bold shadow-sm me-2" onClick={() => updateRentalStatus(r.id, "PAID")}>
                                               <i className="bi bi-cash-coin me-1"></i> Xác nhận Đã Cọc
                                           </button>
+                                          <button className="btn btn-sm btn-outline-danger" title="Xóa vĩnh viễn" onClick={() => deleteRentalOrder(r.id)}><i className="bi bi-trash"></i></button>
                                       </td>
                                   </tr>
                               ))}
@@ -1324,9 +1325,10 @@ export default function AdminDashboard() {
                                       </td>
                                       <td className="text-end px-4">
                                           <button className="btn btn-sm btn-outline-secondary me-2" onClick={() => setSelectedRental(r)}>Chi tiết</button>
-                                          <button className="btn btn-info btn-sm text-white fw-bold shadow-sm" onClick={() => updateRentalStatus(r.id, "ACTIVE")}>
+                                          <button className="btn btn-info btn-sm text-white fw-bold shadow-sm me-2" onClick={() => updateRentalStatus(r.id, "ACTIVE")}>
                                               <i className="bi bi-truck-flatbed me-1"></i> Kích hoạt Đang thuê
                                           </button>
+                                          <button className="btn btn-sm btn-outline-danger" title="Xóa vĩnh viễn" onClick={() => deleteRentalOrder(r.id)}><i className="bi bi-trash"></i></button>
                                       </td>
                                   </tr>
                               ))}
@@ -1364,9 +1366,10 @@ export default function AdminDashboard() {
                                       </td>
                                       <td className="text-end px-4">
                                           <button className="btn btn-sm btn-outline-secondary me-2" onClick={() => setSelectedRental(r)}>Chi tiết</button>
-                                          <button className="btn btn-dark btn-sm fw-bold" onClick={() => setReturningRental({ ...r, returnDate: new Date().toISOString().split('T')[0], returnNote: "", hasIssue: false, issueProductId: r.items?.[0]?.product?.id })}>
+                                          <button className="btn btn-dark btn-sm fw-bold me-2" onClick={() => setReturningRental({ ...r, returnDate: new Date().toISOString().split('T')[0], returnNote: "", hasIssue: false, issueProductId: r.items?.[0]?.product?.id })}>
                                             <i className="bi bi-box-arrow-in-left me-1"></i> Xác nhận TRẢ MÁY
                                           </button>
+                                          <button className="btn btn-sm btn-outline-danger" title="Xóa vĩnh viễn" onClick={() => deleteRentalOrder(r.id)}><i className="bi bi-trash"></i></button>
                                       </td>
                                   </tr>
                               ))}
@@ -1408,7 +1411,8 @@ export default function AdminDashboard() {
                                       </td>
                                       <td><small className="text-muted">{new Date(r.updatedAt).toLocaleDateString('vi-VN')}</small></td>
                                       <td className="text-end px-4">
-                                          <button className="btn btn-sm btn-outline-secondary" onClick={() => setSelectedRental(r)}>Xem lại</button>
+                                          <button className="btn btn-sm btn-outline-secondary me-2" onClick={() => setSelectedRental(r)}>Xem lại</button>
+                                          <button className="btn btn-sm btn-outline-danger" title="Xóa vĩnh viễn" onClick={() => deleteRentalOrder(r.id)}><i className="bi bi-trash"></i></button>
                                       </td>
                                   </tr>
                               ))}
