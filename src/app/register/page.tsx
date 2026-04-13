@@ -90,7 +90,7 @@ export default function RegisterPage() {
       <div className="container d-flex justify-content-center">
         <div className="register-card row g-0">
           <div className="col-md-5 register-sidebar d-none d-md-flex">
-            <h2 className="display-6 fw-bold mb-4">Trở thành Đối tác Nhân Việt</h2>
+            <h2 className="display-6 fw-bold mb-4">Trở thành đối tác lâu dài</h2>
             <p className="opacity-75 fs-5">Khởi tạo tài khoản để quản lý thiết bị, yêu cầu thuê máy và theo dõi bảo hành tập trung.</p>
             <div className="mt-5">
                 <div className="d-flex align-items-center mb-4 text-start">
@@ -144,7 +144,7 @@ export default function RegisterPage() {
                     />
                 </div>
                 <div className="col-md-12 mb-2">
-                    <label className="form-label small fw-bold text-muted text-uppercase">Email Công Ty / Liên Hệ</label>
+                    <label className="form-label small fw-bold text-muted text-uppercase">Email</label>
                     <input 
                         type="email" 
                         className="form-control input-premium border-0" 

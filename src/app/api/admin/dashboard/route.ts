@@ -16,8 +16,8 @@ export async function GET() {
       prisma.warrantyClaim.count({ where: { status: "PENDING" } }),
       prisma.saleOrder.count({ where: { status: "PENDING" } }),
       prisma.rentalOrder.count({ where: { status: "PENDING" } }),
-      prisma.product.count(),
-      prisma.user.count({ where: { role: "CUSTOMER" } })
+      prisma.product.count({ where: { isDeleted: false } }),
+      prisma.user.count({ where: { role: "CUSTOMER", isDeleted: false } })
     ]);
 
     const revenueSales = saleOrders

@@ -737,7 +737,7 @@ export default function AdminDashboard() {
                             </div>
                         </div>
                         <h6 className="text-secondary fw-bold text-uppercase mb-2" style={{ fontSize: '11px', letterSpacing: '1px' }}>Đối tác Doanh nghiệp</h6>
-                        <h3 className="fw-bold text-dark mb-auto">{stats?.totalCustomers || 0} <small className="fs-6">Công ty</small></h3>
+                        <h3 className="fw-bold text-dark mb-auto">{stats?.totalCustomers || 0} <small className="fs-6">Khách hàng</small></h3>
                         <div className="mt-3 small text-muted"><i className="bi bi-database-fill me-1"></i> Kho: <strong>{stats?.totalProducts || 0} SP</strong></div>
                       </div>
                     </div>
