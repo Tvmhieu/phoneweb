@@ -17,8 +17,8 @@ export async function POST(req: Request) {
     const buffer = Buffer.from(bytes);
 
     // Tạo thư mục theo sản phẩm
-    const folderName = `product_${productId}`;
-    const uploadDir = path.join(process.cwd(), "public", "uploads", folderName);
+    const relativeDir = path.join("products", productId.toString());
+    const uploadDir = path.join(process.cwd(), "public", "uploads", relativeDir);
     
     // Đảm bảo thư mục tồn tại
     const fs = require('fs');
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     }
 
     const filename = Date.now() + "_" + file.name.replace(/\s/g, "_");
-    const relativePath = `/uploads/${folderName}/${filename}`;
+    const relativePath = `/uploads/products/${productId}/${filename}`;
     const absolutePath = path.join(uploadDir, filename);
 
     await writeFile(absolutePath, buffer);

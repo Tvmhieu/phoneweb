@@ -63,6 +63,7 @@ export default function Navbar() {
 
                 {/* Khách hàng (Customer) */}
                 {userRole === "CUSTOMER" && (
+                  <>
                     <div className="dropdown">
                         <button className="btn btn-outline-light btn-auth-premium dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown">
                             <i className="bi bi-person-circle me-1"></i> {userInfo?.name || "Tài khoản"}
@@ -73,9 +74,13 @@ export default function Navbar() {
                                 <div className="small text-muted">{userInfo?.email}</div>
                             </li>
                             <li><Link className="dropdown-item py-2" href="/warranty"><i className="bi bi-clock-history me-2"></i>Lịch sử bảo hành</Link></li>
-                            <li><button onClick={logout} className="dropdown-item py-2 text-danger"><i className="bi bi-box-arrow-left me-2"></i>Đăng xuất</button></li>
                         </ul>
                     </div>
+                    {/* Nút đăng xuất bên ngoài theo yêu cầu (nằm giữa tên và giỏ hàng) */}
+                    <button onClick={logout} className="btn btn-outline-light btn-auth-premium border-0 px-2 ms-1" title="Đăng xuất">
+                        <i className="bi bi-box-arrow-right fs-5"></i>
+                    </button>
+                  </>
                 )}
 
                 {/* Giỏ hàng (dành cho GUEST và CUSTOMER) */}
