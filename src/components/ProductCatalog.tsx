@@ -74,6 +74,15 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: a
         .product-card-hover:hover .product-image-zoom {
           transform: scale(1.08);
         }
+        @media (max-width: 576px) {
+            .display-6 { font-size: 1.8rem; }
+            .breadcrumb { font-size: 0.8rem; }
+            .col-sm-6 { width: 50% !important; }
+            .card-product .bg-light { height: 160px !important; }
+            .card-product .card-title { font-size: 0.85rem !important; }
+            .card-product .fs-5 { font-size: 1rem !important; }
+            .search-suggestion-box { width: 100% !important; }
+        }
       `}</style>
 
       {/* Breadcrumb (Tham khảo từ Hshop) */}
@@ -141,7 +150,7 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: a
 
       {/* THANH TÌM KIẾM (Tham khảo search-form từ Hshop) */}
       <div className="position-relative mb-4">
-        <div className="input-group shadow-sm" style={{ maxWidth: "500px" }}>
+        <div className="input-group shadow-sm w-100" style={{ maxWidth: "500px" }}>
           <span className="input-group-text bg-white border-end-0"><i className="bi bi-search text-muted"></i></span>
           <input 
             type="search" 
@@ -155,7 +164,7 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: a
 
         {/* Gợi ý tìm kiếm (tương tự search-suggestions của Hshop) */}
         {searchSuggestions.length > 0 && (
-          <div className="position-absolute bg-white border rounded shadow-lg mt-1" style={{ zIndex: 2000, width: "500px", maxHeight: "400px", overflowY: "auto" }}>
+          <div className="position-absolute bg-white border rounded shadow-lg mt-1 search-suggestion-box" style={{ zIndex: 2000, width: "500px", maxWidth: "100%", maxHeight: "400px", overflowY: "auto" }}>
             {searchSuggestions.map((p) => (
               <Link key={p.id} href={`/products/${p.id}`} className="d-flex align-items-center p-3 text-decoration-none border-bottom" style={{ transition: "all 0.2s" }}
                 onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#f8f9fa")}

@@ -24,7 +24,10 @@ export default function ImageGallery({ mainImage, allImages, productName, produc
   return (
     <div className="position-relative">
       {/* KHUNG ẢNH CHÍNH */}
-      <div className="bg-white border rounded p-2 text-center shadow-sm position-relative overflow-hidden d-flex flex-column align-items-center justify-content-center bg-checkered" style={{ minHeight: "450px" }}>
+      <div className="bg-white border rounded p-2 text-center shadow-sm position-relative overflow-hidden d-flex flex-column align-items-center justify-content-center bg-checkered main-img-container" style={{ minHeight: "450px" }}>
+        <style>{`
+          @media (max-width: 768px) { .main-img-container { min-height: 300px !important; } }
+        `}</style>
           
           <img 
             src={gallery[activeIndex]} 

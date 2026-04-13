@@ -39,6 +39,10 @@ export default async function HomePage() {
             color: white;
             padding: 100px 0;
         }
+        @media (max-width: 768px) {
+            .hero-gradient { padding: 60px 0; }
+            .display-3 { font-size: 2.5rem; }
+        }
         .hero-gradient::after {
             content: "";
             position: absolute;
@@ -219,9 +223,9 @@ export default async function HomePage() {
             <Link href="/products" className="btn btn-outline-primary fw-bold">Xem tất cả <i className="bi bi-chevron-right small"></i></Link>
           </div>
 
-          <div className="row g-4">
+          <div className="row g-3 g-md-4">
             {featuredProducts.map((p: any) => (
-              <div className="col-md-3" key={p.id}>
+              <div className="col-6 col-md-4 col-lg-3" key={p.id}>
                 <div className="card h-100 shadow-sm product-card border-0">
                   <div className="position-relative overflow-hidden bg-light d-flex align-items-center justify-content-center" style={{ height: "200px" }}>
                     {(p.imageUrl || p.images?.[0]?.url) ? (

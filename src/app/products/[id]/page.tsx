@@ -66,7 +66,13 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             <div className="row align-items-center">
               <div className="col-sm-12">
                 <div className="text-muted small mb-1 fw-bold text-uppercase">Giá bán niêm yết</div>
-                <h3 className="text-danger fw-bold mb-0" style={{ fontSize: "2.2rem" }}>{product.price?.toLocaleString("vi-VN")} VNĐ</h3>
+                <h3 className="text-danger fw-bold mb-0 product-price" style={{ fontSize: "2.2rem" }}>{product.price?.toLocaleString("vi-VN")} VNĐ</h3>
+                <style>{`
+                  @media (max-width: 768px) { 
+                    .product-price { font-size: 1.8rem !important; }
+                    h2 { font-size: 1.5rem !important; }
+                  }
+                `}</style>
               </div>
               
               {product.isRentable && (

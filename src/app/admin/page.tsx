@@ -539,9 +539,11 @@ export default function AdminDashboard() {
     <div className="container-fluid" style={{ backgroundColor: "#f0f2f5", minHeight: "100vh" }}>
       <div className="row">
         
-        {/* SIDEBAR */}
-        <div className="col-md-3 col-lg-2 pe-0">
-          <div className="sidebar-premium shadow-sm border-end border-light d-flex flex-column" style={{ height: "100vh", position: "fixed", width: "inherit", zIndex: 1050, background: "#ffffff" }}>
+        {/* SIDEBAR - Responsive Offcanvas for Mobile, Fixed for Desktop */}
+        <div className="col-lg-2 p-0">
+          <div className="offcanvas-lg offcanvas-start shadow-sm border-end border-light d-flex flex-column h-100" 
+               id="adminSidebar" 
+               style={{ position: "fixed", width: "inherit", zIndex: 1050, background: "#ffffff" }}>
             {/* Header - Fixed */}
             <div className="sidebar-header py-4 px-4 text-center border-bottom border-light flex-shrink-0">
               <div className="d-inline-flex p-2 rounded-4 bg-primary bg-opacity-10 mb-2">
@@ -651,7 +653,14 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="col-md-9 col-lg-10 offset-md-3 offset-lg-2 pt-4 px-4 d-flex flex-column min-vh-100">
+        <div className="col-lg-10 offset-lg-2 pt-0 pt-lg-4 px-0 px-md-4 d-flex flex-column min-vh-100">
+            {/* Mobile Header Bar */}
+            <div className="d-lg-none bg-white p-3 shadow-sm sticky-top d-flex justify-content-between align-items-center mb-3" style={{ zIndex: 1040 }}>
+                <h5 className="mb-0 fw-bold"><i className="bi bi-cpu-fill text-primary me-2"></i>Admin Panel</h5>
+                <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminSidebar">
+                    <i className="bi bi-list"></i>
+                </button>
+            </div>
             <style>{`
                 .pointer { cursor: pointer; }
                 .pointer:hover { background-color: rgba(0,0,0,0.03) !important; text-decoration: underline; }

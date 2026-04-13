@@ -35,6 +35,11 @@ export default function Navbar() {
             50% { transform: scale(1.3); }
         }
         .btn-auth-premium { border-radius: 50px; font-weight: 600; padding: 0.5rem 1.25rem; }
+        @media (max-width: 991px) {
+            .navbar-nav { padding-bottom: 1rem; }
+            .d-flex { flex-direction: column; align-items: stretch !important; width: 100%; gap: 10px; }
+            .btn-auth-premium { text-align: center; width: 100%; }
+        }
       `}</style>
       <div className="container">
         <Link href="/" className="navbar-brand fw-bold d-flex align-items-center">

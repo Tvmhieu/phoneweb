@@ -72,6 +72,16 @@ export default function CartPage() {
         }
         .badge-buy { background-color: #e6f7ef; color: #198754; }
         .badge-rent { background-color: #fff8eb; color: #b58105; }
+        @media (max-width: 768px) {
+            .item-img { width: 70px; height: 70px; }
+            .cart-page { py-3 !important; }
+            h1 { font-size: 1.5rem !important; }
+            .table-responsive { border: 0; }
+            .table thead { display: none; }
+            .table tr { display: block; margin-bottom: 1rem; border: 1px solid #eee; border-radius: 12px; padding: 10px; background: white; }
+            .table td { display: block; text-align: left !important; padding: 0.5rem 0 !important; border: 0 !important; }
+            .table td:before { content: attr(data-label); font-weight: bold; display: block; text-transform: uppercase; font-size: 0.7rem; color: #999; margin-bottom: 4px; }
+        }
       `}</style>
 
       <div className="container">
@@ -110,7 +120,7 @@ export default function CartPage() {
                       <tbody className="border-0">
                         {items.map((item) => (
                           <tr key={item.id} className="border-bottom">
-                            <td className="ps-4 py-4">
+                            <td className="ps-4 py-4" data-label="Thiết bị">
                               <div className="d-flex align-items-center">
                                 <img src={item.image} alt={item.name} className="item-img me-3 shadow-sm border" />
                                 <div>
@@ -120,7 +130,7 @@ export default function CartPage() {
                                 </div>
                               </div>
                             </td>
-                            <td className="text-center py-4">
+                            <td className="text-center py-4" data-label="Loại hình">
                               {item.type === "BUY" ? (
                                 <span className="badge badge-buy px-3 py-2 fw-bold rounded-pill">MUA ĐỨT</span>
                               ) : (
@@ -130,7 +140,7 @@ export default function CartPage() {
                                 </div>
                               )}
                             </td>
-                            <td className="text-end py-4">
+                            <td className="text-end py-4" data-label="Tạm tính">
                               <div className="text-danger fw-bold fs-5 mb-0">
                                 {item.type === "BUY" 
                                   ? (item.price * item.quantity).toLocaleString("vi-VN") 
