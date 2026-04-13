@@ -506,6 +506,17 @@ export default function AdminDashboard() {
       } catch(e) {}
   };
 
+  const deleteContact = async (id: number) => {
+    if (!confirm("Bạn có chắc chắn muốn xóa yêu cầu liên hệ này?")) return;
+    try {
+      const res = await fetch(`/api/admin/contacts?id=${id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (data.success) {
+        loadContacts();
+      } else alert(data.message);
+    } catch(e) {}
+  };
+
   const saveAdminNote = async (id: number, type: 'sale' | 'rental', notes: string) => {
     try {
       const url = type === 'sale' ? "/api/admin/sales" : "/api/admin/rentals";
@@ -1835,7 +1846,10 @@ export default function AdminDashboard() {
                                   <div className="card-body p-4">
                                       <div className="d-flex justify-content-between mb-3">
                                           <h5 className="fw-bold mb-0">{c.name}</h5>
-                                          <small className="text-muted">{new Date(c.createdAt).toLocaleDateString()}</small>
+                                          <div className="d-flex align-items-center gap-2">
+                                            <small className="text-muted">{new Date(c.createdAt).toLocaleDateString()}</small>
+                                            <button className="btn btn-sm btn-link text-danger p-0" title="Xóa yêu cầu" onClick={() => deleteContact(c.id)}><i className="bi bi-trash"></i></button>
+                                          </div>
                                       </div>
                                       <p className="small text-muted mb-3"><i className="bi bi-envelope me-1"></i>{c.email} • <i className="bi bi-telephone ms-2 me-1"></i>{c.phone || "N/A"}</p>
                                       <div className="bg-light p-3 rounded mb-3 small" style={{ minHeight: "80px" }}>{c.message}</div>
