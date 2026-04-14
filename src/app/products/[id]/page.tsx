@@ -61,7 +61,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
           <hr className="my-4 opacity-50" />
           
-          {/* GIÁ BÁN & THUÊ */}
+          {/* GIÁ BÁN */}
           <div className="mb-4 p-4 bg-white border rounded shadow-sm">
             <div className="row align-items-center">
               <div className="col-sm-12">
@@ -75,14 +75,6 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                 `}</style>
               </div>
               
-              {product.isRentable && (
-                 <div className="col-sm-12 mt-3">
-                   <div className="p-3 border-start border-4 border-primary bg-primary bg-opacity-10 rounded-end">
-                     <span className="text-primary small d-block fw-bold text-uppercase">Giải pháp cho thuê dự án / thuê sự kiện:</span>
-                     <strong className="text-dark fs-5">{product.rentalPricePerDay?.toLocaleString("vi-VN")} VNĐ / Ngày</strong>
-                   </div>
-                 </div>
-              )}
             </div>
           </div>
 
@@ -127,10 +119,10 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                   <div className="fw-bold mb-1"><i className="bi bi-check-circle-fill text-success me-2"></i>Đổi trả linh hoạt</div>
                   <small className="text-muted">Thay thế máy ngay lập tức nếu gặp lỗi kỹ thuật.</small>
               </div>
-              <div className="col-md-3">
-                  <div className="fw-bold mb-1"><i className="bi bi-check-circle-fill text-success me-2"></i>Bán & Cho thuê</div>
-                  <small className="text-muted">Giải pháp tài chính tối ưu cho doanh nghiệp B2B.</small>
-              </div>
+               <div className="col-md-3">
+                   <div className="fw-bold mb-1"><i className="bi bi-check-circle-fill text-success me-2"></i>Giá tốt nhất</div>
+                   <small className="text-muted">Ưu đãi tối ưu cho doanh nghiệp và đối tác lâu năm.</small>
+               </div>
             </div>
           </div>
         </div>

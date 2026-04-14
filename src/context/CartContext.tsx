@@ -1,15 +1,13 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
 
-// Định nghĩa Giỏ hàng Lai (Vừa Mua / Vừa Thuê)
+// Định nghĩa Giỏ hàng
 export type CartItem = {
   id: number;
   productId: number;
   name: string;
   price: number;
   quantity: number;
-  type: "BUY" | "RENT";
-  rentalDays?: number; // Số ngày thuê (Nếu type là RENT)
   image: string;
 };
 
@@ -46,10 +44,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   
   const clearCart = () => setItems([]);
 
-  // Hàm tính Tổng tiền: Mua (Giá x SL) + Thuê (Giá thuê x SL x Số ngày)
+  // Hàm tính Tổng tiền: Mua (Giá x SL)
   const cartTotal = items.reduce((total, item) => {
-    if (item.type === "BUY") return total + item.price * item.quantity;
-    return total + (item.price * item.quantity * (item.rentalDays || 1));
+    return total + item.price * item.quantity;
   }, 0);
 
   return (

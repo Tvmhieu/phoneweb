@@ -5,8 +5,6 @@ import Link from "next/link";
 
 type SaleItem = { id: number; productId: number; product: { name: string; warrantyMonths: number }; quantity: number };
 type Sale = { id: number; createdAt: string; items: SaleItem[] };
-type RentalItem = { id: number; productId: number; product: { name: string }; quantity: number };
-type Rental = { id: number; status: string; startDate: string; endDate: string; items: RentalItem[] };
 
 type WarrantyClaim = {
   id: number;
@@ -26,7 +24,6 @@ export default function WarrantyPage() {
   const [myClaims, setMyClaims] = useState<WarrantyClaim[]>([]);
   
   const [mySales, setMySales] = useState<Sale[]>([]);
-  const [myRentals, setMyRentals] = useState<Rental[]>([]);
   const [loadingAssets, setLoadingAssets] = useState(false);
 
   // Lấy danh sách ticket và tài sản
@@ -37,14 +34,13 @@ export default function WarrantyPage() {
         .then(r => r.json())
         .then(data => { if (data.success) setMyClaims(data.claims); });
       
-      // Assets (Sales & Rentals)
+      // Assets (Sales)
       setLoadingAssets(true);
       fetch(`/api/my-assets?userId=${userInfo.id}`)
         .then(r => r.json())
         .then(data => {
           if (data.success) {
             setMySales(data.sales);
-            setMyRentals(data.rentals);
           }
         })
         .finally(() => setLoadingAssets(false));
@@ -127,7 +123,7 @@ export default function WarrantyPage() {
            <div className="row align-items-center">
              <div className="col-md-7">
                 <h1 className="display-5 fw-bold mb-3"><i className="bi bi-shield-lock me-2"></i>Trung Tâm Bảo Hành & Kỹ Thuật</h1>
-                <p className="lead opacity-75 mb-0">Hỗ trợ khẩn cấp cho thiết bị mua đứt hoặc đang thuê dự án. Cam kết xử lý trong vòng ban ngày làm việc.</p>
+                <p className="lead opacity-75 mb-0">Hỗ trợ khẩn cấp cho thiết bị đã mua tại hệ thống. Cam kết xử lý trong vòng ban ngày làm việc.</p>
              </div>
              <div className="col-md-5 d-none d-md-block text-end">
                 <i className="bi bi-tools opacity-25" style={{ fontSize: '100px' }}></i>
@@ -142,7 +138,7 @@ export default function WarrantyPage() {
             <div className="col-lg-7">
                 <div className="d-flex justify-content-between align-items-center mb-4">
                     <h5 className="fw-bold mb-0 text-dark">THIẾT BỊ CỦA BẠN</h5>
-                    <span className="badge bg-white text-dark border shadow-sm px-3 py-2">{mySales.length + myRentals.length} Sản phẩm</span>
+                    <span className="badge bg-white text-dark border shadow-sm px-3 py-2">{mySales.length} Sản phẩm</span>
                 </div>
 
                 {loadingAssets ? (
@@ -152,10 +148,10 @@ export default function WarrantyPage() {
                     </div>
                 ) : (
                     <>
-                        {mySales.length === 0 && myRentals.length === 0 && (
+                        {mySales.length === 0 && (
                             <div className="card text-center py-5 border-dashed bg-white bg-opacity-50">
                                 <i className="bi bi-box-seam-fill display-1 text-muted opacity-25"></i>
-                                <p className="mt-3 fs-5 text-muted">Bạn chưa sở hữu hay đang thuê thiết bị nào trong hệ thống.</p>
+                                <p className="mt-3 fs-5 text-muted">Bạn chưa sở hữu thiết bị nào trong hệ thống.</p>
                                 <div className="mt-2 text-center">
                                     <Link href="/products" className="btn btn-outline-primary btn-sm rounded-pill fw-bold">XEM DANH SÁCH THIẾT BỊ</Link>
                                 </div>
@@ -196,32 +192,6 @@ export default function WarrantyPage() {
                             </div>
                         ))}
 
-                        {/* Hợp đồng thuê */}
-                        {myRentals.map(rental => (
-                            <div key={rental.id} className="asset-card mb-4 shadow-sm border-0">
-                                <div className="bg-primary text-white px-3 py-2 d-flex justify-content-between align-items-center">
-                                    <span className="small fw-bold"><i className="bi bi-clock-history me-2"></i>HỢP ĐỒNG THUÊ: RT-#{rental.id}</span>
-                                    <span className="badge bg-white text-primary px-3 rounded-pill">Đang sử dụng</span>
-                                </div>
-                                <div className="p-0">
-                                    <table className="table table-hover align-middle mb-0 border-0">
-                                        <tbody className="border-0">
-                                            {rental.items.map(item => (
-                                                <tr key={item.id} className="border-0">
-                                                    <td className="ps-4 py-4">
-                                                        <div className="fw-bold text-dark">{item.product.name}</div>
-                                                        <div className="small text-muted mt-1 text-primary fw-bold"><i className="bi bi-lightning-charge-fill"></i> Hỗ trợ ưu tiên 24/7</div>
-                                                    </td>
-                                                    <td className="pe-4 text-end">
-                                                        <button onClick={() => {setProductId(item.productId.toString()); setProductName(item.product.name); window.scrollTo({top: 0, behavior: 'smooth'})}} className="btn btn-sm btn-info text-white px-4 py-2 rounded-pill fw-bold shadow-sm">BÁO LỖI KỸ THUẬT</button>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        ))}
                     </>
                 )}
             </div>

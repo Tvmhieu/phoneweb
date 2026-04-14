@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 // --- Kiểu dữ liệu ---
-type RevenuePoint = { name: string; doanhThuBan: number; doanhThuThue: number };
+type RevenuePoint = { name: string; doanhThuBan: number };
 type SaleItem = {
   id: number;
   quantity: number;
@@ -22,17 +22,14 @@ type SaleItem = {
 type Stats = {
   revenue: number;
   salesRevenue: number;
-  rentalRevenue: number;
-  activeRentals: number;
   pendingErrors: number;
   pendingOrders: number;
   pendingSales: number;
-  pendingRentals: number;
   totalProducts: number;
   totalCustomers: number;
   chartData: RevenuePoint[];
 } | null;
-type Product = { id: number; name: string; brand: string; category: string; price: number; stock: number; isRentable: boolean; rentalPricePerDay: number; warrantyMonths: number; description?: string; imageUrl?: string; images?: {url: string}[], allImages?: string[], isVisible?: boolean };
+type Product = { id: number; name: string; brand: string; category: string; price: number; stock: number; warrantyMonths: number; description?: string; imageUrl?: string; images?: {url: string}[], allImages?: string[], isVisible?: boolean };
 type Warranty = { 
   id: number; 
   productId: number; 
@@ -46,30 +43,6 @@ type Warranty = {
   user?: { id: number; name: string; email: string; phone?: string } 
 };
 type ContactMsg = { id: number; name: string; email: string; phone: string; message: string; isRead: boolean; createdAt: string };
-type RentalItem = {
-  id: number;
-  quantity: number;
-  price: number;
-  product?: {
-    id: number;
-    name: string;
-  };
-};
-type Rental = { 
-  id: number; 
-  userId: number; 
-  totalRental: number; 
-  deposit: number; 
-  status: string; 
-  startDate: string; 
-  endDate: string; 
-  isDepositRefunded?: boolean; 
-  depositRefundDate?: string; 
-  user?: { id: number; name: string; email: string; companyName?: string; phone?: string }; 
-  items: RentalItem[]; 
-  adminNotes?: string;
-  updatedAt: string;
-};
 type Sale = { id: number; userId: number; total: number; status: string; createdAt: string; user?: { id: number; name?: string | null; email: string; companyName?: string | null; phone?: string | null }; items: SaleItem[]; adminNotes?: string };
 type UserAccount = { id: number; name: string; email: string; role: string; companyName?: string; phone?: string; address?: string; createdAt: string };
 
@@ -103,7 +76,6 @@ export default function AdminDashboard() {
   const [products, setProducts] = useState<Product[]>([]);
   const [warranties, setWarranties] = useState<Warranty[]>([]);
   const [contacts, setContacts] = useState<ContactMsg[]>([]);
-  const [rentals, setRentals] = useState<Rental[]>([]);
   const [sales, setSales] = useState<Sale[]>([]);
   const [users, setUsers] = useState<UserAccount[]>([]);
 
@@ -112,14 +84,10 @@ export default function AdminDashboard() {
   const [editingProduct, setEditingProduct] = useState<Partial<Product> | null>(null);
   const [editingUser, setEditingUser] = useState<Partial<UserAccount & { password?: string }> | null>(null);
   const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
-  const [selectedRental, setSelectedRental] = useState<Rental | null>(null);
-  const [returningRental, setReturningRental] = useState<any | null>(null);
 
   // Search & Sort states
   const [saleSearch, setSaleSearch] = useState("");
-  const [rentalSearch, setRentalSearch] = useState("");
   const [saleSort, setSaleSort] = useState<{ key: string, dir: 'asc'|'desc' }>({ key: 'id', dir: 'desc' });
-  const [rentalSort, setRentalSort] = useState<{ key: string, dir: 'asc'|'desc' }>({ key: 'id', dir: 'desc' });
 
   const [productSearch, setProductSearch] = useState("");
   const [staffSearch, setStaffSearch] = useState("");
@@ -147,7 +115,6 @@ export default function AdminDashboard() {
      if (activeTab === "PRODUCTS") loadProducts();
      if (activeTab === "WARRANTIES") loadWarranties();
      if (activeTab === "CONTACTS") loadContacts();
-     if (activeTab === "RENTALS") loadRentals();
      if (activeTab === "SALES") loadSales();
      if (activeTab === "USERS") loadUsers();
       if (activeTab === "CUSTOMERS") loadUsers();
@@ -170,9 +137,6 @@ export default function AdminDashboard() {
     try { setLoading(true); const res = await fetch("/api/admin/contacts").then(r => r.json()); if (res.success) setContacts(res.contacts); else alert(res.message); } catch(e){} finally { setLoading(false); }
   };
 
-  const loadRentals = async () => {
-    try { setLoading(true); const res = await fetch("/api/admin/rentals").then(r => r.json()); if (res.success) setRentals(res.rentals); else alert(res.message); } catch(e){} finally { setLoading(false); }
-  };
 
   const loadSales = async () => {
     try { setLoading(true); const res = await fetch("/api/admin/sales").then(r => r.json()); if (res.success) setSales(res.sales); else alert(res.message); } catch(e){} finally { setLoading(false); }
@@ -201,40 +165,11 @@ export default function AdminDashboard() {
     });
   };
 
-  const getFilteredRentals = (list: Rental[]) => {
-    let filtered = list.filter(item => 
-      item.id.toString().includes(rentalSearch) || 
-      (item.user?.name || "").toLowerCase().includes(rentalSearch.toLowerCase()) ||
-      (item.user?.email || "").toLowerCase().includes(rentalSearch.toLowerCase())
-    );
-    return [...filtered].sort((a: any, b: any) => {
-      let valA = a[rentalSort.key];
-      let valB = b[rentalSort.key];
-      if (rentalSort.key === 'user') {
-        valA = a.user?.name || "";
-        valB = b.user?.name || "";
-      }
-      if (rentalSort.key === 'issues') {
-        valA = warranties.filter(w => w.userId === a.userId && w.status !== "COMPLETED" && w.status !== "CANCELLED").length;
-        valB = warranties.filter(w => w.userId === b.userId && w.status !== "COMPLETED" && w.status !== "CANCELLED").length;
-      }
-      if (rentalSort.key === 'isDepositRefunded') {
-        valA = a.isDepositRefunded ? 1 : 0;
-        valB = b.isDepositRefunded ? 1 : 0;
-      }
-      if (valA < valB) return rentalSort.dir === 'asc' ? -1 : 1;
-      if (valA > valB) return rentalSort.dir === 'asc' ? 1 : -1;
-      return 0;
-    });
-  };
 
   const handleSortSale = (key: string) => {
     setSaleSort(prev => ({ key, dir: prev.key === key && prev.dir === 'asc' ? 'desc' : 'asc' }));
   };
 
-  const handleSortRental = (key: string) => {
-    setRentalSort(prev => ({ key, dir: prev.key === key && prev.dir === 'asc' ? 'desc' : 'asc' }));
-  };
 
   const getFilteredProducts = (list: Product[]) => {
     let filtered = list.filter(p => 
@@ -428,18 +363,6 @@ export default function AdminDashboard() {
     } catch(e) {}
   };
 
-  const deleteRentalOrder = async (id: number) => {
-    if (!confirm("Bạn có chắc chắn muốn xóa lịch sử thuê này?")) return;
-    try {
-      const res = await fetch(`/api/admin/rentals?id=${id}`, { method: "DELETE" });
-      const data = await res.json();
-      if (data.success) {
-        alert("Đã xóa!");
-        loadRentals();
-        loadStats();
-      } else alert(data.message);
-    } catch(e) {}
-  };
 
   const updateWarrantyStatus = async (id: number, status: string) => {
       try {
@@ -463,29 +386,6 @@ export default function AdminDashboard() {
     } catch(e) {}
   };
 
-  const updateRentalStatus = async (id: number, status: string, customMsg?: string) => {
-      const msgs: Record<string, string> = {
-          PAID: "Xác nhận khách đã đặt cọc tiền và sẵn sàng bàn giao máy?",
-          ACTIVE: "Xác nhận đã bàn giao máy thành công và bắt đầu tính thời gian thuê?",
-          RETURNED: "Xác nhận đã thu hồi máy và kết thúc hợp đồng?"
-      };
-      if (!confirm(customMsg || msgs[status] || "Cập nhật trạng thái hợp đồng?")) return;
-      
-      try {
-          const res = await fetch("/api/admin/rentals", {
-              method: "PUT", headers: { "Content-Type": "application/json"}, body: JSON.stringify({id, status})
-          });
-          if (res.ok) {
-              loadRentals();
-              loadStats();
-          } else {
-              const data = await res.json();
-              alert("Lỗi: " + data.message);
-          }
-      } catch(e) {
-          alert("Lỗi kết nối máy chủ");
-      }
-  };
 
   const updateSaleStatus = async (id: number, status: string) => {
     try {
@@ -517,9 +417,9 @@ export default function AdminDashboard() {
     } catch(e) {}
   };
 
-  const saveAdminNote = async (id: number, type: 'sale' | 'rental', notes: string) => {
+  const saveAdminNote = async (id: number, type: 'sale', notes: string) => {
     try {
-      const url = type === 'sale' ? "/api/admin/sales" : "/api/admin/rentals";
+      const url = "/api/admin/sales";
       const res = await fetch(url, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -528,7 +428,7 @@ export default function AdminDashboard() {
       const data = await res.json();
       if (data.success) {
         alert("Đã lưu ghi chú nội bộ!");
-        if (type === 'sale') loadSales(); else loadRentals();
+        loadSales();
       } else alert(data.message);
     } catch (e) { alert("Lỗi lưu ghi chú"); }
   };
@@ -579,12 +479,6 @@ export default function AdminDashboard() {
                   <button className={`nav-link w-100 text-start border-0 bg-transparent py-2 px-4 d-flex align-items-center transition-premium ${activeTab === "SALES" ? "active-premium-light" : "text-secondary"}`} onClick={() => setActiveTab("SALES")}>
                     <i className={`bi bi-receipt-cutoff me-3 ${activeTab === "SALES" ? "text-primary" : "text-muted"}`}></i>
                     <span className="small fw-bold">Hóa đơn bán lẻ</span>
-                  </button>
-                </li>
-                <li className="nav-item">
-                  <button className={`nav-link w-100 text-start border-0 bg-transparent py-2 px-4 d-flex align-items-center transition-premium ${activeTab === "RENTALS" ? "active-premium-light" : "text-secondary"}`} onClick={() => setActiveTab("RENTALS")}>
-                    <i className={`bi bi-clock-history me-3 ${activeTab === "RENTALS" ? "text-primary" : "text-muted"}`}></i>
-                    <span className="small fw-bold">Quản lý cho thuê</span>
                   </button>
                 </li>
               </ul>
@@ -698,23 +592,10 @@ export default function AdminDashboard() {
                         <h3 className="fw-bold text-dark mb-1">{(stats?.revenue || 0).toLocaleString()} <small className="fs-6">đ</small></h3>
                         <div className="d-flex flex-column gap-1 mt-3">
                             <div className="small text-muted"><i className="bi bi-cart-check-fill text-info me-1"></i> Bán: <strong>{(stats?.salesRevenue || 0).toLocaleString()} đ</strong></div>
-                            <div className="small text-muted"><i className="bi bi-calendar-check-fill text-warning me-1"></i> Thuê: <strong>{(stats?.rentalRevenue || 0).toLocaleString()} đ</strong></div>
                         </div>
                       </div>
                     </div>
                     
-                    <div className="col-md-4 col-xl-3">
-                      <div className="card-stats-premium bg-white p-4 shadow-sm border-0 border-start border-warning border-5 rounded-4 h-100 d-flex flex-column">
-                        <div className="d-flex justify-content-between align-items-start mb-3">
-                            <div className="p-3 rounded-4 bg-warning bg-opacity-10 text-warning">
-                                <i className="bi bi-hdd-rack-fill fs-3"></i>
-                            </div>
-                        </div>
-                        <h6 className="text-secondary fw-bold text-uppercase mb-2" style={{ fontSize: '11px', letterSpacing: '1px' }}>Hợp đồng đang cho thuê</h6>
-                        <h3 className="fw-bold text-dark mb-auto">{stats?.activeRentals || 0} <small className="fs-6">Đơn vị máy</small></h3>
-                        <div className="mt-3 small text-muted"><i className="bi bi-info-circle me-1"></i> Đang vận hành tối ưu</div>
-                      </div>
-                    </div>
 
                     <div className="col-md-4 col-xl-3">
                       <div className="card-stats-premium bg-white p-4 shadow-sm border-0 border-start border-danger border-5 rounded-4 h-100 d-flex flex-column">
@@ -749,7 +630,7 @@ export default function AdminDashboard() {
                             <div className="card-header bg-white border-0 py-4 px-4 d-flex justify-content-between align-items-center">
                                 <div>
                                     <h5 className="fw-bold mb-0">Biểu Đồ Tài Chính</h5>
-                                    <small className="text-muted">Doanh thu bán vs Thuê (6 tháng gần nhất)</small>
+                                    <small className="text-muted">Doanh thu bán lẻ (6 tháng gần nhất)</small>
                                 </div>
                             </div>
                             <div className="card-body px-2 py-4">
@@ -766,7 +647,6 @@ export default function AdminDashboard() {
                                             />
                                             <Legend verticalAlign="top" align="right" iconType="circle" wrapperStyle={{paddingBottom: '20px'}} />
                                             <Bar dataKey="doanhThuBan" name="Doanh thu bán" fill="#0d6efd" radius={[6, 6, 0, 0]} barSize={24} />
-                                            <Bar dataKey="doanhThuThue" name="Doanh thu thuê" fill="#20c997" radius={[6, 6, 0, 0]} barSize={24} />
                                         </BarChart>
                                     </ResponsiveContainer>
                                 </div>
@@ -789,16 +669,6 @@ export default function AdminDashboard() {
                                                 <span className="badge bg-primary rounded-pill small">{stats?.pendingSales || 0}</span>
                                             </div>
                                             <div className="text-muted x-small mt-1">Đang chờ kế toán xác nhận</div>
-                                        </div>
-                                    </div>
-                                    <div className="p-3 rounded-4 border border-light shadow-sm d-flex align-items-center transition-premium pointer task-card-premium" onClick={() => setActiveTab("RENTALS")}>
-                                        <div className="bg-success text-white p-3 rounded-4 me-3 shadow-success-sm"><i className="bi bi-calendar2-check-fill fs-4"></i></div>
-                                        <div className="flex-grow-1">
-                                            <div className="d-flex justify-content-between">
-                                                <span className="fw-bold text-dark small">Bàn giao hợp đồng</span>
-                                                <span className="badge bg-success rounded-pill small">{stats?.pendingRentals || 0}</span>
-                                            </div>
-                                            <div className="text-muted x-small mt-1">Lên lịch kỹ thuật bàn giao máy</div>
                                         </div>
                                     </div>
                                     <div className="p-3 rounded-4 border border-light shadow-sm d-flex align-items-center transition-premium pointer task-card-premium" onClick={() => setActiveTab("WARRANTIES")}>
@@ -829,7 +699,7 @@ export default function AdminDashboard() {
                            <span className="input-group-text bg-white border-end-0"><i className="bi bi-search"></i></span>
                            <input type="text" className="form-control border-start-0" placeholder="Tìm tên, hiệu, loại..." value={productSearch} onChange={e => setProductSearch(e.target.value)} />
                         </div>
-                        <button className="btn btn-success fw-bold" onClick={() => setEditingProduct({isRentable: false})}><i className="bi bi-plus-lg me-2"></i>Thêm Mới Thiết Bị</button>
+                        <button className="btn btn-success fw-bold" onClick={() => setEditingProduct({})}><i className="bi bi-plus-lg me-2"></i>Thêm Mới Thiết Bị</button>
                       </div>
                   </div>
                   
@@ -957,18 +827,6 @@ export default function AdminDashboard() {
                                           <label className="form-label small fw-bold">Bảo hành (T)</label>
                                           <input type="number" className="form-control" value={editingProduct.warrantyMonths || 12} onChange={e => setEditingProduct({...editingProduct, warrantyMonths: parseInt(e.target.value)})} required/>
                                       </div>
-                                      <div className="col-md-2 d-flex align-items-end mb-2">
-                                          <div className="form-check form-switch fs-5">
-                                            <input className="form-check-input" type="checkbox" role="switch" checked={editingProduct.isRentable || false} onChange={e => setEditingProduct({...editingProduct, isRentable: e.target.checked})} />
-                                            <label className="form-check-label fs-6 fw-bold text-primary">Cho Thuê</label>
-                                          </div>
-                                      </div>
-                                      {editingProduct.isRentable && (
-                                         <div className="col-md-3">
-                                            <label className="form-label small fw-bold text-primary">Giá Thuê / Ngày (VNĐ)</label>
-                                            <input type="number" className="form-control border-primary bg-primary bg-opacity-10 fw-bold text-primary" value={editingProduct.rentalPricePerDay || ""} onChange={e => setEditingProduct({...editingProduct, rentalPricePerDay: parseInt(e.target.value)})} required/>
-                                         </div>
-                                     )}
                                      <div className="col-12 mt-3">
                                          <label className="form-label small fw-bold"><i className="bi bi-file-text me-1"></i>Mô tả sản phẩm & Giới thiệu chức năng</label>
                                          <textarea className="form-control" rows={6} value={editingProduct.description || ""} onChange={e => setEditingProduct({...editingProduct, description: e.target.value})} placeholder="Nhập mô tả chi tiết, giới thiệu chức năng, thông số kỹ thuật (xuống dòng để trình bày đẹp)..."></textarea>
@@ -993,7 +851,6 @@ export default function AdminDashboard() {
                                       <SortHeader label="LOẠI" sortKey="category" currentSort={productSort} onSort={handleSortProduct} />
                                       <SortHeader label="GIÁ BÁN" sortKey="price" currentSort={productSort} onSort={handleSortProduct} />
                                       <SortHeader label="KHO" sortKey="stock" currentSort={productSort} onSort={handleSortProduct} className="text-center" />
-                                      <SortHeader label="THUÊ" sortKey="isRentable" currentSort={productSort} onSort={handleSortProduct} className="text-center" />
                                       <th className="text-end px-4 py-3 text-dark fw-bold">THAO TÁC</th>
                                   </tr>
                               </thead>
@@ -1031,7 +888,6 @@ export default function AdminDashboard() {
                                          <td><span className="badge bg-secondary">{p.category}</span></td>
                                          <td className="text-danger fw-bold">{p.price?.toLocaleString()}đ</td>
                                          <td className="text-center fw-bold">{p.stock}</td>
-                                         <td className="text-center">{p.isRentable ? <span className="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-1"><i className="bi bi-clock-history me-1"></i> {p.rentalPricePerDay?.toLocaleString()}đ/n</span> : <span className="text-muted small">—</span>}</td>
                                          <td className="text-end px-4">
                                              <select 
                                                className={`form-select form-select-sm d-inline-block w-auto me-2 border-2 ${p.isVisible !== false ? 'border-success text-success' : 'border-secondary text-secondary'} fw-bold`}
@@ -1233,252 +1089,6 @@ export default function AdminDashboard() {
             </div>
           )}
 
-          {/* TAB 4: RENTALS MANAGEMENT */}
-          {activeTab === "RENTALS" && (
-              <div className="animate__animated animate__fadeIn">
-                  <div className="d-flex justify-content-between align-items-center mb-5">
-                      <div>
-                          <h2 className="fw-bold text-dark mb-1">Thiết Lập Vận Hành Cho Thuê</h2>
-                          <p className="text-muted mb-0">Theo dõi trạng thái: Cọc - Bàn giao - Vận hành - Thu hồi thiết bị IT.</p>
-                      </div>
-                      <div className="d-flex gap-3">
-                          <div className="input-group shadow-sm" style={{ width: "320px" }}>
-                              <span className="input-group-text bg-white border-end-0"><i className="bi bi-search text-muted"></i></span>
-                              <input type="text" className="form-control border-start-0 py-2" placeholder="Mã RT, tên khách, email..." value={rentalSearch} onChange={e => setRentalSearch(e.target.value)} />
-                          </div>
-                          <button className="btn btn-white border px-4 rounded-3 fw-bold shadow-sm" onClick={loadRentals}><i className="bi bi-arrow-clockwise me-2 text-primary"></i>Làm mới</button>
-                      </div>
-                  </div>
-
-                  {/* 1. CHỜ THANH TOÁN / ĐẶT CỌC */}
-                  <div className="card shadow-sm border-0 rounded-4 mb-5 overflow-hidden border-start border-4 border-warning">
-                      <div className="card-header bg-white border-0 py-3 px-4 d-flex justify-content-between">
-                         <h5 className="mb-0 fw-bold"><i className="bi bi-hourglass-split me-2 text-warning"></i>1. Hợp đồng chờ xác nhận tài chính & cọc</h5>
-                         <span className="badge bg-warning bg-opacity-10 text-warning px-3 py-1 rounded-pill">Bước 1: Payment Check</span>
-                      </div>
-                  <div className="table-responsive">
-                      <table className="table hover align-middle mb-0">
-                          <thead className="bg-light">
-                              <tr>
-                                  <SortHeader label="Hợp Đồng" sortKey="id" currentSort={rentalSort} onSort={handleSortRental} className="px-4" />
-                                  <SortHeader label="Khách Hàng" sortKey="user" currentSort={rentalSort} onSort={handleSortRental} />
-                                  <SortHeader label="Cọc + Tổng Thuê" sortKey="totalRental" currentSort={rentalSort} onSort={handleSortRental} />
-                                  <SortHeader label="Sự cố" sortKey="issues" currentSort={rentalSort} onSort={handleSortRental} />
-                                  <th className="text-end px-4 py-3">Thao Tác</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              {getFilteredRentals(rentals.filter(r => r.status === "PENDING")).map(r => (
-                                  <tr key={r.id}>
-                                      <td className="px-4 fw-bold">RT-#{r.id}</td>
-                                      <td><div className="fw-bold">{r.user?.name}</div><small className="text-muted">{r.user?.email}</small></td>
-                                      <td>
-                                          <div className="small">Cọc: <b>{r.deposit.toLocaleString()} đ</b></div>
-                                          <div className="small text-primary">Cước: <b>{r.totalRental.toLocaleString()} đ</b></div>
-                                      </td>
-                                      <td className="text-center">
-                                          {(() => {
-                                              const count = warranties.filter(w => w.userId === r.userId && w.status !== "COMPLETED" && w.status !== "CANCELLED").length;
-                                              return count > 0 ? <span className="badge bg-danger">{count} sự cố</span> : <span className="text-muted small">Ổn định</span>;
-                                          })()}
-                                      </td>
-                                      <td className="text-end px-4">
-                                          <button className="btn btn-sm btn-outline-secondary me-2" onClick={() => setSelectedRental(r)}>Chi tiết</button>
-                                          <button className="btn btn-warning btn-sm fw-bold shadow-sm me-2" onClick={() => updateRentalStatus(r.id, "PAID")}>
-                                              <i className="bi bi-cash-coin me-1"></i> Xác nhận Đã Cọc
-                                          </button>
-                                          <button className="btn btn-sm btn-outline-danger" title="Xóa vĩnh viễn" onClick={() => deleteRentalOrder(r.id)}><i className="bi bi-trash"></i></button>
-                                      </td>
-                                  </tr>
-                              ))}
-                              {rentals.filter(r => r.status === "PENDING").length === 0 && <tr><td colSpan={4} className="text-center p-4 text-muted small">Không có hợp đồng chờ thanh toán.</td></tr>}
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-
-              {/* 2. CHỜ BÀN GIAO MÁY */}
-              <div className="card shadow-sm border-0 rounded-3 mb-5 overflow-hidden border-start border-4 border-info">
-                  <div className="card-header bg-info text-white fw-bold py-3"><i className="bi bi-truck me-2"></i>2. Chờ Bàn Giao Máy Cho Khách</div>
-                  <div className="table-responsive">
-                      <table className="table hover align-middle mb-0">
-                          <thead className="bg-light">
-                              <tr>
-                                  <SortHeader label="Hợp Đồng" sortKey="id" currentSort={rentalSort} onSort={handleSortRental} className="px-4" />
-                                  <SortHeader label="Khách Hàng" sortKey="user" currentSort={rentalSort} onSort={handleSortRental} />
-                                  <SortHeader label="Ngày Thuê" sortKey="startDate" currentSort={rentalSort} onSort={handleSortRental} />
-                                  <SortHeader label="Sự cố" sortKey="issues" currentSort={rentalSort} onSort={handleSortRental} />
-                                  <th className="text-end px-4 py-3">Thao Tác</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              {getFilteredRentals(rentals.filter(r => r.status === "PAID")).map(r => (
-                                  <tr key={r.id}>
-                                      <td className="px-4 fw-bold">RT-#{r.id}</td>
-                                      <td><div className="fw-bold">{r.user?.name}</div></td>
-                                      <td><span className="badge bg-info-subtle text-info border border-info-subtle">{new Date(r.startDate).toLocaleDateString('vi-VN')}</span></td>
-                                      <td className="text-center">
-                                          {(() => {
-                                              const count = warranties.filter(w => w.userId === r.userId && w.status !== "COMPLETED" && w.status !== "CANCELLED").length;
-                                              return count > 0 ? <span className="badge bg-danger">{count} sự cố</span> : <span className="text-muted small">Ổn định</span>;
-                                          })()}
-                                      </td>
-                                      <td className="text-end px-4">
-                                          <button className="btn btn-sm btn-outline-secondary me-2" onClick={() => setSelectedRental(r)}>Chi tiết</button>
-                                          <button className="btn btn-info btn-sm text-white fw-bold shadow-sm me-2" onClick={() => updateRentalStatus(r.id, "ACTIVE")}>
-                                              <i className="bi bi-truck-flatbed me-1"></i> Kích hoạt Đang thuê
-                                          </button>
-                                          <button className="btn btn-sm btn-outline-danger" title="Xóa vĩnh viễn" onClick={() => deleteRentalOrder(r.id)}><i className="bi bi-trash"></i></button>
-                                      </td>
-                                  </tr>
-                              ))}
-                              {rentals.filter(r => r.status === "PAID").length === 0 && <tr><td colSpan={4} className="text-center p-4 text-muted small">Mọi máy đã được bàn giao xong.</td></tr>}
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-
-              {/* 3. ĐANG CHO THUÊ */}
-              <div className="card shadow-sm border-0 rounded-3 mb-5 overflow-hidden border-start border-4 border-success">
-                  <div className="card-header bg-success text-white fw-bold py-3"><i className="bi bi-play-circle me-2"></i>3. Đang Trong Quá Trình Cho Thuê</div>
-                  <div className="table-responsive">
-                      <table className="table hover align-middle mb-0">
-                          <thead className="bg-light">
-                              <tr>
-                                  <SortHeader label="Hợp Đồng" sortKey="id" currentSort={rentalSort} onSort={handleSortRental} className="px-4" />
-                                  <SortHeader label="Khách Hàng" sortKey="user" currentSort={rentalSort} onSort={handleSortRental} />
-                                  <SortHeader label="Hạn Trả" sortKey="endDate" currentSort={rentalSort} onSort={handleSortRental} />
-                                  <SortHeader label="Sự cố" sortKey="issues" currentSort={rentalSort} onSort={handleSortRental} />
-                                  <th className="text-end px-4 py-3">Thao Tác</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              {getFilteredRentals(rentals.filter(r => r.status === "ACTIVE")).map(r => (
-                                  <tr key={r.id}>
-                                      <td className="px-4 fw-bold">RT-#{r.id}</td>
-                                      <td><div className="fw-bold">{r.user?.name}</div></td>
-                                      <td><span className="badge bg-danger">{new Date(r.endDate).toLocaleDateString('vi-VN')}</span></td>
-                                      <td className="text-center">
-                                          {(() => {
-                                              const count = warranties.filter(w => w.userId === r.userId && w.status !== "COMPLETED" && w.status !== "CANCELLED").length;
-                                              return count > 0 ? <span className="badge bg-danger">{count} sự cố</span> : <span className="text-muted small">Ổn định</span>;
-                                          })()}
-                                      </td>
-                                      <td className="text-end px-4">
-                                          <button className="btn btn-sm btn-outline-secondary me-2" onClick={() => setSelectedRental(r)}>Chi tiết</button>
-                                          <button className="btn btn-dark btn-sm fw-bold me-2" onClick={() => setReturningRental({ ...r, returnDate: new Date().toISOString().split('T')[0], returnNote: "", hasIssue: false, issueProductId: r.items?.[0]?.product?.id })}>
-                                            <i className="bi bi-box-arrow-in-left me-1"></i> Xác nhận TRẢ MÁY
-                                          </button>
-                                          <button className="btn btn-sm btn-outline-danger" title="Xóa vĩnh viễn" onClick={() => deleteRentalOrder(r.id)}><i className="bi bi-trash"></i></button>
-                                      </td>
-                                  </tr>
-                              ))}
-                              {rentals.filter(r => r.status === "ACTIVE").length === 0 && <tr><td colSpan={4} className="text-center p-4 text-muted small">Hiện tại không có máy nào đang cho thuê.</td></tr>}
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-
-              {/* 4. ĐÃ TRẢ MÁY & HOÀN TẤT */}
-              <div className="card shadow-sm border-0 rounded-3 overflow-hidden opacity-75 mb-5">
-                  <div className="card-header bg-dark text-white fw-bold py-3"><i className="bi bi-check2-all me-2"></i>4. Lịch Sử Hợp Đồng Đã Kết Thúc & Tất Toán</div>
-                  <div className="table-responsive">
-                      <table className="table align-middle mb-0">
-                          <thead className="bg-light">
-                              <tr>
-                                  <SortHeader label="Hợp Đồng" sortKey="id" currentSort={rentalSort} onSort={handleSortRental} className="px-4" />
-                                  <SortHeader label="Khách Hàng" sortKey="user" currentSort={rentalSort} onSort={handleSortRental} />
-                                  <SortHeader label="Hoàn Cọc" sortKey="isDepositRefunded" currentSort={rentalSort} onSort={handleSortRental} className="text-center" />
-                                  <SortHeader label="Ngày Xong" sortKey="updatedAt" currentSort={rentalSort} onSort={handleSortRental} />
-                                  <th className="text-end px-4 py-3">Hành Động</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              {getFilteredRentals(rentals.filter(r => r.status === "RETURNED")).map(r => (
-                                  <tr key={r.id}>
-                                      <td className="px-4 fw-bold">RT-#{r.id}</td>
-                                      <td><div className="fw-bold text-muted">{r.user?.name}</div></td>
-                                      <td className="text-center">
-                                          {r.isDepositRefunded ? (
-                                              <span className="badge bg-success"><i className="bi bi-check-circle me-1"></i>Đã trả cọc</span>
-                                          ) : (
-                                              <button className="btn btn-xs btn-outline-warning fw-bold" onClick={async () => {
-                                                  if(!confirm("Xác nhận đã trả tiền cọc cho khách?")) return;
-                                                  await fetch("/api/admin/rentals", { method:"PUT", body: JSON.stringify({id: r.id, isDepositRefunded: true}) });
-                                                  loadRentals();
-                                              }}>Chưa Trả Cọc <i className="bi bi-arrow-right"></i></button>
-                                          )}
-                                      </td>
-                                      <td><small className="text-muted">{new Date(r.updatedAt).toLocaleDateString('vi-VN')}</small></td>
-                                      <td className="text-end px-4">
-                                          <button className="btn btn-sm btn-outline-secondary me-2" onClick={() => setSelectedRental(r)}>Xem lại</button>
-                                          <button className="btn btn-sm btn-outline-danger" title="Xóa vĩnh viễn" onClick={() => deleteRentalOrder(r.id)}><i className="bi bi-trash"></i></button>
-                                      </td>
-                                  </tr>
-                              ))}
-                              {rentals.filter(r => r.status === "RETURNED").length === 0 && <tr><td colSpan={5} className="text-center p-4 text-muted small">Chưa có hợp đồng nào kết thúc.</td></tr>}
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-
-              {/* 5. DANH SÁCH SỰ CỐ ĐANG XỬ LÝ */}
-              <div className="card shadow-sm border-0 rounded-3 overflow-hidden border-start border-4 border-danger mb-5">
-                  <div className="card-header bg-danger text-white fw-bold py-3 pt-4"><h5 className="mb-0 fw-bold">5. DANH SÁCH CÁC SỰ CỐ PHÁT SINH KHI THUÊ</h5></div>
-                  <div className="table-responsive">
-                      <table className="table hover align-middle mb-0">
-                          <thead className="bg-light">
-                              <tr>
-                                  <th className="px-4">MÁY (PRODUCT)</th>
-                                  <th>NGƯỜI THUÊ</th>
-                                  <th>SỰ CỐ XẢY RA</th>
-                                  <th>HƯỚNG GIẢI QUYẾT</th>
-                                  <th className="text-center">TÌNH TRẠNG</th>
-                                  <th className="text-end px-4">THAO TÁC</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              {warranties.filter(w => w.status !== "DONE" && w.status !== "CANCELLED").map(w => (
-                                  <tr key={w.id}>
-                                      <td className="px-4">
-                                          <div className="fw-bold">{w.product?.name}</div>
-                                          <small className="text-muted">ID: {w.productId}</small>
-                                      </td>
-                                      <td>
-                                          <div className="fw-bold small">{w.user?.name}</div>
-                                          <div className="text-muted" style={{fontSize: '0.75rem'}}>{w.user?.phone || w.user?.email}</div>
-                                      </td>
-                                      <td className="small" style={{maxWidth: '200px'}}>{w.issueDetail}</td>
-                                      <td>
-                                          <input type="text" className="form-control form-control-sm" placeholder="Nhập hướng xử lý..." defaultValue={w.resolution || ""} onBlur={async (e) => {
-                                              await fetch("/api/admin/warranties", { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify({id: w.id, resolution: e.target.value}) });
-                                              loadWarranties();
-                                          }}/>
-                                      </td>
-                                      <td className="text-center">
-                                          <select className="form-select form-select-sm" value={w.status} onChange={async (e) => {
-                                              await fetch("/api/admin/warranties", { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify({id: w.id, status: e.target.value}) });
-                                              loadWarranties();
-                                          }}>
-                                              <option value="PENDING">Chờ xử lý</option>
-                                              <option value="CHECKING">Đang kiểm tra</option>
-                                              <option value="PROCESSING">Đang sửa chữa/Đổi máy</option>
-                                              <option value="DONE">Đã khắc phục xong</option>
-                                              <option value="CANCELLED">Hủy bỏ</option>
-                                          </select>
-                                      </td>
-                                      <td className="text-end px-4">
-                                          <button className="btn btn-sm btn-outline-danger" title="Xóa vĩnh viễn khỏi CSDL" onClick={() => deleteWarranty(w.id)}><i className="bi bi-trash"></i></button>
-                                      </td>
-                                  </tr>
-                              ))}
-                              {warranties.filter(w => w.status !== "DONE" && w.status !== "CANCELLED").length === 0 && <tr><td colSpan={6} className="text-center p-4 text-muted small">Hiện không có sự cố thuê máy nào được báo cáo.</td></tr>}
-                          </tbody>
-                      </table>
-                  </div>
-              </div>
-          </div>
-        )}
 
           {/* TAB: USERS CRUD (Quản lý Nhân sự) */}
           {activeTab === "USERS" && (
@@ -1967,155 +1577,6 @@ export default function AdminDashboard() {
             </div>
           )}
 
-          {selectedRental && (
-            <div className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style={{ background: "rgba(0,0,0,0.55)", zIndex: 2000 }} onClick={() => setSelectedRental(null)}>
-              <div className="bg-white rounded-4 shadow-lg p-4" style={{ width: "min(900px, calc(100vw - 2rem))", maxHeight: "90vh", overflowY: "auto" }} onClick={(e) => e.stopPropagation()}>
-                <div className="d-flex justify-content-between align-items-start mb-3">
-                  <div>
-                    <div className="text-muted small">Hợp đồng thuê</div>
-                    <h4 className="fw-bold mb-1">RT-#{selectedRental.id}</h4>
-                    <span className="badge bg-info text-dark">Thời hạn: {new Date(selectedRental.startDate).toLocaleDateString()} - {new Date(selectedRental.endDate).toLocaleDateString()}</span>
-                  </div>
-                  <button className="btn btn-light" onClick={() => setSelectedRental(null)}>Đóng</button>
-                </div>
-
-                <div className="row g-3 mb-4">
-                  <div className="col-md-6">
-                    <div className="border rounded-3 p-3 h-100 bg-light">
-                      <div className="fw-bold mb-2">Thông tin khách thuê</div>
-                      <div className="fw-semibold">{selectedRental.user?.companyName || selectedRental.user?.name || "N/A"}</div>
-                      <div className="text-muted small">{selectedRental.user?.email} • {selectedRental.user?.phone || "—"}</div>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="border rounded-4 p-3 h-100 bg-primary bg-opacity-10 text-primary">
-                      <div className="fw-bold mb-2 text-dark">Tài chính hợp đồng</div>
-                      <div className="d-flex justify-content-between small"><span>Tiền cọc:</span> <b>{(selectedRental.deposit || 0).toLocaleString()} đ</b></div>
-                      <div className="d-flex justify-content-between fs-4 fw-bold"><span>CƯỚC THUÊ:</span> <b>{(selectedRental.totalRental || 0).toLocaleString()} đ</b></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="table-responsive">
-                  <table className="table align-middle">
-                    <thead className="table-dark">
-                      <tr>
-                        <th>Thiết bị cho thuê</th>
-                        <th className="text-center">Số lượng</th>
-                        <th className="text-end">Đơn giá thuê/ngày</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {selectedRental.items?.map((item, idx) => (
-                        <tr key={idx}>
-                          <td className="fw-semibold">{item.product?.name || "Sản phẩm không xác định"}</td>
-                          <td className="text-center fw-bold">{item.quantity}</td>
-                          <td className="text-end">{(item.price || 0).toLocaleString()} đ</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-
-                {/* Ghi chú nội bộ */}
-                <div className="mt-4 p-3 border rounded-3 bg-warning bg-opacity-10 border-warning border-opacity-25">
-                  <label className="form-label fw-bold text-dark"><i className="bi bi-journal-text me-2"></i>Ghi chú nội bộ Hợp đồng (Chỉ nhân viên thấy)</label>
-                  <textarea 
-                    className="form-control border-warning border-opacity-50" 
-                    rows={3} 
-                    placeholder="Ghi chú về tình trạng máy mượn, cọc, VAT..."
-                    defaultValue={selectedRental.adminNotes || ""}
-                    onBlur={(e) => setSelectedRental({...selectedRental, adminNotes: e.target.value})}
-                  ></textarea>
-                  <div className="text-end mt-2">
-                    <button className="btn btn-info btn-sm fw-bold px-4 text-white" onClick={() => saveAdminNote(selectedRental.id, 'rental', selectedRental.adminNotes || "")}>
-                      <i className="bi bi-save me-1"></i> Lưu ghi chú
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-          {/* Modal TRẢ MÁY */}
-          {returningRental && (
-            <div className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center" style={{ background: "rgba(0,0,0,0.6)", zIndex: 3000 }}>
-              <div className="bg-white rounded-4 shadow-lg p-4 slide-up" style={{ width: "min(500px, 95vw)" }}>
-                <h4 className="fw-bold mb-3 text-dark"><i className="bi bi-check2-square text-primary me-2"></i>Quy trình Trả Máy & Hoàn Tất</h4>
-                <div className="mb-3">
-                  <label className="form-label small fw-bold">Ngày trả thực thực tế</label>
-                  <input type="date" className="form-control" value={returningRental.returnDate} onChange={e => setReturningRental({...returningRental, returnDate: e.target.value})} />
-                </div>
-
-                <div className="card bg-light border-0 mb-4 p-3 shadow-sm">
-                  <div className="form-check form-switch mb-3">
-                    <input className="form-check-input" type="checkbox" id="damageSwitch" checked={returningRental.hasIssue} onChange={e => setReturningRental({...returningRental, hasIssue: e.target.checked})}/>
-                    <label className="form-check-label fw-bold text-danger" htmlFor="damageSwitch">Có xảy ra sự cố / hỏng hóc máy?</label>
-                  </div>
-                  
-                  {returningRental.hasIssue && (
-                    <div className="animate__animated animate__fadeIn">
-                      <div className="mb-2">
-                        <label className="form-label small fw-bold text-muted">Thiết bị gặp sự cố</label>
-                        <select className="form-select form-select-sm" value={returningRental.issueProductId} onChange={e => setReturningRental({...returningRental, issueProductId: parseInt(e.target.value)})}>
-                          {returningRental.items?.map((it: any) => (
-                            <option key={it.productId} value={it.productId}>{it.product?.name}</option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="mb-0">
-                        <label className="form-label small fw-bold text-muted">Mô tả chi tiết hỏng hóc</label>
-                        <textarea className="form-control" rows={3} placeholder="Ví dụ: Màn hình bị vỡ, không lên nguồn..." value={returningRental.returnNote} onChange={e => setReturningRental({...returningRental, returnNote: e.target.value})}></textarea>
-                      </div>
-                    </div>
-                  )}
-                  {!returningRental.hasIssue && (
-                    <div className="mb-0">
-                      <label className="form-label small fw-bold">Ghi nhận tình trạng (Optional)</label>
-                      <input type="text" className="form-control form-control-sm" placeholder="Ví dụ: Máy tốt, đã vệ sinh..." value={returningRental.returnNote} onChange={e => setReturningRental({...returningRental, returnNote: e.target.value})} />
-                    </div>
-                  )}
-                </div>
-
-                <div className="d-flex gap-2">
-                  <button className="btn btn-light flex-fill fw-bold" onClick={() => setReturningRental(null)}>Hủy bỏ</button>
-                  <button className="btn btn-primary flex-fill fw-bold" onClick={async (e) => {
-                    const btn = e.currentTarget;
-                    btn.disabled = true;
-                    btn.innerHTML = '<span className="spinner-border spinner-border-sm me-2"></span>Đang xử lý...';
-                    
-                    try {
-                        const notes = returningRental.hasIssue ? `[SỰ CỐ] ${returningRental.returnNote}` : returningRental.returnNote;
-                        const res = await fetch("/api/admin/rentals", {
-                          method: "PUT",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({ id: returningRental.id, status: "RETURNED", returnDate: returningRental.returnDate, returnNote: notes })
-                        });
-                        
-                        if (!res.ok) throw new Error("Lỗi cập nhật hợp đồng");
-
-                                if (returningRental.hasIssue) {
-                                  await fetch("/api/admin/warranties", {
-                                    method: "POST",
-                                    headers: { "Content-Type": "application/json" },
-                                    body: JSON.stringify({ userId: returningRental.userId, productId: returningRental.issueProductId, issueDetail: returningRental.returnNote })
-                                  });
-                                  await loadWarranties();
-                                }
-                                
-                                await loadRentals();
-                                await loadStats();
-                                setReturningRental(null);
-                        alert("Đã xác nhận trả máy thành công!");
-                    } catch (err: any) {
-                        alert("Lỗi: " + err.message);
-                        btn.disabled = false;
-                        btn.innerHTML = 'Xác nhận Trả Máy & Hoàn Tất';
-                    }
-                  }}>Xác nhận Trả Máy & Hoàn Tất</button>
-                </div>
-              </div>
-            </div>
-          )}
             </div>
 
             {/* MINIMAL ADMIN FOOTER */}

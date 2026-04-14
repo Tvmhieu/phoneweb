@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "ABC XYZ - Giải pháp & Thiết bị Công Nghệ",
-  description: "Trang bị doanh nghiệp với máy chủ, máy tính, cấu hình cho thuê và mua đứt",
+  description: "Trang bị doanh nghiệp với máy chủ, máy tính và các giải pháp hạ tầng công nghệ hiện đại",
 };
 
 export default function RootLayout({

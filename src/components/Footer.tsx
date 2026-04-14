@@ -33,7 +33,7 @@ export default function Footer() {
               ABC <span className="text-accent ms-1">XYZ</span>
             </h5>
             <p className="small text-white-50 mb-4 lh-lg">
-              Hệ thống cung cấp giải pháp chuyển đổi số, thiết bị CNTT và dịch vụ cho thuê máy văn phòng chuyên nghiệp hàng đầu Việt Nam. Đối tác tin cậy cho mọi doanh nghiệp.
+              Hệ thống cung cấp giải pháp chuyển đổi số và thiết bị CNTT chuyên nghiệp hàng đầu Việt Nam. Đối tác tin cậy cho mọi doanh nghiệp.
             </p>
             <div className="d-flex gap-3">
               <a href="#" className="btn btn-outline-light btn-sm rounded-circle p-2 px-3 shadow-sm border-opacity-25" style={{ fontSize: '1.1rem' }}><i className="bi bi-facebook"></i></a>
@@ -46,7 +46,6 @@ export default function Footer() {
             <h6 className="footer-heading">Khám phá</h6>
             <ul className="list-unstyled">
               <li className="mb-2"><a href="/products" className="footer-link">Sản phẩm bán lẻ</a></li>
-              <li className="mb-2"><a href="/products?category=RENT" className="footer-link">Dịch vụ thuê máy</a></li>
               <li className="mb-2"><a href="/warranty" className="footer-link">Trung tâm bảo hành</a></li>
               <li className="mb-2"><a href="/contact" className="footer-link">Liên hệ tư vấn</a></li>
             </ul>

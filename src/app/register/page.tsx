@@ -91,7 +91,7 @@ export default function RegisterPage() {
         <div className="register-card row g-0">
           <div className="col-md-5 register-sidebar d-none d-md-flex">
             <h2 className="display-6 fw-bold mb-4">Trở thành đối tác lâu dài</h2>
-            <p className="opacity-75 fs-5">Khởi tạo tài khoản để quản lý thiết bị, yêu cầu thuê máy và theo dõi bảo hành tập trung.</p>
+            <p className="opacity-75 fs-5">Khởi tạo tài khoản để quản lý thiết bị, đơn hàng và theo dõi bảo hành tập trung.</p>
             <div className="mt-5">
                 <div className="d-flex align-items-center mb-4 text-start">
                     <div className="bg-white bg-opacity-20 rounded-circle p-2 me-3">

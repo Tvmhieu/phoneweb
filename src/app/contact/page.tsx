@@ -126,7 +126,7 @@ export default function ContactPage() {
                                 </div>
                                 <div className="d-flex align-items-center mb-3">
                                     <i className="bi bi-check-circle-fill me-2"></i>
-                                    <span>Báo giá thuê máy dự án dài hạn</span>
+                                    <span>Tư vấn trang bị máy chủ dự án lớn</span>
                                 </div>
                                 <div className="d-flex align-items-center">
                                     <i className="bi bi-check-circle-fill me-2"></i>
@@ -184,7 +184,7 @@ export default function ContactPage() {
                                             <textarea
                                                 className="form-control bg-light border-0 fs-6"
                                                 rows={4}
-                                                placeholder="Mô tả nhu cầu của bạn (VD: Cần thuê máy chủ dự án SAP...)"
+                                                placeholder="Mô tả nhu cầu của bạn (VD: Cần trang bị máy chủ cho dự án SAP...)"
                                                 value={formData.message}
                                                 onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))}
                                                 required

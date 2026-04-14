@@ -5,11 +5,11 @@ import { Suspense } from "react";
 export const dynamic = "force-dynamic";
 
 const fallbackProducts = [
-  { id: 1, name: "Máy Chủ Dell PowerEdge R440", brand: "Dell", category: "SERVER", price: 45000000, rentalPricePerDay: 500000, isRentable: true, stock: 5, imageUrl: "/assets/server.jpg" },
-  { id: 2, name: "Máy In HP LaserJet Pro", brand: "HP", category: "PRINTER", price: 4200000, rentalPricePerDay: null, isRentable: false, stock: 12, imageUrl: "/assets/printer.jpg" },
-  { id: 3, name: "Switch Cisco Catalyst 2960", brand: "Cisco", category: "NETWORK", price: 9500000, rentalPricePerDay: 80000, isRentable: true, stock: 8, imageUrl: "/assets/switch.jpg" },
-  { id: 4, name: "Máy POS Quản Lý Bán Hàng Sunmi", brand: "Sunmi", category: "POS", price: 12000000, rentalPricePerDay: 150000, isRentable: true, stock: 15, imageUrl: "/assets/pos.jpg" },
-  { id: 5, name: "Laptop ThinkPad T14s", brand: "Lenovo", category: "LAPTOP", price: 28000000, rentalPricePerDay: 250000, isRentable: true, stock: 20, imageUrl: "/assets/laptop.jpg" },
+  { id: 1, name: "Máy Chủ Dell PowerEdge R440", brand: "Dell", category: "SERVER", price: 45000000, stock: 5, imageUrl: "/assets/server.jpg" },
+  { id: 2, name: "Máy In HP LaserJet Pro", brand: "HP", category: "PRINTER", price: 4200000, stock: 12, imageUrl: "/assets/printer.jpg" },
+  { id: 3, name: "Switch Cisco Catalyst 2960", brand: "Cisco", category: "NETWORK", price: 9500000, stock: 8, imageUrl: "/assets/switch.jpg" },
+  { id: 4, name: "Máy POS Quản Lý Bán Hàng Sunmi", brand: "Sunmi", category: "POS", price: 12000000, stock: 15, imageUrl: "/assets/pos.jpg" },
+  { id: 5, name: "Laptop ThinkPad T14s", brand: "Lenovo", category: "LAPTOP", price: 28000000, stock: 20, imageUrl: "/assets/laptop.jpg" },
 ];
 
 export default async function ProductsPage() {

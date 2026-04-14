@@ -16,8 +16,6 @@ export async function GET(req: Request) {
           stock: true,
           price: true,
           warrantyMonths: true,
-          isRentable: true,
-          rentalPricePerDay: true,
           isVisible: true,
           createdAt: true,
           updatedAt: true,
@@ -47,7 +45,6 @@ export async function POST(req: Request) {
     const stock = Number(data.stock) || 0;
     const price = Number(data.price) || 0;
     const warrantyMonths = Number(data.warrantyMonths) || 12;
-    const rentalPricePerDay = Number(data.rentalPricePerDay) || null;
     
     // Mảng link ảnh (tối đa 10) — lọc bỏ link rỗng
     const imagesData = Array.isArray(data.allImages) ? data.allImages.filter((u: string) => u && u.trim()).slice(0, 10) : [];
@@ -68,8 +65,6 @@ export async function POST(req: Request) {
                ...(data.stock !== undefined && { stock: Number(data.stock) }),
                ...(data.price !== undefined && { price: Number(data.price) }),
                ...(data.warrantyMonths !== undefined && { warrantyMonths: Number(data.warrantyMonths) }),
-               ...(data.isRentable !== undefined && { isRentable: !!data.isRentable }),
-               ...(data.rentalPricePerDay !== undefined && { rentalPricePerDay: data.rentalPricePerDay ? Number(data.rentalPricePerDay) : null }),
                ...(data.isVisible !== undefined && { isVisible: !!data.isVisible }),
                ...(Array.isArray(data.allImages) && {
                  images: {
@@ -91,8 +86,6 @@ export async function POST(req: Request) {
                stock,
                price,
                warrantyMonths,
-               isRentable: !!data.isRentable,
-               rentalPricePerDay,
                isVisible: data.isVisible !== undefined ? !!data.isVisible : true,
                images: {
                  create: imagesData.map((url: string) => ({ url }))

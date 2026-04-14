@@ -4,10 +4,10 @@ import Link from "next/link";
 export const dynamic = "force-dynamic";
 
 const fallbackProducts = [
-  { id: 1, name: "Máy Chủ Dell PowerEdge R440", brand: "Dell", category: "SERVER", price: 45000000, isRentable: true, rentalPricePerDay: 500000, imageUrl: "" },
-  { id: 2, name: "Máy In HP LaserJet Pro", brand: "HP", category: "PRINTER", price: 4200000, isRentable: false, rentalPricePerDay: null, imageUrl: "" },
-  { id: 3, name: "Switch Cisco Catalyst 2960", brand: "Cisco", category: "NETWORK", price: 9500000, isRentable: true, rentalPricePerDay: 80000, imageUrl: "" },
-  { id: 4, name: "Laptop ThinkPad T14s Gen 3", brand: "Lenovo", category: "LAPTOP", price: 28500000, isRentable: true, rentalPricePerDay: 250000, imageUrl: "" },
+  { id: 1, name: "Máy Chủ Dell PowerEdge R440", brand: "Dell", category: "SERVER", price: 45000000, imageUrl: "" },
+  { id: 2, name: "Máy In HP LaserJet Pro", brand: "HP", category: "PRINTER", price: 4200000, imageUrl: "" },
+  { id: 3, name: "Switch Cisco Catalyst 2960", brand: "Cisco", category: "NETWORK", price: 9500000, imageUrl: "" },
+  { id: 4, name: "Laptop ThinkPad T14s Gen 3", brand: "Lenovo", category: "LAPTOP", price: 28500000, imageUrl: "" },
 ];
 
 export default async function HomePage() {
@@ -124,8 +124,8 @@ export default async function HomePage() {
                 <span className="text-info">Chuyên nghiệp & Toàn diện</span>
               </h1>
               <p className="lead fs-4 mb-5 opacity-90">
-                ABC XYZ cung cấp cấu hình máy chủ, máy trạm và hạ tầng mạng theo yêu cầu ngắn hạn và dài hạn. 
-                Hỗ trợ linh hoạt hình thức <strong>Mua</strong> hoặc <strong>Cho thuê dự án</strong>.
+                ABC XYZ cung cấp cấu hình máy chủ, máy trạm và hạ tầng mạng theo yêu cầu doanh nghiệp. 
+                Sản phẩm chính hãng với chính sách bảo hành ưu việt.
               </p>
               <div className="d-flex gap-3">
                 <Link href="/products" className="btn btn-light btn-lg btn-premium text-primary">Xem Sản phẩm</Link>
@@ -141,8 +141,8 @@ export default async function HomePage() {
                         <span className="fw-bold">Cam kết chính hãng 100%</span>
                     </div>
                     <div className="d-flex align-items-center mb-3 text-start">
-                        <i className="bi bi-clock-history fs-3 me-3 text-info"></i>
-                        <span className="fw-bold">Thời gian thuê linh hoạt từ 1-36 tháng</span>
+                        <i className="bi bi-patch-check fs-3 me-3 text-info"></i>
+                        <span className="fw-bold">Bảo hành linh hoạt đến 36 tháng</span>
                     </div>
                     <div className="d-flex align-items-center text-start">
                         <i className="bi bi-headset fs-3 me-3 text-info"></i>
@@ -200,14 +200,6 @@ export default async function HomePage() {
                 </div>
               </Link>
             </div>
-            <div className="col-6 col-md-4 col-lg-2 mt-4">
-              <Link href="/products?category=RENT" className="text-decoration-none text-dark">
-                <div className="category-card bg-primary text-white">
-                  <i className="bi bi-calendar2-check-fill display-5 mb-3 d-block text-warning"></i>
-                  <h6 className="fw-bold mb-0">Dịch Vụ Thuê</h6>
-                </div>
-              </Link>
-            </div>
           </div>
         </div>
       </section>
@@ -232,9 +224,6 @@ export default async function HomePage() {
                       <img src={p.imageUrl || p.images?.[0]?.url} className="w-100 h-100" style={{ objectFit: "cover", width: '100%', height: '100%' }} alt={p.name} />
                     ) : (
                       <i className={`bi ${p.category === 'SERVER' ? 'bi-hdd-network' : p.category === 'PRINTER' ? 'bi-printer' : 'bi-laptop'} display-3 text-muted`}></i>
-                    )}
-                    {p.isRentable && (
-                        <div className="position-absolute top-0 start-0 bg-warning text-dark px-3 py-1 fw-bold small rounded-bottom-end shadow-sm">Có Thuê</div>
                     )}
                   </div>
                   <div className="card-body p-4 d-flex flex-column">

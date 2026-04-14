@@ -26,8 +26,6 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: a
     let matchCat = true;
     if (category === "ALL") {
       matchCat = true;
-    } else if (category === "RENT") {
-      matchCat = !!p.isRentable;
     } else {
       matchCat = p.category === category;
     }
@@ -94,59 +92,31 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: a
       </nav>
 
       <h1 className="fw-bold text-primary mb-4" style={{ fontSize: "1.75rem" }}>
-        {category === "RENT" ? "Thuê thiết bị IT — Giải pháp B2B" : "Danh mục Thiết bị IT — Chính hãng 100%"}
+        Danh mục Thiết bị IT — Chính hãng 100%
       </h1>
 
-      {/* GENERAL HERO - HIỆN KHI KHÔNG PHẢI CATEGORY RENT */}
-      {category !== "RENT" && (
-        <div className="card border-0 rounded-4 overflow-hidden mb-5 shadow-sm" style={{ background: "linear-gradient(135deg, #0d6efd 0%, #004085 100%)" }}>
-           <div className="card-body p-4 p-lg-5 text-white position-relative">
-              <div className="row align-items-center">
-                 <div className="col-lg-8">
-                    <div className="text-info mb-2 fw-bold text-uppercase small" style={{ letterSpacing: '1.5px' }}>Trung tâm thiết bị IT Doanh nghiệp</div>
-                    <h2 className="display-6 fw-bold mb-3">Hạ Tầng Công Nghệ Đột Phá</h2>
-                    <p className="lead mb-4 opacity-75">
-                       Khám phá kho thiết bị Server, Network và Workstation cấu hình cao từ các thương hiệu hàng đầu thế giới Dell, HP, Cisco, Lenovo. Giải pháp tối ưu cho trung tâm dữ liệu.
-                    </p>
-                    <div className="d-flex flex-wrap gap-3">
-                       <div className="bg-white bg-opacity-10 p-2 px-3 rounded-pill small fw-bold border border-white border-opacity-10"><i className="bi bi-patch-check-fill me-2 text-info"></i>100% Chính hãng</div>
-                       <div className="bg-white bg-opacity-10 p-2 px-3 rounded-pill small fw-bold border border-white border-opacity-10"><i className="bi bi-headset me-2 text-info"></i>Hỗ trợ 24/7</div>
-                       <div className="bg-white bg-opacity-10 p-2 px-3 rounded-pill small fw-bold border border-white border-opacity-10"><i className="bi bi-truck me-2 text-info"></i>Giao hàng hỏa tốc</div>
-                    </div>
-                 </div>
-                 <div className="col-lg-4 d-none d-lg-block text-center mt-4 mt-lg-0">
-                    <i className="bi bi-cpu-fill text-white opacity-10" style={{ fontSize: '10rem' }}></i>
-                 </div>
-              </div>
-           </div>
-        </div>
-      )}
-
-      {/* RENTAL HERO - HIỆN KHI CHỌN CATEGORY LÀ RENT */}
-      {category === "RENT" && (
-        <div className="card border-0 rounded-4 overflow-hidden mb-5 shadow-sm" style={{ background: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)" }}>
-           <div className="card-body p-4 p-lg-5 text-dark position-relative">
-              <div className="row align-items-center">
-                 <div className="col-lg-8">
-                    <div className="text-primary mb-2 fw-bold text-uppercase small" style={{ letterSpacing: '1.5px' }}>Giải pháp thuê máy dự án</div>
-                    <h2 className="display-6 fw-bold mb-3 text-primary">Dịch Vụ Thuê Thiết Bị IT B2B</h2>
-                    <p className="lead mb-4 fw-medium" style={{ color: "#004085" }}>
-                       ABC XYZ cung cấp cấu hình máy chủ, máy trạm và hạ tầng mạng theo yêu cầu ngắn hạn và dài hạn. 
-                       Hỗ trợ kỹ thuật 24/7 onsite và thay thế linh kiện ngay lập tức.
-                    </p>
-                    <div className="d-flex flex-wrap gap-3">
-                       <div className="bg-white bg-opacity-40 p-2 px-3 rounded-pill small fw-bold border border-white"><i className="bi bi-shield-check me-2 text-primary"></i>Bảo hiểm thiết bị</div>
-                       <div className="bg-white bg-opacity-40 p-2 px-3 rounded-pill small fw-bold border border-white"><i className="bi bi-clock-history me-2 text-primary"></i>Thuê linh hoạt</div>
-                       <div className="bg-white bg-opacity-40 p-2 px-3 rounded-pill small fw-bold border border-white"><i className="bi bi-tools me-2 text-primary"></i>Onsite 4h</div>
-                    </div>
-                 </div>
-                 <div className="col-lg-4 d-none d-lg-block text-center mt-4 mt-lg-0">
-                    <i className="bi bi-calendar2-check-fill text-primary opacity-10" style={{ fontSize: '10rem' }}></i>
-                 </div>
-              </div>
-           </div>
-        </div>
-      )}
+      {/* GENERAL HERO */}
+      <div className="card border-0 rounded-4 overflow-hidden mb-5 shadow-sm" style={{ background: "linear-gradient(135deg, #0d6efd 0%, #004085 100%)" }}>
+         <div className="card-body p-4 p-lg-5 text-white position-relative">
+            <div className="row align-items-center">
+               <div className="col-lg-8">
+                  <div className="text-info mb-2 fw-bold text-uppercase small" style={{ letterSpacing: '1.5px' }}>Trung tâm thiết bị IT Doanh nghiệp</div>
+                  <h2 className="display-6 fw-bold mb-3">Hạ Tầng Công Nghệ Đột Phá</h2>
+                  <p className="lead mb-4 opacity-75">
+                     Khám phá kho thiết bị Server, Network và Workstation cấu hình cao từ các thương hiệu hàng đầu thế giới Dell, HP, Cisco, Lenovo. Giải pháp tối ưu cho trung tâm dữ liệu.
+                  </p>
+                  <div className="d-flex flex-wrap gap-3">
+                     <div className="bg-white bg-opacity-10 p-2 px-3 rounded-pill small fw-bold border border-white border-opacity-10"><i className="bi bi-patch-check-fill me-2 text-info"></i>100% Chính hãng</div>
+                     <div className="bg-white bg-opacity-10 p-2 px-3 rounded-pill small fw-bold border border-white border-opacity-10"><i className="bi bi-headset me-2 text-info"></i>Hỗ trợ 24/7</div>
+                     <div className="bg-white bg-opacity-10 p-2 px-3 rounded-pill small fw-bold border border-white border-opacity-10"><i className="bi bi-truck me-2 text-info"></i>Giao hàng hỏa tốc</div>
+                  </div>
+               </div>
+               <div className="col-lg-4 d-none d-lg-block text-center mt-4 mt-lg-0">
+                  <i className="bi bi-cpu-fill text-white opacity-10" style={{ fontSize: '10rem' }}></i>
+               </div>
+            </div>
+         </div>
+      </div>
 
       {/* THANH TÌM KIẾM (Tham khảo search-form từ Hshop) */}
       <div className="position-relative mb-4">
@@ -198,7 +168,6 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: a
                 <button onClick={() => setCategory("PRINTER")} className={`btn btn-sm ${category === "PRINTER" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-printer me-1"></i>Máy In</button>
                 <button onClick={() => setCategory("LAPTOP")} className={`btn btn-sm ${category === "LAPTOP" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-laptop me-1"></i>Laptop</button>
                 <button onClick={() => setCategory("POS")} className={`btn btn-sm ${category === "POS" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-phone me-1"></i>Máy POS</button>
-                <button onClick={() => setCategory("RENT")} className={`btn btn-sm ${category === "RENT" ? "btn-primary fw-bold" : "btn-outline-primary"}`}><i className="bi bi-clock-history me-1"></i>Dịch vụ Cho Thuê</button>
               </div>
             </div>
 
@@ -257,9 +226,6 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: a
             <div key={p.id} className="col-sm-6 col-md-4 col-lg-3">
               <Link href={`/products/${p.id}`} className="text-decoration-none">
                 <div className="card card-product product-card-hover h-100 shadow-sm border-0 position-relative">
-                  {p.isRentable && (
-                    <span className="position-absolute top-0 end-0 badge bg-primary text-white m-2 p-2 rounded-pill shadow-sm" style={{ zIndex: 5, fontSize: '0.7rem' }}><i className="bi bi-clock-history me-1"></i>Có Cho Thuê</span>
-                  )}
                   
                   {/* Ảnh sản phẩm (Cập nhật: Hiện ảnh nếu có, ngược lại hiện ID) */}
                   <div className="bg-light text-center rounded-top d-flex align-items-center justify-content-center border-bottom overflow-hidden" style={{ height: "220px" }}>
@@ -276,9 +242,6 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: a
                   <div className="card-body d-flex flex-column">
                     <h5 className="card-title text-dark fw-bold" style={{ fontSize: "0.95rem", lineHeight: 1.4 }}>{p.name}</h5>
                     <p className="card-text text-danger fw-bold fs-5 mb-1">{p.price ? p.price.toLocaleString('vi-VN') + ' đ' : 'Liên hệ'}</p>
-                    {p.isRentable && p.rentalPricePerDay && (
-                      <p className="text-muted small mb-2"><i className="bi bi-clock-history"></i> Thuê: {p.rentalPricePerDay.toLocaleString('vi-VN')} đ/ngày</p>
-                    )}
                     <div className="mt-auto">
                       <span className="btn btn-sm btn-outline-primary w-100">Xem chi tiết</span>
                     </div>

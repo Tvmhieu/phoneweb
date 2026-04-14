@@ -35,23 +35,9 @@ export async function GET(req: Request) {
       orderBy: { createdAt: "desc" }
     });
 
-    // Lấy tất cả đơn hàng thuê
-    const rentals = await prisma.rentalOrder.findMany({
-      where: { userId: id },
-      include: { 
-        items: { 
-          include: { 
-            product: true 
-          } 
-        } 
-      },
-      orderBy: { createdAt: "desc" }
-    });
-
     return NextResponse.json({ 
       success: true, 
-      sales, 
-      rentals 
+      sales
     });
 
   } catch (error: any) {

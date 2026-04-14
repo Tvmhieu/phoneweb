@@ -71,7 +71,6 @@ export default function CartPage() {
             box-shadow: 0 8px 20px rgba(13, 110, 253, 0.2);
         }
         .badge-buy { background-color: #e6f7ef; color: #198754; }
-        .badge-rent { background-color: #fff8eb; color: #b58105; }
         @media (max-width: 768px) {
             .item-img { width: 70px; height: 70px; }
             .cart-page { py-3 !important; }
@@ -112,7 +111,6 @@ export default function CartPage() {
                       <thead className="bg-light border-0">
                         <tr>
                           <th className="ps-4 py-3 text-muted small fw-bold text-uppercase border-0">Chi tiết thiết bị</th>
-                          <th className="py-3 text-muted small fw-bold text-uppercase text-center border-0">Loại hình</th>
                           <th className="py-3 text-muted small fw-bold text-uppercase text-end border-0">Tạm tính</th>
                           <th className="pe-4 py-3 border-0"></th>
                         </tr>
@@ -130,21 +128,9 @@ export default function CartPage() {
                                 </div>
                               </div>
                             </td>
-                            <td className="text-center py-4" data-label="Loại hình">
-                              {item.type === "BUY" ? (
-                                <span className="badge badge-buy px-3 py-2 fw-bold rounded-pill">MUA ĐỨT</span>
-                              ) : (
-                                <div className="text-center">
-                                    <span className="badge badge-rent px-3 py-2 fw-bold rounded-pill mb-1 d-inline-block">THUÊ MÁY</span>
-                                    <div className="small text-muted fw-bold">Gói: {item.rentalDays} ngày</div>
-                                </div>
-                              )}
-                            </td>
                             <td className="text-end py-4" data-label="Tạm tính">
                               <div className="text-danger fw-bold fs-5 mb-0">
-                                {item.type === "BUY" 
-                                  ? (item.price * item.quantity).toLocaleString("vi-VN") 
-                                  : (item.price * item.quantity * (item.rentalDays || 1)).toLocaleString("vi-VN")} <small>đ</small>
+                                {(item.price * item.quantity).toLocaleString("vi-VN")} <small>đ</small>
                               </div>
                             </td>
                             <td className="pe-4 text-end">

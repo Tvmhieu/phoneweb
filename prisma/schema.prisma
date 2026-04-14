@@ -18,7 +18,6 @@ model User {
   role         String        @default("CUSTOMER") // "ADMIN", "MANAGER", "EMPLOYEE", "CUSTOMER"
   
   saleOrders   SaleOrder[]
-  rentalOrders RentalOrder[]
   warrantyClaims WarrantyClaim[]
   cart         Cart?
   
@@ -42,12 +41,7 @@ model Product {
   price            Int             
   warrantyMonths   Int                @default(12) // Thời gian bảo hành (Tháng)
   
-  // Thông tin Cho thuê
-  isRentable       Boolean            @default(false)
-  rentalPricePerDay Int?            
-  
   saleItems        SaleOrderItem[]
-  rentalItems      RentalOrderItem[]
   cartItems        CartItem[]
   warrantyClaims   WarrantyClaim[]
   
@@ -98,38 +92,6 @@ model SaleOrderItem {
   price     Float
 }
 
-// ======================================
-// NGHIỆP VỤ CHO THUÊ
-// ======================================
-model RentalOrder {
-  id          Int                @id @default(autoincrement())
-  userId      Int
-  user        User               @relation(fields: [userId], references: [id])
-  deposit     Float              
-  totalRental Float              
-  status      String             @default("PENDING") 
-  startDate   DateTime
-  endDate     DateTime
-  items       RentalOrderItem[]
-  adminNotes  String?            @db.VarChar(1000) // Ghi chú nội bộ cho quản trị viên
-  returnDate  DateTime?          // Ngày trả máy thực tế
-  returnNote  String?            @db.VarChar(1000) // Tình trạng máy khi trả
-  isDepositRefunded Boolean @default(false)    // Đã hoàn cọc cho khách chưa?
-  depositRefundDate DateTime?                 // Ngày hoàn cọc thực tế
-  
-  createdAt   DateTime           @default(now())
-  updatedAt   DateTime           @updatedAt
-}
-
-model RentalOrderItem {
-  id          Int         @id @default(autoincrement())
-  orderId     Int
-  order       RentalOrder @relation(fields: [orderId], references: [id])
-  productId   Int
-  product     Product     @relation(fields: [productId], references: [id])
-  quantity    Int
-  pricePerDay Float
-}
 
 // ======================================
 // BẢO HÀNH & LIÊN HỆ YÊU CẦU
@@ -176,5 +138,4 @@ model CartItem {
   productId Int
   product   Product  @relation(fields: [productId], references: [id])
   quantity  Int
-  isRental  Boolean  @default(false) 
 }

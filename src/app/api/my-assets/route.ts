@@ -25,23 +25,9 @@ export async function GET(req: Request) {
       orderBy: { createdAt: "desc" }
     });
 
-    // Lấy hợp đồng thuê (Rentals)
-    const rentals = await prisma.rentalOrder.findMany({
-      where: { userId: id, status: { in: ["ACTIVE", "PENDING"] } },
-      include: { 
-        items: { 
-          include: { 
-            product: true 
-          } 
-        } 
-      },
-      orderBy: { createdAt: "desc" }
-    });
-
     return NextResponse.json({ 
       success: true, 
-      sales, 
-      rentals 
+      sales
     });
 
   } catch (error: any) {
