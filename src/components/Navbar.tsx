@@ -78,6 +78,7 @@ export default function Navbar() {
                                 <div className="fw-bold text-primary">{userInfo?.name}</div>
                                 <div className="small text-muted">{userInfo?.email}</div>
                             </li>
+                            <li><Link className="dropdown-item py-2" href="/orders"><i className="bi bi-receipt me-2"></i>Đơn hàng / Thuê máy</Link></li>
                             <li><Link className="dropdown-item py-2" href="/warranty"><i className="bi bi-clock-history me-2"></i>Lịch sử bảo hành</Link></li>
                         </ul>
                     </div>

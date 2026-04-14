@@ -624,7 +624,7 @@ export default function AdminDashboard() {
                 <li className="nav-item">
                   <button className={`nav-link w-100 text-start border-0 bg-transparent py-2 px-4 d-flex align-items-center transition-premium ${activeTab === "CUSTOMERS" ? "active-premium-light" : "text-secondary"}`} onClick={() => setActiveTab("CUSTOMERS")}>
                     <i className={`bi bi-person-lines-fill me-3 ${activeTab === "CUSTOMERS" ? "text-primary" : "text-muted"}`}></i>
-                    <span className="small fw-bold">Danh sách đối tác</span>
+                    <span className="small fw-bold">Quản lý tài khoản khách hàng</span>
                   </button>
                 </li>
               </ul>
