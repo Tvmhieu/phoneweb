@@ -48,6 +48,7 @@ export default function Footer() {
             <ul className="list-unstyled">
               <li className="mb-2"><Link href="/products" className="footer-link">Sản phẩm bán lẻ</Link></li>
               <li className="mb-2"><Link href="/warranty" className="footer-link">Trung tâm bảo hành</Link></li>
+              <li className="mb-2"><Link href="/warranty-policy" className="footer-link">Chính sách bảo hành</Link></li>
               <li className="mb-2"><Link href="/contact" className="footer-link">Liên hệ tư vấn</Link></li>
             </ul>
           </div>

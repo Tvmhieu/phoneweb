@@ -123,7 +123,10 @@ export default function WarrantyPage() {
            <div className="row align-items-center">
              <div className="col-md-7">
                 <h1 className="display-5 fw-bold mb-3"><i className="bi bi-shield-lock me-2"></i>Trung Tâm Bảo Hành & Kỹ Thuật</h1>
-                <p className="lead opacity-75 mb-0">Hỗ trợ khẩn cấp cho thiết bị đã mua tại hệ thống. Cam kết xử lý trong vòng ban ngày làm việc.</p>
+                <p className="lead opacity-75 mb-3">Hỗ trợ khẩn cấp cho thiết bị đã mua tại hệ thống. Cam kết xử lý trong vòng ban ngày làm việc.</p>
+                <Link href="/warranty-policy" className="btn btn-warning btn-sm rounded-pill fw-bold px-3 border-0 shadow-sm text-dark">
+                    <i className="bi bi-file-earmark-text me-1"></i> Xem chi tiết Chính sách bảo hành
+                </Link>
              </div>
              <div className="col-md-5 d-none d-md-block text-end">
                 <i className="bi bi-tools opacity-25" style={{ fontSize: '100px' }}></i>
