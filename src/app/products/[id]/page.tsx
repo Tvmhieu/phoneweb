@@ -4,18 +4,36 @@ import Link from "next/link";
 import AddToCart from "@/components/AddToCart";
 import ImageGallery from "@/components/ImageGallery";
 
+interface ProductImage {
+  id: number;
+  url: string;
+}
+
+interface Product {
+  id: number;
+  name: string;
+  brand: string;
+  category: string;
+  price: number | null;
+  stock: number;
+  imageUrl: string | null;
+  description: string | null;
+  warrantyMonths: number;
+  images: ProductImage[];
+}
+
 export default async function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  let product: any = null;
+  let product: Product | null = null;
   try {
-    product = await prisma.product.findFirst({
+    product = (await prisma.product.findFirst({
       where: { 
         id: parseInt(id),
         isVisible: true,
         isDeleted: false
       },
       include: { images: true }
-    });
+    })) as any; // Cast as any then back to Product to handle Prisma's complex types simply for the UI layer
   } catch (error) {
     console.warn("Lỗi tải sản phẩm:", error);
   }
@@ -23,7 +41,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   if (!product) return notFound();
 
   // Lấy danh sách link ảnh từ bảng ProductImage
-  const allImages = product.images?.map((img: any) => img.url) || [];
+  const allImages = product.images?.map((img) => img.url) || [];
 
   return (
     <div className="container py-4">
@@ -79,7 +97,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           </div>
 
           {/* NÚT MUA / GIỎ HÀNG */}
-          <AddToCart product={product as any} />
+          <AddToCart product={product} />
           
           <div className="mt-3 text-muted small">
             <i className="bi bi-info-circle me-1"></i> Giá trên đã bao gồm VAT và hỗ trợ kỹ thuật onsite.

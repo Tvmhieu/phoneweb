@@ -13,7 +13,9 @@ export default function Navbar() {
 
   const pathname = usePathname();
 
-  useEffect(() => setHydrated(true), []);
+  useEffect(() => {
+    setTimeout(() => setHydrated(true), 0);
+  }, []);
 
   const isAdminPath = pathname.startsWith("/admin");
   const isInternalRole = userRole === "ADMIN" || userRole === "MANAGER" || userRole === "EMPLOYEE";

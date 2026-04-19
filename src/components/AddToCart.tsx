@@ -6,8 +6,8 @@ type AddToCartProps = {
   product: {
     id: number;
     name: string;
-    price: number;
-    imageUrl: string;
+    price: number | null;
+    imageUrl: string | null;
     stock: number;
   }
 };
@@ -24,10 +24,9 @@ export default function AddToCart({ product }: AddToCartProps) {
     addToCart({
       productId: product.id,
       name: product.name,
-      price: product.price,
+      price: product.price || 0,
       quantity,
-      type: "BUY",
-      image: product.imageUrl
+      image: product.imageUrl || ""
     });
   };
 

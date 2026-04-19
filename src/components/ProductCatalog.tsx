@@ -1,24 +1,43 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import Image from "next/image";
+import { useSearchParams, useRouter } from "next/navigation";
 
-export default function ProductCatalog({ initialProducts }: { initialProducts: any[] }) {
+interface ProductImage {
+  url: string;
+}
+
+interface Product {
+  id: number;
+  name: string;
+  brand: string;
+  category: string;
+  price: number | null;
+  stock: number;
+  imageUrl?: string;
+  images?: ProductImage[];
+}
+
+export default function ProductCatalog({ initialProducts }: { initialProducts: Product[] }) {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
-  const [category, setCategory] = useState("ALL");
   const [minPrice, setMinPrice] = useState(0); 
   const [maxPrice, setMaxPrice] = useState(100000000); 
   const [sortOrder, setSortOrder] = useState(""); // "", "asc", "desc"
 
-  useEffect(() => {
-    const cat = searchParams.get("category");
-    if (cat) {
-      setCategory(cat.toUpperCase());
+  const category = (searchParams.get("category") || "ALL").toUpperCase();
+
+  const handleCategoryChange = (newCat: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (newCat === "ALL") {
+      params.delete("category");
     } else {
-      setCategory("ALL");
+      params.set("category", newCat);
     }
-  }, [searchParams]);
+    router.push(`?${params.toString()}`, { scroll: false });
+  };
 
   let filteredProducts = initialProducts.filter((p) => {
     const matchSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase()) || p.brand.toLowerCase().includes(searchTerm.toLowerCase());
@@ -50,9 +69,6 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: a
         p.brand.toLowerCase().includes(searchTerm.toLowerCase())
       ).slice(0, 5)
     : [];
-
-  // Danh sách category để lấy từ data
-  const categories = Array.from(new Set(initialProducts.map(p => p.category)));
 
   return (
     <div className="container py-4">
@@ -162,12 +178,12 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: a
             <div className="col-12">
               <div className="d-flex gap-2 flex-wrap align-items-center">
                 <span className="text-muted small fw-bold me-2"><i className="bi bi-grid me-1"></i>Phân loại:</span>
-                <button onClick={() => setCategory("ALL")} className={`btn btn-sm ${category === "ALL" ? "btn-primary" : "btn-outline-primary"}`}>Tất cả</button>
-                <button onClick={() => setCategory("SERVER")} className={`btn btn-sm ${category === "SERVER" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-hdd-network me-1"></i>Máy Chủ</button>
-                <button onClick={() => setCategory("NETWORK")} className={`btn btn-sm ${category === "NETWORK" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-router me-1"></i>Thiết Bị Mạng</button>
-                <button onClick={() => setCategory("PRINTER")} className={`btn btn-sm ${category === "PRINTER" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-printer me-1"></i>Máy In</button>
-                <button onClick={() => setCategory("LAPTOP")} className={`btn btn-sm ${category === "LAPTOP" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-laptop me-1"></i>Laptop</button>
-                <button onClick={() => setCategory("POS")} className={`btn btn-sm ${category === "POS" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-phone me-1"></i>Máy POS</button>
+                <button onClick={() => handleCategoryChange("ALL")} className={`btn btn-sm ${category === "ALL" ? "btn-primary" : "btn-outline-primary"}`}>Tất cả</button>
+                <button onClick={() => handleCategoryChange("SERVER")} className={`btn btn-sm ${category === "SERVER" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-hdd-network me-1"></i>Máy Chủ</button>
+                <button onClick={() => handleCategoryChange("NETWORK")} className={`btn btn-sm ${category === "NETWORK" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-router me-1"></i>Thiết Bị Mạng</button>
+                <button onClick={() => handleCategoryChange("PRINTER")} className={`btn btn-sm ${category === "PRINTER" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-printer me-1"></i>Máy In</button>
+                <button onClick={() => handleCategoryChange("LAPTOP")} className={`btn btn-sm ${category === "LAPTOP" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-laptop me-1"></i>Laptop</button>
+                <button onClick={() => handleCategoryChange("POS")} className={`btn btn-sm ${category === "POS" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-phone me-1"></i>Máy POS</button>
               </div>
             </div>
 
@@ -210,7 +226,7 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: a
       {/* Thông báo kết quả tìm kiếm (tham khảo từ Hshop) */}
       {searchTerm && (
         <div className="alert alert-info py-2 px-3 small">
-          Tìm kiếm cho: "<strong>{searchTerm}</strong>" — Có <strong>{filteredProducts.length}</strong> kết quả
+          Tìm kiếm cho: &quot;<strong>{searchTerm}</strong>&quot; — Có <strong>{filteredProducts.length}</strong> kết quả
         </div>
       )}
 
@@ -230,7 +246,14 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: a
                   {/* Ảnh sản phẩm (Cập nhật: Hiện ảnh nếu có, ngược lại hiện ID) */}
                   <div className="bg-light text-center rounded-top d-flex align-items-center justify-content-center border-bottom overflow-hidden" style={{ height: "220px" }}>
                     {(p.imageUrl || p.images?.[0]?.url) ? (
-                      <img src={p.imageUrl || p.images?.[0]?.url} alt={p.name} className="w-100 h-100 product-image-zoom" style={{ objectFit: "cover", width: '100%', height: '100%', display: 'block' }} />
+                      <Image 
+                        src={p.imageUrl || p.images?.[0]?.url} 
+                        alt={p.name} 
+                        width={300} 
+                        height={220} 
+                        className="w-100 h-100 product-image-zoom" 
+                        style={{ objectFit: "cover" }} 
+                      />
                     ) : (
                       <div className="text-center">
                         <i className={`bi ${p.category === 'SERVER' ? 'bi-hdd-network-fill' : p.category === 'PRINTER' ? 'bi-printer-fill' : p.category === 'LAPTOP' ? 'bi-laptop' : p.category === 'POS' ? 'bi-phone' : 'bi-router-fill'} d-block mb-2`} style={{ fontSize: "4rem", color: "#adb5bd" }}></i>

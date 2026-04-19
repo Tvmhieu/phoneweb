@@ -21,7 +21,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem("userInfo");
-    if (saved) setUserInfo(JSON.parse(saved));
+    if (saved) {
+      try {
+        const user = JSON.parse(saved);
+        setTimeout(() => setUserInfo(user), 0);
+      } catch (e) {
+        console.error("Lỗi parse userInfo:", e);
+      }
+    }
   }, []);
 
   useEffect(() => {

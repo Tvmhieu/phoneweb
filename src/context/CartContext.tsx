@@ -27,7 +27,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   // Tải giỏ hàng từ localStorage khi Tải trang
   useEffect(() => {
     const saved = localStorage.getItem("nhanviet_cart");
-    if (saved) setItems(JSON.parse(saved));
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        // Dùng setTimeout để tránh lỗi "Calling setState synchronously within an effect"
+        setTimeout(() => setItems(parsed), 0);
+      } catch (e) {
+        console.error("Lỗi giỏ hàng:", e);
+      }
+    }
   }, []);
 
   // Lưu giỏ hàng mỗi khi thay đổi

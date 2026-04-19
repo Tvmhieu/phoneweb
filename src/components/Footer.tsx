@@ -1,6 +1,7 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
+import Link from "next/link";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -45,9 +46,9 @@ export default function Footer() {
           <div className="col-lg-2 col-md-6 text-start">
             <h6 className="footer-heading">Khám phá</h6>
             <ul className="list-unstyled">
-              <li className="mb-2"><a href="/products" className="footer-link">Sản phẩm bán lẻ</a></li>
-              <li className="mb-2"><a href="/warranty" className="footer-link">Trung tâm bảo hành</a></li>
-              <li className="mb-2"><a href="/contact" className="footer-link">Liên hệ tư vấn</a></li>
+              <li className="mb-2"><Link href="/products" className="footer-link">Sản phẩm bán lẻ</Link></li>
+              <li className="mb-2"><Link href="/warranty" className="footer-link">Trung tâm bảo hành</Link></li>
+              <li className="mb-2"><Link href="/contact" className="footer-link">Liên hệ tư vấn</Link></li>
             </ul>
           </div>
           

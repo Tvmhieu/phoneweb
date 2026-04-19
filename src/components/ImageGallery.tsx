@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function ImageGallery({ mainImage, allImages, productName, productId }: { mainImage: string | null, allImages: string[], productName: string, productId: number }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -29,11 +30,13 @@ export default function ImageGallery({ mainImage, allImages, productName, produc
           @media (max-width: 768px) { .main-img-container { min-height: 300px !important; } }
         `}</style>
           
-          <img 
+          <Image 
             src={gallery[activeIndex]} 
             alt={productName} 
+            width={600}
+            height={400}
             className="img-fluid rounded cursor-zoom-in" 
-            style={{ maxHeight: "400px", objectFit: "contain", cursor: "zoom-in" }} 
+            style={{ maxHeight: "400px", objectFit: "contain", cursor: "zoom-in", width: 'auto', height: 'auto' }} 
             onClick={() => setShowLightbox(true)}
           />
 
@@ -73,7 +76,7 @@ export default function ImageGallery({ mainImage, allImages, productName, produc
               style={{ width: "70px", height: "70px", flexShrink: 0, transition: "all 0.2s" }}
               onClick={() => setActiveIndex(idx)}
             >
-              <img src={url} className="w-100 h-100" style={{ objectFit: "cover" }} />
+              <Image src={url} alt={`${productName} thumbnail ${idx}`} width={70} height={70} className="w-100 h-100" style={{ objectFit: "cover" }} />
             </div>
           ))}
         </div>
