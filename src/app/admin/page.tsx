@@ -1120,7 +1120,7 @@ export default function AdminDashboard() {
                    </div>
                    <div className="col-md-4">
                       <div className="p-4 bg-white rounded-4 shadow-sm border-0 border-start border-primary border-5 h-100">
-                         <div className="text-secondary small fw-bold text-uppercase mb-2">Quản lý (Manager)</div>
+                         <div className="text-secondary small fw-bold text-uppercase mb-2">Nhân viên quản lý</div>
                          <div className="d-flex align-items-center">
                             <h2 className="fw-bold mb-0 me-3">{users.filter(u => u.role === "MANAGER").length}</h2>
                             <div className="bg-primary bg-opacity-10 text-primary p-2 rounded-circle"><i className="bi bi-person-badge-fill"></i></div>
@@ -1129,7 +1129,7 @@ export default function AdminDashboard() {
                    </div>
                    <div className="col-md-4">
                       <div className="p-4 bg-white rounded-4 shadow-sm border-0 border-start border-success border-5 h-100">
-                         <div className="text-secondary small fw-bold text-uppercase mb-2">Nhân sự vận hành</div>
+                         <div className="text-secondary small fw-bold text-uppercase mb-2">Nhân viên kinh doanh</div>
                          <div className="d-flex align-items-center">
                             <h2 className="fw-bold mb-0 me-3">{users.filter(u => u.role === "EMPLOYEE").length}</h2>
                             <div className="bg-success bg-opacity-10 text-success p-2 rounded-circle"><i className="bi bi-people-fill"></i></div>
@@ -1165,9 +1165,9 @@ export default function AdminDashboard() {
                               <div className="col-md-4">
                                 <label className="form-label small fw-bold">Nhóm quyền hạn</label>
                                 <select className="form-select py-2 shadow-sm" style={{ borderLeft: '5px solid #dc3545' }} value={editingUser.role} onChange={e => setEditingUser({...editingUser, role: e.target.value})}>
-                                    <option value="ADMIN">ADMINISTRATOR (Toàn quyền)</option>
-                                    <option value="MANAGER">MANAGER (Quản lý kho/thuê)</option>
-                                    <option value="EMPLOYEE">STAFF (Nhân viên vận hành)</option>
+                                    <option value="ADMIN">ADMIN (Quản trị hệ thống)</option>
+                                    <option value="MANAGER">MANAGER (Nhân viên quản lý)</option>
+                                    <option value="EMPLOYEE">EMPLOYEE (Nhân viên kinh doanh)</option>
                                 </select>
                               </div>
                               <div className="col-md-4 d-flex align-items-end">
@@ -1230,7 +1230,7 @@ export default function AdminDashboard() {
                                 <span className="badge px-3 py-2 rounded-pill shadow-sm" 
                                       style={{ backgroundColor: rc.bg, color: rc.color, border: `1px solid ${rc.border}`, fontSize: '11px', fontWeight: '800' }}>
                                   <i className={`bi ${u.role === 'ADMIN' ? 'bi-shield-lock-fill' : u.role === 'MANAGER' ? 'bi-award-fill' : 'bi-person-fill'} me-1`}></i>
-                                  {u.role === 'EMPLOYEE' ? 'STAFF' : u.role}
+                                  {u.role === 'EMPLOYEE' ? 'NV Kinh doanh' : u.role === 'MANAGER' ? 'NV Quản lý' : u.role}
                                 </span>
                               </td>
                               <td className="text-end px-4">
