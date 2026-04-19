@@ -9,8 +9,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, message: "Dữ liệu giỏ hàng rỗng hoặc chưa đăng nhập!" }, { status: 400 });
     }
 
+    interface CheckoutItem {
+      productId: number;
+      price: number;
+      quantity: number;
+    }
+
     // Tính tổng đơn hàng bán (VAT 10%)
-    const saleTotal = items.reduce((acc: number, item: any) => acc + (item.price * item.quantity), 0);
+    const saleTotal = items.reduce((acc: number, item: CheckoutItem) => acc + (item.price * item.quantity), 0);
     
     await prisma.saleOrder.create({
       data: {
@@ -18,7 +24,7 @@ export async function POST(req: Request) {
         total: saleTotal * 1.1, // VAT 10%
         status: "PENDING",
         items: {
-          create: items.map((item: any) => ({
+          create: items.map((item: CheckoutItem) => ({
             productId: item.productId,
             quantity: item.quantity,
             price: item.price

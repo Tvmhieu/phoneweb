@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { writeFile } from "fs/promises";
+import { writeFile, mkdir } from "fs/promises";
+import { existsSync } from "fs";
 import path from "path";
 
 export async function POST(req: Request) {
@@ -21,9 +22,8 @@ export async function POST(req: Request) {
     const uploadDir = path.join(process.cwd(), "public", "uploads", relativeDir);
     
     // Đảm bảo thư mục tồn tại
-    const fs = require('fs');
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
+    if (!existsSync(uploadDir)) {
+      await mkdir(uploadDir, { recursive: true });
     }
 
     const filename = Date.now() + "_" + file.name.replace(/\s/g, "_");

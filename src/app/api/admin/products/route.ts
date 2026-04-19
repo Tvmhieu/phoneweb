@@ -30,9 +30,10 @@ export async function GET(req: Request) {
       allImages: product.images.map((image) => image.url)
     }));
     return NextResponse.json({ success: true, products: normalizedProducts });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMsg = error instanceof Error ? error.message : String(error);
     console.error("Products GET Error:", error);
-    return NextResponse.json({ success: false, message: "Lỗi tải kho: " + error.message }, { status: 500 });
+    return NextResponse.json({ success: false, message: "Lỗi tải kho: " + errorMsg }, { status: 500 });
   }
 }
 

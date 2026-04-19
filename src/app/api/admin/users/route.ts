@@ -53,14 +53,23 @@ export async function PUT(req: Request) {
   try {
     const { id, name, email, role, companyName, phone, password } = await req.json();
 
-    const data: any = { name, email, role, companyName, phone };
+    type UserUpdateData = {
+      name?: string;
+      email?: string;
+      role?: any; // Role is often an enum, using any or the actual Prisma enum type
+      companyName?: string;
+      phone?: string;
+      password?: string;
+    };
+
+    const updateData: UserUpdateData = { name, email, role, companyName, phone };
     if (password) {
-      data.password = await hash(password, 10);
+      updateData.password = await hash(password, 10);
     }
 
     const updatedUser = await prisma.user.update({
       where: { id },
-      data
+      data: updateData
     });
 
     return NextResponse.json({ success: true, user: updatedUser });

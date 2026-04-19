@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 type Product = { name: string; imageUrl?: string };
@@ -27,6 +28,7 @@ export default function OrdersPage() {
     }
 
     if (userInfo?.id) {
+      setLoading(true);
       fetch(`/api/my-orders?userId=${userInfo.id}`)
         .then(r => r.json())
         .then(data => {
@@ -35,8 +37,10 @@ export default function OrdersPage() {
           }
         })
         .finally(() => setLoading(false));
+    } else if (!loading) {
+      setLoading(false);
     }
-  }, [userInfo]);
+  }, [userInfo, userRole, router, loading]);
 
   const getSaleStatusBadge = (status: string) => {
     const s = status.toUpperCase();
@@ -106,7 +110,15 @@ export default function OrdersPage() {
                   <div className="card-body p-4">
                     {sale.items.map(item => (
                       <div key={item.id} className="d-flex align-items-center mb-3">
-                        <img src={item.product.imageUrl || "https://placehold.co/100x100?text=Product"} alt={item.product.name} className="item-img me-3" />
+                        <div className="item-img me-3 overflow-hidden position-relative" style={{ width: "60px", height: "60px" }}>
+                          <Image 
+                            src={item.product.imageUrl || "https://placehold.co/100x100?text=Product"} 
+                            alt={item.product.name} 
+                            fill
+                            sizes="60px"
+                            style={{ objectFit: "cover" }} 
+                          />
+                        </div>
                         <div className="flex-grow-1">
                           <div className="fw-bold">{item.product.name}</div>
                           <div className="text-muted small">Số lượng: {item.quantity} × {item.price.toLocaleString()}đ</div>

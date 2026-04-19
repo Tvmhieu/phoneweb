@@ -25,8 +25,9 @@ export async function GET(req: Request) {
     if (!user) return NextResponse.json({ success: false, message: "Không tìm thấy người dùng" }, { status: 404 });
 
     return NextResponse.json({ success: true, user });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal Server Error";
+    return NextResponse.json({ success: false, message }, { status: 500 });
   }
 }
 
@@ -47,7 +48,8 @@ export async function PUT(req: Request) {
     });
 
     return NextResponse.json({ success: true, user: updatedUser });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal Server Error";
+    return NextResponse.json({ success: false, message }, { status: 500 });
   }
 }

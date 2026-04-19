@@ -1,5 +1,20 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
+import Image from "next/image";
+
+interface ProductImage {
+  url: string;
+}
+
+interface Product {
+  id: number;
+  name: string;
+  brand: string;
+  category: string;
+  price: number | null;
+  imageUrl: string | null;
+  images?: ProductImage[];
+}
 
 export const dynamic = "force-dynamic";
 
@@ -11,9 +26,9 @@ const fallbackProducts = [
 ];
 
 export default async function HomePage() {
-  let featuredProducts = [];
+  let featuredProducts: Product[] = [];
   try {
-    featuredProducts = await prisma.product.findMany({
+    featuredProducts = (await prisma.product.findMany({
       where: {
         AND: [
           { isVisible: true },
@@ -23,10 +38,10 @@ export default async function HomePage() {
       take: 8,
       orderBy: { id: 'desc' },
       include: { images: { select: { url: true } } }
-    });
-    if (featuredProducts.length === 0) featuredProducts = fallbackProducts;
+    })) as unknown as Product[];
+    if (featuredProducts.length === 0) featuredProducts = fallbackProducts as unknown as Product[];
   } catch (error) {
-    featuredProducts = fallbackProducts;
+    featuredProducts = fallbackProducts as unknown as Product[];
   }
 
   return (
@@ -216,12 +231,19 @@ export default async function HomePage() {
           </div>
 
           <div className="row g-3 g-md-4">
-            {featuredProducts.map((p: any) => (
+            {featuredProducts.map((p) => (
               <div className="col-6 col-md-4 col-lg-3" key={p.id}>
                 <div className="card h-100 shadow-sm product-card border-0">
                   <div className="position-relative overflow-hidden bg-light d-flex align-items-center justify-content-center" style={{ height: "200px" }}>
                     {(p.imageUrl || p.images?.[0]?.url) ? (
-                      <img src={p.imageUrl || p.images?.[0]?.url} className="w-100 h-100" style={{ objectFit: "cover", width: '100%', height: '100%' }} alt={p.name} />
+                      <Image 
+                        src={p.imageUrl || p.images?.[0]?.url || ""} 
+                        className="w-100 h-100" 
+                        style={{ objectFit: "cover" }} 
+                        alt={p.name} 
+                        fill
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                      />
                     ) : (
                       <i className={`bi ${p.category === 'SERVER' ? 'bi-hdd-network' : p.category === 'PRINTER' ? 'bi-printer' : 'bi-laptop'} display-3 text-muted`}></i>
                     )}
