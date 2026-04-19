@@ -15,7 +15,7 @@ interface Product {
   category: string;
   price: number | null;
   stock: number;
-  imageUrl?: string;
+  imageUrl?: string | null;
   images?: ProductImage[];
 }
 
@@ -247,7 +247,7 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: P
                   <div className="bg-light text-center rounded-top d-flex align-items-center justify-content-center border-bottom overflow-hidden" style={{ height: "220px" }}>
                     {(p.imageUrl || p.images?.[0]?.url) ? (
                       <Image 
-                        src={p.imageUrl || p.images?.[0]?.url} 
+                        src={p.imageUrl || p.images?.[0]?.url || ""} 
                         alt={p.name} 
                         width={300} 
                         height={220} 

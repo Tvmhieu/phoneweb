@@ -32,8 +32,6 @@ async function main() {
         stock: 5,
         price: 45000000,
         warrantyMonths: 36,
-        isRentable: true,
-        rentalPricePerDay: 500000,
       },
       {
         name: 'Máy In HP LaserJet Pro',
@@ -43,7 +41,6 @@ async function main() {
         stock: 12,
         price: 4200000,
         warrantyMonths: 12,
-        isRentable: false, // Chỉ bán
       },
       {
         name: 'Switch Cisco Catalyst 2960',
@@ -53,8 +50,6 @@ async function main() {
         stock: 8,
         price: 9500000,
         warrantyMonths: 24,
-        isRentable: true,
-        rentalPricePerDay: 80000,
       },
       {
         name: 'Máy POS Quản Lý Bán Hàng Sunmi',
@@ -64,8 +59,6 @@ async function main() {
         stock: 15,
         price: 12000000,
         warrantyMonths: 12,
-        isRentable: true,
-        rentalPricePerDay: 150000,
       },
       {
         name: 'Laptop ThinkPad T14s',
@@ -75,8 +68,6 @@ async function main() {
         stock: 20,
         price: 28000000,
         warrantyMonths: 24,
-        isRentable: true,
-        rentalPricePerDay: 250000,
       }
     ],
   });

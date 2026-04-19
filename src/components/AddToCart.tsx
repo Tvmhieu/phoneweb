@@ -48,7 +48,7 @@ export default function AddToCart({ product }: AddToCartProps) {
 
         <div className="mb-3 p-2 bg-white border rounded text-end">
           <span className="text-muted small">Thành tiền: </span>
-          <span className="text-danger fw-bold fs-5">{(product.price * quantity).toLocaleString("vi-VN")} đ</span>
+          <span className="text-danger fw-bold fs-5">{((product.price || 0) * quantity).toLocaleString("vi-VN")} đ</span>
         </div>
 
         <button 
