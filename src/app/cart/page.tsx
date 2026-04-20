@@ -7,6 +7,7 @@ import { useState } from "react";
 export default function CartPage() {
   const { items, removeFromCart, cartTotal, clearCart } = useCart();
   const { userRole, userInfo } = useAuth();
+  const [address, setAddress] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleCheckout = async () => {
@@ -14,18 +15,24 @@ export default function CartPage() {
       alert("Hệ thống yêu cầu ĐĂNG NHẬP để ghi nhận đơn hàng doanh nghiệp.");
       return;
     }
+
+    if (!address.trim()) {
+      alert("Vui lòng nhập địa chỉ nhận hàng/văn phòng dự án.");
+      return;
+    }
     
     setIsProcessing(true);
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
-        body: JSON.stringify({ userId: userInfo.id, items }),
+        body: JSON.stringify({ userId: userInfo.id, items, address }),
       });
       const data = await res.json();
       
       if (data.success) {
         alert("Đơn hàng đã được lưu vào hệ thống thành công! Chuyên viên kinh doanh sẽ liên hệ xác nhận sớm nhất.");
         clearCart();
+        setAddress("");
       } else {
         alert("Lỗi xử lý đơn hàng: " + data.message);
       }
@@ -183,13 +190,25 @@ export default function CartPage() {
                         <Link href="/login" className="btn btn-outline-primary w-100 fw-bold py-3 rounded-pill border-2">ĐĂNG NHẬP ĐỂ ĐẶT HÀNG</Link>
                     </div>
                   ) : (
-                    <button onClick={handleCheckout} disabled={isProcessing} className="btn btn-primary btn-checkout w-100 py-3 shadow">
+                    <>
+                      <div className="mb-4">
+                        <label className="form-label fw-bold small text-muted"><i className="bi bi-geo-alt me-1"></i>Địa chỉ nhận hàng / Văn phòng dự án</label>
+                        <textarea 
+                          className="form-control border-2 rounded-3 shadow-sm bg-white" 
+                          rows={3} 
+                          placeholder="Nhập địa chỉ chi tiết (Số nhà, tên đường, quận/huyện...)"
+                          value={address}
+                          onChange={(e) => setAddress(e.target.value)}
+                        ></textarea>
+                      </div>
+                      <button onClick={handleCheckout} disabled={isProcessing} className="btn btn-primary btn-checkout w-100 py-3 shadow">
                         {isProcessing ? (
                             <><span className="spinner-border spinner-border-sm me-2"></span>ĐANG XỬ LÝ...</>
                         ) : (
                             <><i className="bi bi-shield-check me-2"></i>XÁC NHẬN ĐẶT HÀNG</>
                         )}
                     </button>
+                    </>
                   )}
                   
                   <p className="text-center text-muted small mt-4">

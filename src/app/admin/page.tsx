@@ -43,7 +43,7 @@ type Warranty = {
   user?: { id: number; name: string; email: string; phone?: string } 
 };
 type ContactMsg = { id: number; name: string; email: string; phone: string; message: string; isRead: boolean; createdAt: string };
-type Sale = { id: number; userId: number; total: number; status: string; createdAt: string; user?: { id: number; name?: string | null; email: string; companyName?: string | null; phone?: string | null }; items: SaleItem[]; adminNotes?: string };
+type Sale = { id: number; userId: number; total: number; status: string; createdAt: string; user?: { id: number; name?: string | null; email: string; companyName?: string | null; phone?: string | null }; items: SaleItem[]; adminNotes?: string; shippingAddress?: string | null };
 type UserAccount = { id: number; name: string; email: string; role: string; companyName?: string; phone?: string; address?: string; createdAt: string };
 
 // --- Thành phần hỗ trợ ---
@@ -940,6 +940,7 @@ export default function AdminDashboard() {
                                 <tr>
                                     <SortHeader label="MÃ ĐƠN" sortKey="id" currentSort={saleSort} onSort={handleSortSale} className="px-4" />
                                     <SortHeader label="KHÁCH HÀNG" sortKey="user" currentSort={saleSort} onSort={handleSortSale} />
+                                    <th className="text-dark fw-bold">ĐỊA CHỈ GIAO HÀNG</th>
                                     <SortHeader label="TỔNG TIỀN" sortKey="total" currentSort={saleSort} onSort={handleSortSale} />
                                     <th className="text-center">BẢO HÀNH</th>
                                     <SortHeader label="NGÀY MUA" sortKey="createdAt" currentSort={saleSort} onSort={handleSortSale} />
@@ -955,8 +956,9 @@ export default function AdminDashboard() {
                                          <td>
                                             <div className="fw-bold small">{customer.name}</div>
                                             <div className="text-muted small">{customer.contact}</div>
-                                         </td>
-                                         <td className="text-danger fw-bold">{s.total.toLocaleString()} đ</td>
+                                          </td>
+                                          <td><div className="small text-truncate" style={{maxWidth: '200px'}} title={s.shippingAddress || ""}>{s.shippingAddress || "N/A"}</div></td>
+                                          <td className="text-danger fw-bold">{s.total.toLocaleString()} đ</td>
                                          <td className="text-center">
                                             {s.items?.map(it => (
                                                 <div key={it.id} className="small text-muted">{it.product?.warrantyMonths || 12}T</div>
@@ -993,6 +995,7 @@ export default function AdminDashboard() {
                                 <tr>
                                     <SortHeader label="MÃ ĐƠN" sortKey="id" currentSort={saleSort} onSort={handleSortSale} className="px-4" />
                                     <SortHeader label="KHÁCH HÀNG" sortKey="user" currentSort={saleSort} onSort={handleSortSale} />
+                                    <th className="text-dark fw-bold">ĐỊA CHỈ GIAO HÀNG</th>
                                     <SortHeader label="TỔNG TIỀN" sortKey="total" currentSort={saleSort} onSort={handleSortSale} />
                                     <th className="text-center">BẢO HÀNH</th>
                                     <SortHeader label="NGÀY MUA" sortKey="createdAt" currentSort={saleSort} onSort={handleSortSale} />
@@ -1009,6 +1012,7 @@ export default function AdminDashboard() {
                                             <div className="fw-bold small">{customer.name}</div>
                                             <div className="text-muted small">{customer.contact}</div>
                                         </td>
+                                        <td className="text-center"><small className="text-muted">{s.shippingAddress || "N/A"}</small></td>
                                         <td className="text-primary fw-bold">{s.total.toLocaleString()} đ</td>
                                         <td className="text-center">
                                            {s.items?.map(it => (
@@ -1041,6 +1045,7 @@ export default function AdminDashboard() {
                                 <tr>
                                     <SortHeader label="MÃ ĐƠN" sortKey="id" currentSort={saleSort} onSort={handleSortSale} className="px-4" />
                                     <SortHeader label="KHÁCH HÀNG" sortKey="user" currentSort={saleSort} onSort={handleSortSale} />
+                                    <th className="text-dark fw-bold text-center">ĐỊA CHỈ GIAO</th>
                                     <SortHeader label="TỔNG TIỀN" sortKey="total" currentSort={saleSort} onSort={handleSortSale} />
                                     <th className="text-center">BẢO HÀNH</th>
                                     <SortHeader label="NGÀY MUA" sortKey="createdAt" currentSort={saleSort} onSort={handleSortSale} />
@@ -1057,6 +1062,7 @@ export default function AdminDashboard() {
                                             <div className="fw-bold small">{customer.name}</div>
                                             <div className="text-muted small">{customer.contact}</div>
                                         </td>
+                                        <td className="text-center"><small className="text-muted">{s.shippingAddress || "N/A"}</small></td>
                                         <td className="text-primary fw-bold">{s.total.toLocaleString()} đ</td>
                                         <td className="text-center">
                                            {s.items?.map(it => (
@@ -1498,14 +1504,20 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="row g-3 mb-4">
-                  <div className="col-md-6">
+                  <div className="col-md-4">
                     <div className="border rounded-3 p-3 h-100 bg-light">
                       <div className="fw-bold mb-2">Thông tin khách hàng</div>
                       <div className="fw-semibold">{formatCustomer(selectedSale).name}</div>
                       <div className="text-muted small">{formatCustomer(selectedSale).contact}</div>
                     </div>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-4">
+                    <div className="border rounded-3 p-3 h-100 bg-info bg-opacity-10 border-info border-opacity-25">
+                      <div className="fw-bold mb-2 text-info"><i className="bi bi-geo-alt-fill me-1"></i>Địa chỉ giao hàng</div>
+                      <div className="small fw-bold">{selectedSale.shippingAddress || "Chưa cập nhật địa chỉ"}</div>
+                    </div>
+                  </div>
+                  <div className="col-md-4">
                     <div className="border rounded-3 p-3 h-100 bg-light">
                       <div className="fw-bold mb-2">Tổng tiền</div>
                       <div className="fs-4 fw-bold text-primary">{selectedSale.total.toLocaleString()} đ</div>

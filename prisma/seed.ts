@@ -121,6 +121,7 @@ async function main() {
         userId: customer1.id,
         total: products[0].price * 2,
         status: 'COMPLETED',
+        shippingAddress: '123 Lê Lợi, TP.HCM',
         adminNotes: 'Khách hàng VIP, giao hàng nhanh',
         items: {
           create: [
@@ -139,6 +140,7 @@ async function main() {
         userId: customer2.id,
         total: products[1].price * 1 + products[2].price * 1,
         status: 'PENDING',
+        shippingAddress: '456 Nguyễn Trãi, Hà Nội',
         items: {
           create: [
             {
@@ -161,6 +163,7 @@ async function main() {
         userId: customer1.id,
         total: products[4].price * 1,
         status: 'SHIPPING',
+        shippingAddress: '789 Trần Hưng Đạo, Đà Nẵng',
         adminNotes: 'Đang giao hàng qua Giao Hàng Tiết Kiệm',
         items: {
           create: [
@@ -179,6 +182,7 @@ async function main() {
         userId: customer2.id,
         total: products[0].price * 1 + products[3].price * 2,
         status: 'CANCELLED',
+        shippingAddress: 'Ki-ốt 12, Chợ Bến Thành, TP.HCM',
         adminNotes: 'Khách hàng đổi ý, yêu cầu hủy đơn',
         items: {
           create: [
@@ -202,6 +206,7 @@ async function main() {
         userId: customer1.id,
         total: products[2].price * 3,
         status: 'PROCESSING',
+        shippingAddress: 'Tòa nhà Bitexco, Q1, TP.HCM',
         adminNotes: 'Đơn hàng số lượng lớn, cần kiểm tra kỹ trước khi xuất',
         items: {
           create: [

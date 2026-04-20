@@ -74,12 +74,13 @@ model SaleOrder {
   id         Int              @id @default(autoincrement())
   userId     Int
   user       User             @relation(fields: [userId], references: [id])
-  total      Float
-  status     String           @default("PENDING") 
-  items      SaleOrderItem[]
-  adminNotes String?          @db.VarChar(1000) // Ghi chú nội bộ cho quản trị viên
-  createdAt  DateTime         @default(now())
-  updatedAt  DateTime         @updatedAt
+  total           Float
+  status          String           @default("PENDING") 
+  shippingAddress String?          // Địa chỉ giao hàng cho đơn này
+  items           SaleOrderItem[]
+  adminNotes      String?          @db.VarChar(1000) // Ghi chú nội bộ cho quản trị viên
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 }
 
 model SaleOrderItem {

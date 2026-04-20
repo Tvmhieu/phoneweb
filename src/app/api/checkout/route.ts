@@ -4,11 +4,11 @@ import prisma from "@/lib/prisma";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { items } = body;
+    const { items, address } = body;
     const userId = parseInt(body.userId);
 
-    if (isNaN(userId) || !items || items.length === 0) {
-      return NextResponse.json({ success: false, message: "Dữ liệu giỏ hàng rỗng hoặc chưa đăng nhập!" }, { status: 400 });
+    if (isNaN(userId) || !items || items.length === 0 || !address) {
+      return NextResponse.json({ success: false, message: "Vui lòng nhập địa chỉ giao hàng và danh sách sản phẩm!" }, { status: 400 });
     }
 
     interface CheckoutItem {
@@ -26,6 +26,7 @@ export async function POST(req: Request) {
           userId: userId,
           total: saleTotal * 1.1, // VAT 10%
           status: "PENDING",
+          shippingAddress: address,
           items: {
             create: items.map((item: CheckoutItem) => ({
               productId: parseInt(item.productId),
