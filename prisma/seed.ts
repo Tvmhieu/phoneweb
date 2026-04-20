@@ -28,6 +28,15 @@ async function main() {
     },
   });
 
+  await prisma.user.create({
+    data: {
+      email: 'admin@pnl.com',
+      password: 'admin123',
+      name: 'Quản trị viên PNL',
+      role: 'ADMIN',
+    },
+  });
+
   // 2. Tạo 1 số Thiết bị mẫu (Sản phẩm Bàn và Thuê)
   await prisma.product.createMany({
     data: [
@@ -140,6 +149,65 @@ async function main() {
             {
               productId: products[2].id,
               quantity: 1,
+              price: products[2].price,
+            }
+          ]
+        }
+      }
+    });
+
+    await prisma.saleOrder.create({
+      data: {
+        userId: customer1.id,
+        total: products[4].price * 1,
+        status: 'SHIPPING',
+        adminNotes: 'Đang giao hàng qua Giao Hàng Tiết Kiệm',
+        items: {
+          create: [
+            {
+              productId: products[4].id,
+              quantity: 1,
+              price: products[4].price,
+            }
+          ]
+        }
+      }
+    });
+
+    await prisma.saleOrder.create({
+      data: {
+        userId: customer2.id,
+        total: products[0].price * 1 + products[3].price * 2,
+        status: 'CANCELLED',
+        adminNotes: 'Khách hàng đổi ý, yêu cầu hủy đơn',
+        items: {
+          create: [
+            {
+              productId: products[0].id,
+              quantity: 1,
+              price: products[0].price,
+            },
+            {
+              productId: products[3].id,
+              quantity: 2,
+              price: products[3].price,
+            }
+          ]
+        }
+      }
+    });
+
+    await prisma.saleOrder.create({
+      data: {
+        userId: customer1.id,
+        total: products[2].price * 3,
+        status: 'PROCESSING',
+        adminNotes: 'Đơn hàng số lượng lớn, cần kiểm tra kỹ trước khi xuất',
+        items: {
+          create: [
+            {
+              productId: products[2].id,
+              quantity: 3,
               price: products[2].price,
             }
           ]
