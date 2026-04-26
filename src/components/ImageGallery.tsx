@@ -5,12 +5,13 @@ import Image from "next/image";
 export default function ImageGallery({ mainImage, allImages, productName, productId }: { mainImage: string | null, allImages: string[], productName: string, productId: number }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [showLightbox, setShowLightbox] = useState(false);
+  const [zoom, setZoom] = useState(1);
 
   // Gộp ảnh đại diện và bộ sưu tập
   const gallery = allImages.length > 0 ? allImages : (mainImage ? [mainImage] : []);
 
-  const nextImg = () => setActiveIndex((prev) => (prev + 1) % gallery.length);
-  const prevImg = () => setActiveIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
+  const nextImg = () => { setActiveIndex((prev) => (prev + 1) % gallery.length); setZoom(1); };
+  const prevImg = () => { setActiveIndex((prev) => (prev - 1 + gallery.length) % gallery.length); setZoom(1); };
 
   if (gallery.length === 0) {
     return (
@@ -37,7 +38,7 @@ export default function ImageGallery({ mainImage, allImages, productName, produc
             sizes="(max-width: 768px) 100vw, 50vw"
             className="cursor-zoom-in p-4" 
             style={{ objectFit: "contain", mixBlendMode: "multiply" }} 
-            onClick={() => setShowLightbox(true)}
+            onClick={() => { setShowLightbox(true); setZoom(1); }}
           />
 
           {/* NÚT ĐIỀU HƯỚNG < > */}
@@ -61,8 +62,8 @@ export default function ImageGallery({ mainImage, allImages, productName, produc
           )}
 
           {/* PHÓNG TO ICON */}
-          <button className="position-absolute bottom-0 end-0 btn btn-light btn-sm m-3 shadow-sm border" onClick={() => setShowLightbox(true)}>
-             <i className="bi bi-zoom-in"></i> Phóng to
+           <button className="position-absolute bottom-0 end-0 btn btn-light btn-sm m-3 shadow-sm border fw-bold" onClick={() => { setShowLightbox(true); setZoom(1); }}>
+             <i className="bi bi-zoom-in"></i> Phóng to ảnh
           </button>
       </div>
 
@@ -85,19 +86,41 @@ export default function ImageGallery({ mainImage, allImages, productName, produc
       {/* LIGHTBOX (FULLSCREEN ZOOM) */}
       {showLightbox && (
         <div className="position-fixed top-0 start-0 w-100 h-100 bg-black bg-opacity-90 d-flex align-items-center justify-content-center" style={{ zIndex: 9999 }}>
-            <button className="position-absolute top-0 end-0 btn btn-link text-white fs-1 m-4 text-decoration-none" onClick={() => setShowLightbox(false)}>&times;</button>
+            <button className="position-absolute top-0 end-0 btn btn-link text-white fs-1 m-4 text-decoration-none" style={{ zIndex: 10001 }} onClick={() => setShowLightbox(false)}>&times;</button>
             
-            <button className="btn btn-link text-white fs-1 position-absolute start-0 m-4 d-none d-md-block" onClick={prevImg}>
+            <button className="btn btn-link text-white fs-1 position-absolute start-0 m-4 d-none d-md-block" style={{ zIndex: 10001 }} onClick={prevImg}>
                 <i className="bi bi-chevron-left"></i>
             </button>
 
-            <img src={gallery[activeIndex]} className="img-fluid" style={{ maxHeight: "90vh", maxWidth: "90vw" }} />
+            <div 
+              className="w-100 h-100 overflow-auto d-flex align-items-center justify-content-center" 
+              style={{ padding: "50px" }}
+              onWheel={(e) => {
+                  if (e.deltaY < 0) setZoom(z => Math.min(z + 0.3, 4));
+                  else setZoom(z => Math.max(z - 0.3, 1));
+              }}
+            >
+              <img 
+                  src={gallery[activeIndex]} 
+                  style={{ 
+                      width: zoom === 1 ? 'auto' : `${zoom * 90}vw`,
+                      height: zoom === 1 ? 'auto' : 'auto',
+                      maxHeight: zoom === 1 ? "90vh" : "none", 
+                      maxWidth: zoom === 1 ? "90vw" : "none",
+                      cursor: zoom > 1 ? 'zoom-out' : 'zoom-in',
+                      transition: "width 0.15s ease-out"
+                  }} 
+                  title="Cuộn chuột để thu/phóng"
+                  onClick={() => setZoom(z => z === 1 ? 2.5 : 1)}
+              />
+            </div>
 
-            <button className="btn btn-link text-white fs-1 position-absolute end-0 m-4 d-none d-md-block" onClick={nextImg}>
+            <button className="btn btn-link text-white fs-1 position-absolute end-0 m-4 d-none d-md-block" style={{ zIndex: 10001 }} onClick={nextImg}>
                 <i className="bi bi-chevron-right"></i>
             </button>
             
-            <div className="position-absolute bottom-0 text-white mb-4 fw-bold">
+            <div className="position-absolute bottom-0 text-white mb-4 fw-bold text-center w-100" style={{ zIndex: 10000, pointerEvents: 'none' }}>
+                <div className="small opacity-75 fw-normal mb-1">Cuộn chuột (scroll) để thu phóng ảnh • Click để khôi phục mặc định</div>
                 {activeIndex + 1} / {gallery.length} — {productName}
             </div>
         </div>
