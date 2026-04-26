@@ -156,8 +156,18 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: P
                 onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#f8f9fa")}
                 onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "white")}
               >
-                <div className="bg-light rounded d-flex align-items-center justify-content-center me-3" style={{ width: "50px", height: "50px", flexShrink: 0 }}>
-                  <i className={`bi ${p.category === 'TABLET' ? 'bi-tablet' : 'bi-smartphone'} text-primary`}></i>
+                <div className="bg-light rounded d-flex align-items-center justify-content-center me-3 overflow-hidden position-relative" style={{ width: "50px", height: "50px", flexShrink: 0 }}>
+                  {(p.imageUrl || p.images?.[0]?.url) ? (
+                    <Image 
+                      src={p.imageUrl || p.images?.[0]?.url || ""} 
+                      alt={p.name} 
+                      fill
+                      sizes="50px"
+                      style={{ objectFit: "contain", mixBlendMode: "multiply", padding: "4px" }} 
+                    />
+                  ) : (
+                    <i className={`bi ${p.category === 'TABLET' ? 'bi-tablet' : 'bi-smartphone'} text-primary`}></i>
+                  )}
                 </div>
                 <div className="flex-grow-1">
                   <div className="fw-bold text-dark" style={{ fontSize: "0.9rem" }}>{p.name}</div>
