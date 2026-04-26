@@ -108,7 +108,7 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: P
       </nav>
 
       <h1 className="fw-bold text-primary mb-4" style={{ fontSize: "1.75rem" }}>
-        Danh mục Thiết bị IT — Chính hãng 100%
+        Thế giới Smartphone — Chính hãng 100%
       </h1>
 
       {/* GENERAL HERO */}
@@ -116,10 +116,10 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: P
          <div className="card-body p-4 p-lg-5 text-white position-relative">
             <div className="row align-items-center">
                <div className="col-lg-8">
-                  <div className="text-info mb-2 fw-bold text-uppercase small" style={{ letterSpacing: '1.5px' }}>Trung tâm thiết bị IT Doanh nghiệp</div>
-                  <h2 className="display-6 fw-bold mb-3">Hạ Tầng Công Nghệ Đột Phá</h2>
+                  <div className="text-info mb-2 fw-bold text-uppercase small" style={{ letterSpacing: '1.5px' }}>Hệ thống bán lẻ điện thoại uy tín</div>
+                  <h2 className="display-6 fw-bold mb-3">Công Nghệ Trong Tầm Tay</h2>
                   <p className="lead mb-4 opacity-75">
-                     Khám phá kho thiết bị Server, Network và Workstation cấu hình cao từ các thương hiệu hàng đầu thế giới Dell, HP, Cisco, Lenovo. Giải pháp tối ưu cho trung tâm dữ liệu.
+                     Trải nghiệm những dòng flagship mới nhất từ Apple, Samsung, Xiaomi với mức giá hấp dẫn và chế độ bảo hành chuyên nghiệp.
                   </p>
                   <div className="d-flex flex-wrap gap-3">
                      <div className="bg-white bg-opacity-10 p-2 px-3 rounded-pill small fw-bold border border-white border-opacity-10"><i className="bi bi-patch-check-fill me-2 text-info"></i>100% Chính hãng</div>
@@ -128,7 +128,7 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: P
                   </div>
                </div>
                <div className="col-lg-4 d-none d-lg-block text-center mt-4 mt-lg-0">
-                  <i className="bi bi-cpu-fill text-white opacity-10" style={{ fontSize: '10rem' }}></i>
+                  <i className="bi bi-smartphone text-white opacity-10" style={{ fontSize: '10rem' }}></i>
                </div>
             </div>
          </div>
@@ -157,7 +157,7 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: P
                 onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "white")}
               >
                 <div className="bg-light rounded d-flex align-items-center justify-content-center me-3" style={{ width: "50px", height: "50px", flexShrink: 0 }}>
-                  <i className={`bi ${p.category === 'SERVER' ? 'bi-hdd-network' : p.category === 'PRINTER' ? 'bi-printer' : p.category === 'LAPTOP' ? 'bi-laptop' : 'bi-router'} text-primary`}></i>
+                  <i className={`bi ${p.category === 'TABLET' ? 'bi-tablet' : 'bi-smartphone'} text-primary`}></i>
                 </div>
                 <div className="flex-grow-1">
                   <div className="fw-bold text-dark" style={{ fontSize: "0.9rem" }}>{p.name}</div>
@@ -179,11 +179,11 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: P
               <div className="d-flex gap-2 flex-wrap align-items-center">
                 <span className="text-muted small fw-bold me-2"><i className="bi bi-grid me-1"></i>Phân loại:</span>
                 <button onClick={() => handleCategoryChange("ALL")} className={`btn btn-sm ${category === "ALL" ? "btn-primary" : "btn-outline-primary"}`}>Tất cả</button>
-                <button onClick={() => handleCategoryChange("SERVER")} className={`btn btn-sm ${category === "SERVER" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-hdd-network me-1"></i>Máy Chủ</button>
-                <button onClick={() => handleCategoryChange("NETWORK")} className={`btn btn-sm ${category === "NETWORK" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-router me-1"></i>Thiết Bị Mạng</button>
-                <button onClick={() => handleCategoryChange("PRINTER")} className={`btn btn-sm ${category === "PRINTER" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-printer me-1"></i>Máy In</button>
-                <button onClick={() => handleCategoryChange("LAPTOP")} className={`btn btn-sm ${category === "LAPTOP" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-laptop me-1"></i>Laptop</button>
-                <button onClick={() => handleCategoryChange("POS")} className={`btn btn-sm ${category === "POS" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-phone me-1"></i>Máy POS</button>
+                <button onClick={() => handleCategoryChange("IPHONE")} className={`btn btn-sm ${category === "IPHONE" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-apple me-1"></i>iPhone</button>
+                <button onClick={() => handleCategoryChange("SAMSUNG")} className={`btn btn-sm ${category === "SAMSUNG" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-smartphone me-1"></i>Samsung</button>
+                <button onClick={() => handleCategoryChange("XIAOMI")} className={`btn btn-sm ${category === "XIAOMI" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-smartphone me-1"></i>Xiaomi</button>
+                <button onClick={() => handleCategoryChange("OPPO")} className={`btn btn-sm ${category === "OPPO" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-smartphone me-1"></i>Oppo</button>
+                <button onClick={() => handleCategoryChange("TABLET")} className={`btn btn-sm ${category === "TABLET" ? "btn-primary" : "btn-outline-secondary"}`}><i className="bi bi-tablet me-1"></i>Máy tính bảng</button>
               </div>
             </div>
 
@@ -256,7 +256,7 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: P
                       />
                     ) : (
                       <div className="text-center">
-                        <i className={`bi ${p.category === 'SERVER' ? 'bi-hdd-network-fill' : p.category === 'PRINTER' ? 'bi-printer-fill' : p.category === 'LAPTOP' ? 'bi-laptop' : p.category === 'POS' ? 'bi-phone' : 'bi-router-fill'} d-block mb-2`} style={{ fontSize: "4rem", color: "#adb5bd" }}></i>
+                        <i className={`bi ${p.category === 'TABLET' ? 'bi-tablet' : 'bi-smartphone'} d-block mb-2`} style={{ fontSize: "4rem", color: "#adb5bd" }}></i>
                         <span className="badge bg-secondary opacity-50">MÃ SP: #{p.id}</span>
                       </div>
                     )}

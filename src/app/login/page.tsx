@@ -92,31 +92,31 @@ export default function LoginPage() {
         <div className="login-card row g-0">
           <div className="col-md-5 login-sidebar d-none d-md-flex">
             <h2 className="display-6 fw-bold mb-4">Chào mừng trở lại!</h2>
-            <p className="opacity-75 fs-5">Truy cập hệ thống quản trị tài sản IT dành cho doanh nghiệp Nhân Việt B2B.</p>
+            <p className="opacity-75 fs-5">Truy cập hệ thống quản lý bán hàng và hỗ trợ khách hàng dành riêng cho đối tác PhoneStore.</p>
             <div className="mt-5">
                 <div className="d-flex align-items-center mb-4">
                     <div className="bg-white bg-opacity-20 rounded-circle p-2 me-3">
                         <i className="bi bi-shield-lock-fill fs-5"></i>
                     </div>
-                    <span>Bảo mật dữ liệu chuẩn doanh nghiệp</span>
+                    <span>Hệ thống bảo mật giao dịch an toàn</span>
                 </div>
                 <div className="d-flex align-items-center mb-4">
                     <div className="bg-white bg-opacity-20 rounded-circle p-2 me-3">
                         <i className="bi bi-cpu-fill fs-5"></i>
                     </div>
-                    <span>Quản lý thiết bị thời gian thực</span>
+                    <span>Quản lý đơn hàng thời gian thực</span>
                 </div>
                 <div className="d-flex align-items-center">
                     <div className="bg-white bg-opacity-20 rounded-circle p-2 me-3">
                         <i className="bi bi-headset fs-5"></i>
                     </div>
-                    <span>Hỗ trợ kỹ thuật Onsite 24/7</span>
+                    <span>Hỗ trợ kỹ thuật phần mềm 24/7</span>
                 </div>
             </div>
           </div>
           <div className="col-md-7 form-container">
             <div className="text-center mb-5 d-md-none">
-                <h3 className="fw-bold text-primary">Nhân Việt B2B</h3>
+                <h3 className="fw-bold text-primary">PhoneStore</h3>
             </div>
             <h3 className="fw-bold mb-2">Đăng Nhập Tài Khoản</h3>
             <p className="text-muted mb-5">Vui lòng nhập thông tin để truy cập hệ thống.</p>
