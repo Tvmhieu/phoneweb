@@ -25,18 +25,18 @@ export default function ImageGallery({ mainImage, allImages, productName, produc
   return (
     <div className="position-relative">
       {/* KHUNG ẢNH CHÍNH */}
-      <div className="bg-white border rounded p-2 text-center shadow-sm position-relative overflow-hidden d-flex flex-column align-items-center justify-content-center bg-checkered main-img-container" style={{ minHeight: "450px" }}>
+      <div className="bg-light border rounded text-center shadow-sm position-relative overflow-hidden d-flex flex-column align-items-center justify-content-center main-img-container" style={{ height: "450px", width: "100%" }}>
         <style>{`
-          @media (max-width: 768px) { .main-img-container { min-height: 300px !important; } }
+          @media (max-width: 768px) { .main-img-container { height: 350px !important; } }
         `}</style>
           
           <Image 
             src={gallery[activeIndex]} 
             alt={productName} 
-            width={600}
-            height={400}
-            className="img-fluid rounded cursor-zoom-in" 
-            style={{ maxHeight: "400px", objectFit: "contain", cursor: "zoom-in", width: 'auto', height: 'auto' }} 
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="cursor-zoom-in p-4" 
+            style={{ objectFit: "contain", mixBlendMode: "multiply" }} 
             onClick={() => setShowLightbox(true)}
           />
 
@@ -106,11 +106,6 @@ export default function ImageGallery({ mainImage, allImages, productName, produc
       <style jsx>{`
         .cursor-pointer { cursor: pointer; }
         .hover-opacity-100:hover { opacity: 1 !important; }
-        .bg-checkered {
-          background-image: linear-gradient(45deg, #f8f9fa 25%, transparent 25%), linear-gradient(-45deg, #f8f9fa 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f8f9fa 75%), linear-gradient(-45deg, transparent 75%, #f8f9fa 75%);
-          background-size: 20px 20px;
-          background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-        }
       `}</style>
     </div>
   );
