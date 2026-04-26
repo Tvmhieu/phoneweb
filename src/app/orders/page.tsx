@@ -22,10 +22,7 @@ export default function OrdersPage() {
         return;
     }
     
-    if (!userInfo && !loading) {
-        router.push("/login");
-        return;
-    }
+    // Redirect login handling is managed by the setTimeout below
 
     if (userInfo?.id) {
       setLoading(true);
@@ -37,10 +34,16 @@ export default function OrdersPage() {
           }
         })
         .finally(() => setLoading(false));
-    } else if (!loading) {
-      setLoading(false);
+    } else {
+      // Xác minh xem có phải khách chưa login không
+      const t = setTimeout(() => {
+        if (!localStorage.getItem("userInfo")) {
+          router.push("/login");
+        }
+      }, 500);
+      return () => clearTimeout(t);
     }
-  }, [userInfo, userRole, router, loading]);
+  }, [userInfo, userRole, router]);
 
   const getSaleStatusBadge = (status: string) => {
     const s = status.toUpperCase();
