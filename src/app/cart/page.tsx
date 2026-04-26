@@ -8,6 +8,7 @@ export default function CartPage() {
   const { items, removeFromCart, cartTotal, clearCart } = useCart();
   const { userRole, userInfo } = useAuth();
   const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleCheckout = async () => {
@@ -16,16 +17,17 @@ export default function CartPage() {
       return;
     }
 
-    if (!address.trim()) {
-      alert("Vui lòng nhập địa chỉ nhận hàng/.");
+    if (!phone.trim() || !address.trim()) {
+      alert("Vui lòng nhập đầy đủ Số điện thoại và Địa chỉ nhận hàng.");
       return;
     }
     
     setIsProcessing(true);
     try {
+      const fullShippingAddress = `SĐT: ${phone} - Địa chỉ: ${address}`;
       const res = await fetch("/api/checkout", {
         method: "POST",
-        body: JSON.stringify({ userId: userInfo.id, items, address }),
+        body: JSON.stringify({ userId: userInfo.id, items, address: fullShippingAddress }),
       });
       const data = await res.json();
       
@@ -192,7 +194,15 @@ export default function CartPage() {
                   ) : (
                     <>
                       <div className="mb-4">
-                        <label className="form-label fw-bold small text-muted"><i className="bi bi-geo-alt me-1"></i>Địa chỉ nhận hàngVăn phòng dự án</label>
+                        <label className="form-label fw-bold small text-muted"><i className="bi bi-telephone me-1"></i>Số điện thoại người nhận</label>
+                        <input
+                          type="tel"
+                          className="form-control border-2 rounded-3 shadow-sm bg-white mb-3"
+                          placeholder="Nhập số điện thoại liên hệ"
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                        />
+                        <label className="form-label fw-bold small text-muted"><i className="bi bi-geo-alt me-1"></i>Địa chỉ nhận hàng</label>
                         <textarea 
                           className="form-control border-2 rounded-3 shadow-sm bg-white" 
                           rows={3} 
