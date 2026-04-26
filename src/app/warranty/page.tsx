@@ -122,8 +122,8 @@ export default function WarrantyPage() {
         <div className="container">
            <div className="row align-items-center">
              <div className="col-md-7">
-                <h1 className="display-5 fw-bold mb-3"><i className="bi bi-shield-lock me-2"></i>Trung Tâm Bảo Hành & Kỹ Thuật</h1>
-                <p className="lead opacity-75 mb-3">Hỗ trợ khẩn cấp cho thiết bị đã mua tại hệ thống. Cam kết xử lý trong vòng ban ngày làm việc.</p>
+                <h1 className="display-5 fw-bold mb-3"><i className="bi bi-shield-lock me-2"></i>Trung Tâm Bảo Hành PhoneStore</h1>
+                <p className="lead opacity-75 mb-3">Hỗ trợ bảo hành nhanh chóng cho các sản phẩm mua tại PhoneStore. Cam kết xử lý và phản hồi trong 24 giờ.</p>
                 <Link href="/warranty-policy" className="btn btn-warning btn-sm rounded-pill fw-bold px-3 border-0 shadow-sm text-dark">
                     <i className="bi bi-file-earmark-text me-1"></i> Xem chi tiết Chính sách bảo hành
                 </Link>
@@ -140,7 +140,7 @@ export default function WarrantyPage() {
             {/* DANH SÁCH TÀI SẢN */}
             <div className="col-lg-7">
                 <div className="d-flex justify-content-between align-items-center mb-4">
-                    <h5 className="fw-bold mb-0 text-dark">THIẾT BỊ CỦA BẠN</h5>
+                    <h5 className="fw-bold mb-0 text-dark">SẢN PHẨM KHÁCH HÀNG ĐÃ MUA</h5>
                     <span className="badge bg-white text-dark border shadow-sm px-3 py-2">{mySales.length} Sản phẩm</span>
                 </div>
 
@@ -153,10 +153,10 @@ export default function WarrantyPage() {
                     <>
                         {mySales.length === 0 && (
                             <div className="card text-center py-5 border-dashed bg-white bg-opacity-50">
-                                <i className="bi bi-box-seam-fill display-1 text-muted opacity-25"></i>
-                                <p className="mt-3 fs-5 text-muted">Bạn chưa sở hữu thiết bị nào trong hệ thống.</p>
+                                <i className="bi bi-phone display-1 text-muted opacity-25"></i>
+                                <p className="mt-3 fs-5 text-muted">Bạn chưa có lịch sử mua hàng nào tại PhoneStore.</p>
                                 <div className="mt-2 text-center">
-                                    <Link href="/products" className="btn btn-outline-primary btn-sm rounded-pill fw-bold">XEM DANH SÁCH THIẾT BỊ</Link>
+                                    <Link href="/products" className="btn btn-outline-primary btn-sm rounded-pill fw-bold">XEM ĐIỆN THOẠI MỚI</Link>
                                 </div>
                             </div>
                         )}
@@ -214,16 +214,16 @@ export default function WarrantyPage() {
                         ) : (
                             <form onSubmit={handleSubmit}>
                                 <div className="mb-4">
-                                    <label className="form-label small fw-bold text-muted">Thiết bị đang chọn xử lý</label>
+                                    <label className="form-label small fw-bold text-muted">Sản phẩm đang chọn xử lý</label>
                                     <div className="p-3 bg-light border rounded-3 fw-bold text-primary d-flex justify-content-between align-items-center">
-                                        <span>{productName || "XÁC NHẬN CHỌN MÁY..."}</span>
+                                        <span>{productName || "CHƯA CHỌN SẢN PHẨM..."}</span>
                                         {productId && <span className="badge bg-dark">ID: {productId}</span>}
                                     </div>
                                     {!productId && <small className="text-muted mt-2 d-block"><i className="bi bi-info-circle me-1"></i>Hãy nhấn <strong>Gửi yêu cầu</strong> từ danh sách bên cạnh</small>}
                                 </div>
                                 <div className="mb-4">
                                     <label className="form-label small fw-bold text-muted">Mô tả chi tiết sự cố <span className="text-primary">*</span></label>
-                                    <textarea className="form-control bg-light border-0" rows={5} value={issueDetail} onChange={e => setIssueDetail(e.target.value)} required placeholder="Ví dụ: Máy chủ phát âm thanh lạ, đèn trạng thái đỏ, hay màn hình xanh..." />
+                                    <textarea className="form-control bg-light border-0" rows={5} value={issueDetail} onChange={e => setIssueDetail(e.target.value)} required placeholder="Ví dụ: Điện thoại khởi động không lên, sạc không vào pin, liệt cảm ứng góc màn hình..." />
                                 </div>
                                 <button type="submit" disabled={isSubmitting || !productId} className="btn btn-primary w-100 py-3 fw-bold fs-5 rounded-pill shadow">
                                     {isSubmitting ? (
@@ -239,17 +239,17 @@ export default function WarrantyPage() {
 
                 {userInfo && (
                     <div className="card border-0 shadow-sm rounded-4 overflow-hidden">
-                        <div className="card-header bg-white border-0 py-3 fw-bold"><i className="bi bi-journal-text me-2 text-primary"></i>LỊCH SỬ TICKET (GẦN NHẤT)</div>
+                        <div className="card-header bg-white border-0 py-3 fw-bold"><i className="bi bi-journal-text me-2 text-primary"></i>LỊCH SỬ BẢO HÀNH (GẦN NHẤT)</div>
                         <div className="card-body p-0">
                             <ul className="list-group list-group-flush">
                                 {myClaims.length === 0 && <li className="list-group-item text-center py-5 text-muted small"><i className="bi bi-inbox-fill d-block fs-1 opacity-25"></i>Bạn chưa gửi yêu cầu nào</li>}
                                 {[...myClaims].slice(0, 5).map(c => (
                                     <li key={c.id} className="list-group-item p-4 ticket-item bg-transparent">
                                         <div className="d-flex justify-content-between align-items-center mb-2">
-                                            <span className="fw-bold fs-5 text-dark">#TICKET-{c.id}</span>
+                                            <span className="fw-bold fs-5 text-dark">#BH-{c.id}</span>
                                             {statusBadge(c.status)}
                                         </div>
-                                        <div className="text-primary fw-bold mb-1"><i className="bi bi-box-seam me-1"></i>{c.product?.name}</div>
+                                        <div className="text-primary fw-bold mb-1"><i className="bi bi-phone me-1"></i>{c.product?.name}</div>
                                         <div className="small text-muted d-flex justify-content-between align-items-center">
                                             <span><i className="bi bi-calendar3 me-1"></i>{new Date(c.createdAt).toLocaleDateString("vi-VN")}</span>
                                             <Link href={`/warranty/${c.id}`} className="text-decoration-underline text-muted">Chi tiết <i className="bi bi-arrow-right small"></i></Link>
