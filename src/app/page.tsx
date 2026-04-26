@@ -270,12 +270,10 @@ export default async function HomePage() {
       <section className="py-5 bg-white">
         <div className="container">
           <div className="row align-items-center justify-content-center text-center g-5 opacity-50">
-            <div className="col-4 col-md-2"><i className="bi bi-apple fs-1"></i></div>
-            <div className="col-4 col-md-2"><span className="fw-bold fs-3">SAMSUNG</span></div>
-            <div className="col-4 col-md-2"><span className="fw-bold fs-3">XIAOMI</span></div>
-            <div className="col-4 col-md-2"><span className="fw-bold fs-4">OPPO</span></div>
-            <div className="col-4 col-md-2"><span className="fw-bold fs-4">VIVO</span></div>
-            <div className="col-4 col-md-2"><span className="fw-bold fs-4">REALME</span></div>
+            <div className="col-6 col-md-3"><i className="bi bi-apple" style={{ fontSize: '2.5rem' }}></i></div>
+            <div className="col-6 col-md-3"><span className="fw-bold" style={{ fontSize: '1.8rem', letterSpacing: '1px' }}>SAMSUNG</span></div>
+            <div className="col-6 col-md-3"><span className="fw-bold" style={{ fontSize: '1.8rem', letterSpacing: '1px' }}>XIAOMI</span></div>
+            <div className="col-6 col-md-3"><span className="fw-bold text-success" style={{ fontSize: '1.8rem', letterSpacing: '1px' }}>OPPO</span></div>
           </div>
         </div>
       </section>
