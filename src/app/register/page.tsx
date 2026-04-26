@@ -7,7 +7,6 @@ import Link from "next/link";
 export default function RegisterPage() {
   const router = useRouter();
   const [name, setName] = useState("");
-  const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
@@ -20,7 +19,7 @@ export default function RegisterPage() {
     try {
       const res = await fetch("/api/register", {
         method: "POST",
-        body: JSON.stringify({ name, companyName: companyName || "Cá nhân", email, password, address })
+        body: JSON.stringify({ name, email, password, address })
       });
       const data = await res.json();
       
@@ -117,9 +116,7 @@ export default function RegisterPage() {
             <div className="text-center mb-5 d-md-none">
                 <h3 className="fw-bold text-primary">PhoneStore</h3>
             </div>
-            <h3 className="fw-bold mb-2">Đăng Ký Tài Khoản Tôn Trọng</h3>
-            <p className="text-muted mb-4 small">Lưu ý: Tài khoản khởi tạo mặc định có quyền <strong>Khách Hàng (Customer)</strong>.</p>
-
+            <h3 className="fw-bold mb-4">Đăng Ký Tài Khoản Tôn Trọng</h3>
             <form onSubmit={handleRegister}>
               <div className="row g-3">
                 <div className="col-md-12 mb-2">
@@ -131,16 +128,6 @@ export default function RegisterPage() {
                         value={name} 
                         onChange={(e) => setName(e.target.value)} 
                         required 
-                    />
-                </div>
-                <div className="col-md-12 mb-2">
-                    <label className="form-label small fw-bold text-muted text-uppercase">Tên Đơn Vị / Công Ty</label>
-                    <input 
-                        type="text" 
-                        className="form-control input-premium border-0" 
-                        placeholder="Để trống nếu là cá nhân" 
-                        value={companyName} 
-                        onChange={(e) => setCompanyName(e.target.value)} 
                     />
                 </div>
                 <div className="col-md-12 mb-2">

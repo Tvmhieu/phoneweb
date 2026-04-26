@@ -19,7 +19,7 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
-    const { name, email, password, role, companyName, phone } = await req.json();
+    const { name, email, password, role, phone } = await req.json();
 
     if (!email || !password || !role) {
       return NextResponse.json({ success: false, message: "Thiếu thông tin bắt buộc" }, { status: 400 });
@@ -38,7 +38,6 @@ export async function POST(req: Request) {
         email,
         password: hashedPassword,
         role,
-        companyName,
         phone
       }
     });
@@ -51,18 +50,21 @@ export async function POST(req: Request) {
 
 export async function PUT(req: Request) {
   try {
-    const { id, name, email, role, companyName, phone, password } = await req.json();
+    const { id, name, email, role, phone, password } = await req.json();
 
-    type UserUpdateData = {
+    if (!id || !email || !role) {
+      return NextResponse.json({ success: false, message: "Thiếu dữ liệu bắt buộc" }, { status: 400 });
+    }
+
+    interface UserUpdateData {
       name?: string;
-      email?: string;
-      role?: any; // Role is often an enum, using any or the actual Prisma enum type
-      companyName?: string;
+      email: string;
+      role: string;
       phone?: string;
       password?: string;
-    };
+    }
 
-    const updateData: UserUpdateData = { name, email, role, companyName, phone };
+    const updateData: UserUpdateData = { name, email, role, phone };
     if (password) {
       updateData.password = await hash(password, 10);
     }

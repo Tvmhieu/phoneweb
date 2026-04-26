@@ -16,7 +16,6 @@ export async function GET(req: Request) {
           name: true,
           phone: true,
           address: true,
-          companyName: true,
           role: true,
           createdAt: true
       }
@@ -33,7 +32,7 @@ export async function GET(req: Request) {
 
 export async function PUT(req: Request) {
   try {
-    const { userId, name, phone, address, companyName } = await req.json();
+    const { userId, name, phone, address } = await req.json();
 
     if (!userId) return NextResponse.json({ success: false, message: "Thiếu userId" }, { status: 400 });
 
@@ -42,8 +41,7 @@ export async function PUT(req: Request) {
       data: {
         name,
         phone,
-        address,
-        companyName
+        address
       }
     });
 

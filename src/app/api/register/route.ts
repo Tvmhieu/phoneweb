@@ -4,9 +4,9 @@ import { hash } from "bcryptjs";
 
 export async function POST(req: Request) {
   try {
-    const { name, companyName, email, password, address } = await req.json();
+    const { name, email, password, address } = await req.json();
 
-    if (!email || !password) {
+    if (!name || !email || !password) {
       return NextResponse.json({ success: false, message: "Thiếu thông tin bắt buộc!" }, { status: 400 });
     }
 
@@ -22,7 +22,6 @@ export async function POST(req: Request) {
     await prisma.user.create({
       data: {
         name,
-        companyName,
         email,
         password: hashedPassword,
         address,

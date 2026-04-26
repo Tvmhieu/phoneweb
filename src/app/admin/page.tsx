@@ -43,8 +43,8 @@ type Warranty = {
   user?: { id: number; name: string; email: string; phone?: string } 
 };
 type ContactMsg = { id: number; name: string; email: string; phone: string; message: string; isRead: boolean; createdAt: string };
-type Sale = { id: number; userId: number; total: number; status: string; createdAt: string; user?: { id: number; name?: string | null; email: string; companyName?: string | null; phone?: string | null }; items: SaleItem[]; adminNotes?: string; shippingAddress?: string | null };
-type UserAccount = { id: number; name: string; email: string; role: string; companyName?: string; phone?: string; address?: string; createdAt: string };
+type Sale = { id: number; userId: number; total: number; status: string; createdAt: string; user?: { id: number; name?: string | null; email: string; phone?: string | null }; items: SaleItem[]; adminNotes?: string; shippingAddress?: string | null };
+type UserAccount = { id: number; name: string; email: string; role: string; phone?: string; address?: string; createdAt: string };
 
 // --- Thành phần hỗ trợ ---
 const SortHeader = ({ label, sortKey, currentSort, onSort, className = "" }: { label: string, sortKey: string, currentSort: { key: string, dir: 'asc'|'desc' }, onSort: (key: string) => void, className?: string }) => {
@@ -203,8 +203,7 @@ export default function AdminDashboard() {
   const getFilteredCustomers = (list: UserAccount[]) => {
     let filtered = list.filter(u => 
       u.name?.toLowerCase().includes(customerSearch.toLowerCase()) || 
-      u.email.toLowerCase().includes(customerSearch.toLowerCase()) ||
-      u.companyName?.toLowerCase().includes(customerSearch.toLowerCase())
+      u.email.toLowerCase().includes(customerSearch.toLowerCase())
     );
     return [...filtered].sort((a: any, b: any) => {
       let valA = a[customerSort.key];
@@ -254,7 +253,7 @@ export default function AdminDashboard() {
         contact: order.user?.email || "Không có thông tin" 
       };
     }
-    const name = order.user?.companyName || order.user?.name || "Khách hàng";
+    const name = order.user?.name || "Khách hàng";
     const contact = [order.user?.email, order.user?.phone].filter(Boolean).join(" • ");
     return { name, contact: contact || "Chưa có thông tin liên hệ" };
   };
@@ -301,7 +300,7 @@ export default function AdminDashboard() {
     try {
       const res = await fetch(`/api/admin/products?id=${id}`, { method: "DELETE" });
       const data = await res.json();
-      if (data.success) {
+      if (res.ok) {
         alert("Đã xóa sản phẩm!");
         loadProducts();
         loadStats();
@@ -1170,8 +1169,8 @@ export default function AdminDashboard() {
                                 <input type="password" name="password" className="form-control py-2 shadow-sm" onChange={e => setEditingUser({...editingUser, password: e.target.value})} required={!editingUser.id}/>
                               </div>
                               <div className="col-md-4">
-                                <label className="form-label small fw-bold">Phòng ban / Chức vụ</label>
-                                <input type="text" className="form-control py-2 shadow-sm" value={editingUser.companyName || ""} onChange={e => setEditingUser({...editingUser, companyName: e.target.value})} placeholder="Sale, Kỹ thuật, Kế toán..."/>
+                                <label className="form-label small fw-bold">Số Điện Thoại</label>
+                                <input type="text" className="form-control py-2 shadow-sm" value={editingUser.phone || ""} onChange={e => setEditingUser({...editingUser, phone: e.target.value})}/>
                               </div>
                               <div className="col-md-4">
                                 <label className="form-label small fw-bold">Nhóm quyền hạn</label>
@@ -1199,7 +1198,7 @@ export default function AdminDashboard() {
                         <tr>
                           <SortHeader label="NHÂN VIÊN" sortKey="name" currentSort={staffSort} onSort={handleSortStaff} className="px-4 py-3" />
                           <SortHeader label="THÔNG TIN LIÊN HỆ" sortKey="email" currentSort={staffSort} onSort={handleSortStaff} />
-                          <SortHeader label="PHÒNG BAN" sortKey="companyName" currentSort={staffSort} onSort={handleSortStaff} />
+                          <SortHeader label="VAI TRÒ" sortKey="role" currentSort={staffSort} onSort={handleSortStaff} />
                           <SortHeader label="PHÂN QUYỀN" sortKey="role" currentSort={staffSort} onSort={handleSortStaff} />
                           <th className="text-end px-4 py-3 text-dark fw-bold">QUẢN TRỊ</th>
                         </tr>
@@ -1234,7 +1233,7 @@ export default function AdminDashboard() {
                               </td>
                               <td>
                                 <span className="badge bg-light text-dark border fw-medium px-3 py-2 rounded-pill">
-                                  <i className="bi bi-bookmark-fill text-muted me-1"></i> {u.companyName || "N/A"}
+                                  <i className="bi bi-shield-lock-fill text-muted me-1"></i> {u.role}
                                 </span>
                               </td>
                               <td>
@@ -1268,7 +1267,7 @@ export default function AdminDashboard() {
                     <div className="d-flex gap-3">
                       <div className="input-group" style={{ width: "300px" }}>
                          <span className="input-group-text bg-white border-end-0"><i className="bi bi-search"></i></span>
-                         <input type="text" className="form-control border-start-0" placeholder="Tìm tên, email, cty..." value={customerSearch} onChange={e => setCustomerSearch(e.target.value)} />
+                         <input type="text" className="form-control border-start-0" placeholder="Tìm tên, email..." value={customerSearch} onChange={e => setCustomerSearch(e.target.value)} />
                       </div>
                       <button className="btn btn-dark fw-bold" onClick={() => setEditingUser({role: "CUSTOMER"})}><i className="bi bi-person-plus-fill me-2"></i>Thêm Khách Hàng</button>
                     </div>
@@ -1292,15 +1291,11 @@ export default function AdminDashboard() {
                                 <input type="password" name="password" className="form-control" onChange={e => setEditingUser({...editingUser, password: e.target.value})} required={!editingUser.id}/>
                               </div>
                               <div className="col-md-4">
-                                <label className="form-label small fw-bold">Tên công ty (B2B)</label>
-                                <input type="text" className="form-control" value={editingUser.companyName || ""} onChange={e => setEditingUser({...editingUser, companyName: e.target.value})}/>
-                              </div>
-                              <div className="col-md-4">
                                 <label className="form-label small fw-bold">Số điện thoại</label>
                                 <input type="text" className="form-control" value={editingUser.phone || ""} onChange={e => setEditingUser({...editingUser, phone: e.target.value})}/>
                               </div>
                               <div className="col-md-8">
-                                <label className="form-label small fw-bold">Địa chỉ giao hàng / Văn phòng</label>
+                                <label className="form-label small fw-bold">Địa chỉ giao hàng</label>
                                 <input type="text" className="form-control" placeholder="VD: 123 Nguyễn Văn Linh, Q7, TP.HCM" value={editingUser.address || ""} onChange={e => setEditingUser({...editingUser, address: e.target.value})}/>
                               </div>
                               <input type="hidden" value="CUSTOMER" />
