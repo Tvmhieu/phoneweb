@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -20,18 +20,18 @@ export default function RegisterPage() {
     try {
       const res = await fetch("/api/register", {
         method: "POST",
-        body: JSON.stringify({ name, companyName: companyName || "CÃ¡ nhÃ¢n", email, password, address })
+        body: JSON.stringify({ name, companyName: companyName || "Cá nhân", email, password, address })
       });
       const data = await res.json();
       
       if (data.success) {
-        alert("ÄÄƒng kÃ½ thÃ nh cÃ´ng! Äang chuyá»ƒn hÆ°á»›ng Ä‘áº¿n trang Ä‘Äƒng nháº­p...");
+        alert("Đăng ký thành công! Đang chuyển hướng đến trang đăng nhập...");
         router.push("/login");
       } else {
-        alert("Lá»—i ÄÄƒng KÃ½: " + data.message);
+        alert("Lỗi Đăng Ký: " + data.message);
       }
     } catch (err) {
-      alert("Lá»—i káº¿t ná»‘i mÃ¡y chá»§");
+      alert("Lỗi kết nối máy chủ");
     } finally {
       setIsSubmitting(false);
     }
@@ -90,55 +90,55 @@ export default function RegisterPage() {
       <div className="container d-flex justify-content-center">
         <div className="register-card row g-0">
           <div className="col-md-5 register-sidebar d-none d-md-flex">
-            <h2 className="display-6 fw-bold mb-4">Trá»Ÿ thÃ nh Ä‘á»‘i tÃ¡c lÃ¢u dÃ i</h2>
-            <p className="opacity-75 fs-5">Khá»Ÿi táº¡o tÃ i khoáº£n Ä‘á»ƒ quáº£n lÃ½ thiáº¿t bá»‹, Ä‘Æ¡n hÃ ng vÃ  theo dÃµi báº£o hÃ nh táº­p trung.</p>
+            <h2 className="display-6 fw-bold mb-4">Trở thành đối tác lâu dài</h2>
+            <p className="opacity-75 fs-5">Khởi tạo tài khoản để quản lý thiết bị, đơn hàng và theo dõi bảo hành tập trung.</p>
             <div className="mt-5">
                 <div className="d-flex align-items-center mb-4 text-start">
                     <div className="bg-white bg-opacity-20 rounded-circle p-2 me-3">
                         <i className="bi bi-person-check-fill fs-5"></i>
                     </div>
-                    <span>DÃ nh cho cáº£ doanh nghiá»‡p & khÃ¡ch láº»</span>
+                    <span>Dành cho cả doanh nghiệp & khách lẻ</span>
                 </div>
                 <div className="d-flex align-items-center mb-4 text-start">
                     <div className="bg-white bg-opacity-20 rounded-circle p-2 me-3">
                         <i className="bi bi-tags-fill fs-5"></i>
                     </div>
-                    <span>Nháº­n Æ°u Ä‘Ã£i chiáº¿t kháº¥u dá»± Ã¡n lá»›n</span>
+                    <span>Nhận ưu đãi chiết khấu dự án lớn</span>
                 </div>
                 <div className="d-flex align-items-center text-start">
                     <div className="bg-white bg-opacity-20 rounded-circle p-2 me-3">
                         <i className="bi bi-clock-history fs-5"></i>
                     </div>
-                    <span>LÆ°u lá»‹ch sá»­ giao dá»‹ch trá»n Ä‘á»i</span>
+                    <span>Lưu lịch sử giao dịch trọn đời</span>
                 </div>
             </div>
           </div>
           <div className="col-md-7 form-container">
             <div className="text-center mb-5 d-md-none">
-                <h3 className="fw-bold text-success">NhÃ¢n Viá»‡t B2B</h3>
+                <h3 className="fw-bold text-success">Nhân Việt B2B</h3>
             </div>
-            <h3 className="fw-bold mb-2">ÄÄƒng KÃ½ TÃ i Khoáº£n Má»›i</h3>
-            <p className="text-muted mb-4 small">LÆ°u Ã½: TÃ i khoáº£n khá»Ÿi táº¡o máº·c Ä‘á»‹nh cÃ³ quyá»n <strong>KhÃ¡ch HÃ ng (Customer)</strong>.</p>
+            <h3 className="fw-bold mb-2">Đăng Ký Tài Khoản Mới</h3>
+            <p className="text-muted mb-4 small">Lưu ý: Tài khoản khởi tạo mặc định có quyền <strong>Khách Hàng (Customer)</strong>.</p>
 
             <form onSubmit={handleRegister}>
               <div className="row g-3">
                 <div className="col-md-12 mb-2">
-                    <label className="form-label small fw-bold text-muted text-uppercase">Há» vÃ  TÃªn</label>
+                    <label className="form-label small fw-bold text-muted text-uppercase">Họ và Tên</label>
                     <input 
                         type="text" 
                         className="form-control input-premium border-0" 
-                        placeholder="VD: Nguyá»…n VÄƒn A" 
+                        placeholder="VD: Nguyễn Văn A" 
                         value={name} 
                         onChange={(e) => setName(e.target.value)} 
                         required 
                     />
                 </div>
                 <div className="col-md-12 mb-2">
-                    <label className="form-label small fw-bold text-muted text-uppercase">TÃªn ÄÆ¡n Vá»‹ / CÃ´ng Ty</label>
+                    <label className="form-label small fw-bold text-muted text-uppercase">Tên Đơn Vị / Công Ty</label>
                     <input 
                         type="text" 
                         className="form-control input-premium border-0" 
-                        placeholder="Äá»ƒ trá»‘ng náº¿u lÃ  cÃ¡ nhÃ¢n" 
+                        placeholder="Để trống nếu là cá nhân" 
                         value={companyName} 
                         onChange={(e) => setCompanyName(e.target.value)} 
                     />
@@ -155,21 +155,21 @@ export default function RegisterPage() {
                     />
                 </div>
                 <div className="col-md-12 mb-2">
-                    <label className="form-label small fw-bold text-muted text-uppercase">Äá»‹a chá»‰ giao hÃ ng / VÄƒn phÃ²ng</label>
+                    <label className="form-label small fw-bold text-muted text-uppercase">Địa chỉ giao hàng / Văn phòng</label>
                     <input 
                         type="text" 
                         className="form-control input-premium border-0" 
-                        placeholder="VD: 123 Nguyá»…n VÄƒn Linh, Quáº­n 7, TP.HCM" 
+                        placeholder="VD: 123 Nguyễn Văn Linh, Quận 7, TP.HCM" 
                         value={address} 
                         onChange={(e) => setAddress(e.target.value)} 
                     />
                 </div>
                 <div className="col-md-12 mb-4">
-                    <label className="form-label small fw-bold text-muted text-uppercase">Máº­t kháº©u</label>
+                    <label className="form-label small fw-bold text-muted text-uppercase">Mật khẩu</label>
                     <input 
                         type="password" 
                         className="form-control input-premium border-0" 
-                        placeholder="Tá»‘i thiá»ƒu 6 kÃ½ tá»±" 
+                        placeholder="Tối thiểu 6 ký tự" 
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)} 
                         required 
@@ -179,15 +179,15 @@ export default function RegisterPage() {
               
               <button type="submit" disabled={isSubmitting} className="btn btn-success btn-register w-100 mb-4 py-3">
                 {isSubmitting ? (
-                    <><span className="spinner-border spinner-border-sm me-2"></span>ÄANG KHá»žI Táº O...</>
+                    <><span className="spinner-border spinner-border-sm me-2"></span>ĐANG KHỞI TẠO...</>
                 ) : (
-                    "HOÃ€N Táº¤T ÄÄ‚NG KÃ"
+                    "HOÀN TẤT ĐĂNG KÝ"
                 )}
               </button>
               
               <div className="text-center">
-                <span className="text-muted small">ÄÃ£ cÃ³ tÃ i khoáº£n thÃ nh viÃªn?</span>
-                <Link href="/login" className="text-primary ms-2 fw-bold text-decoration-none small">ÄÄƒng nháº­p</Link>
+                <span className="text-muted small">Đã có tài khoản thành viên?</span>
+                <Link href="/login" className="text-primary ms-2 fw-bold text-decoration-none small">Đăng nhập</Link>
               </div>
             </form>
           </div>

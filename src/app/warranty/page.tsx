@@ -123,7 +123,7 @@ export default function WarrantyPage() {
            <div className="row align-items-center">
              <div className="col-md-7">
                 <h1 className="display-5 fw-bold mb-3"><i className="bi bi-shield-lock me-2"></i>Trung Tâm Bảo Hành & Kỹ Thuật</h1>
-                <p className="lead opacity-75 mb-3">Hỗ trợ khẩn cấp cho các dòng Smartphone & Tablet đã mua tại hệ thống PhoneStore.</p>
+                <p className="lead opacity-75 mb-3">Hỗ trợ khẩn cấp cho thiết bị đã mua tại hệ thống. Cam kết xử lý trong vòng ban ngày làm việc.</p>
                 <Link href="/warranty-policy" className="btn btn-warning btn-sm rounded-pill fw-bold px-3 border-0 shadow-sm text-dark">
                     <i className="bi bi-file-earmark-text me-1"></i> Xem chi tiết Chính sách bảo hành
                 </Link>
@@ -223,7 +223,7 @@ export default function WarrantyPage() {
                                 </div>
                                 <div className="mb-4">
                                     <label className="form-label small fw-bold text-muted">Mô tả chi tiết sự cố <span className="text-primary">*</span></label>
-                                    <textarea className="form-control bg-light border-0" rows={5} value={issueDetail} onChange={e => setIssueDetail(e.target.value)} required placeholder="Ví dụ: Điện thoại không lên nguồn, màn hình bị sọc, hay pin tụt nhanh..." />
+                                    <textarea className="form-control bg-light border-0" rows={5} value={issueDetail} onChange={e => setIssueDetail(e.target.value)} required placeholder="Ví dụ: Máy chủ phát âm thanh lạ, đèn trạng thái đỏ, hay màn hình xanh..." />
                                 </div>
                                 <button type="submit" disabled={isSubmitting || !productId} className="btn btn-primary w-100 py-3 fw-bold fs-5 rounded-pill shadow">
                                     {isSubmitting ? (

@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Chính Sách Bảo Hành - PhoneStore",
-  description: "Chính sách bảo hành điện thoại và máy tính bảng tại PhoneStore. Cam kết đổi mới trong 30 ngày và bảo hành 12 tháng chính hãng.",
+  title: "Chính Sách Bảo Hành - ABC XYZ",
+  description: "Chính sách bảo hành thiết bị văn phòng tại ABC XYZ. Cam kết đổi mới trong 30 ngày và bảo hành 12 tháng chính hãng.",
 };
 
 export default function WarrantyPolicyPage() {
@@ -65,13 +65,13 @@ export default function WarrantyPolicyPage() {
 
         <div className="policy-container mx-auto" style={{ maxWidth: '900px' }}>
           <div className="text-center">
-            <h1 className="policy-title text-uppercase">Chính Sách Bảo Hành Điện Thoại & Máy Tính Bảng</h1>
+            <h1 className="policy-title text-uppercase">Chính Sách Bảo Hành Thiết Bị Văn Phòng</h1>
           </div>
 
           <div className="policy-content">
             <section>
               <h4 className="section-header"><i className="bi bi-info-circle-fill"></i> 1. Phạm vi áp dụng</h4>
-              <p>Chính sách này áp dụng cho tất cả các thiết bị di động do PhoneStore cung cấp, bao gồm nhưng không giới hạn: điện thoại thông minh (smartphone), máy tính bảng, đồng hồ thông minh và các phụ kiện đi kèm.</p>
+              <p>Chính sách này áp dụng cho tất cả các thiết bị văn phòng do công ty cung cấp, bao gồm nhưng không giới hạn: máy in, máy photocopy, máy scan, máy chiếu, máy tính và các thiết bị liên quan.</p>
             </section>
 
             <section>
@@ -137,8 +137,8 @@ export default function WarrantyPolicyPage() {
             <div className="contact-info bg-primary bg-opacity-10 p-4 rounded-4 text-center">
               <h5 className="fw-bold text-primary mb-3">Mọi thắc mắc xin liên hệ:</h5>
               <div className="d-flex flex-column flex-md-row justify-content-center gap-4">
-                <div><i className="bi bi-telephone-fill me-2 text-primary"></i> <strong>Hotline:</strong> 1900 8888</div>
-                <div><i className="bi bi-envelope-fill me-2 text-primary"></i> <strong>Email:</strong> support@phonestore.com.vn</div>
+                <div><i className="bi bi-telephone-fill me-2 text-primary"></i> <strong>Hotline:</strong> 1900 XXXX</div>
+                <div><i className="bi bi-envelope-fill me-2 text-primary"></i> <strong>Email:</strong> support@nhanviet.com</div>
               </div>
               <Link href="/warranty" className="btn btn-primary rounded-pill px-4 py-2 mt-4 fw-bold">
                 GỬI YÊU CẦU BẢO HÀNH ONLINE
