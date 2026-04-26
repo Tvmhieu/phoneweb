@@ -50,7 +50,7 @@ export default function RegisterPage() {
             width: 100%;
         }
         .register-sidebar {
-            background: linear-gradient(135deg, #198754 0%, #0a58ca 100%);
+            background: linear-gradient(135deg, #0d6efd 0%, #004085 100%);
             color: white;
             padding: 50px;
             display: flex;
@@ -76,48 +76,48 @@ export default function RegisterPage() {
             border-radius: 12px;
             padding: 14px;
             font-weight: 700;
-            background: #198754;
+            background: #0d6efd;
             border: none;
             transition: all 0.3s;
         }
         .btn-register:hover {
-            background: #146c43;
+            background: #0b5ed7;
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(25, 135, 84, 0.2);
+            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.2);
         }
       `}</style>
 
       <div className="container d-flex justify-content-center">
         <div className="register-card row g-0">
           <div className="col-md-5 register-sidebar d-none d-md-flex">
-            <h2 className="display-6 fw-bold mb-4">Trở thành đối tác lâu dài</h2>
-            <p className="opacity-75 fs-5">Khởi tạo tài khoản để quản lý thiết bị, đơn hàng và theo dõi bảo hành tập trung.</p>
+            <h2 className="display-6 fw-bold mb-4">Tham gia PhoneStore</h2>
+            <p className="opacity-75 fs-5">Khởi tạo tài khoản để dễ dàng mua sắm smartphone, quản lý thiết bị và theo dõi bảo hành tiện lợi.</p>
             <div className="mt-5">
                 <div className="d-flex align-items-center mb-4 text-start">
                     <div className="bg-white bg-opacity-20 rounded-circle p-2 me-3">
-                        <i className="bi bi-person-check-fill fs-5"></i>
+                        <i className="bi bi-phone-fill fs-5"></i>
                     </div>
-                    <span>Dành cho cả doanh nghiệp & khách lẻ</span>
+                    <span>Sở hữu smartphone chính hãng 100%</span>
                 </div>
                 <div className="d-flex align-items-center mb-4 text-start">
                     <div className="bg-white bg-opacity-20 rounded-circle p-2 me-3">
-                        <i className="bi bi-tags-fill fs-5"></i>
+                        <i className="bi bi-gift-fill fs-5"></i>
                     </div>
-                    <span>Nhận ưu đãi chiết khấu dự án lớn</span>
+                    <span>Nhận ưu đãi và mã giảm giá độc quyền</span>
                 </div>
                 <div className="d-flex align-items-center text-start">
                     <div className="bg-white bg-opacity-20 rounded-circle p-2 me-3">
                         <i className="bi bi-clock-history fs-5"></i>
                     </div>
-                    <span>Lưu lịch sử giao dịch trọn đời</span>
+                    <span>Theo dõi lịch sử giao dịch & bảo hành</span>
                 </div>
             </div>
           </div>
           <div className="col-md-7 form-container">
             <div className="text-center mb-5 d-md-none">
-                <h3 className="fw-bold text-success">Nhân Việt B2B</h3>
+                <h3 className="fw-bold text-primary">PhoneStore</h3>
             </div>
-            <h3 className="fw-bold mb-2">Đăng Ký Tài Khoản Mới</h3>
+            <h3 className="fw-bold mb-2">Đăng Ký Tài Khoản Tôn Trọng</h3>
             <p className="text-muted mb-4 small">Lưu ý: Tài khoản khởi tạo mặc định có quyền <strong>Khách Hàng (Customer)</strong>.</p>
 
             <form onSubmit={handleRegister}>
@@ -177,7 +177,7 @@ export default function RegisterPage() {
                 </div>
               </div>
               
-              <button type="submit" disabled={isSubmitting} className="btn btn-success btn-register w-100 mb-4 py-3">
+              <button type="submit" disabled={isSubmitting} className="btn btn-primary btn-register w-100 mb-4 py-3 text-white">
                 {isSubmitting ? (
                     <><span className="spinner-border spinner-border-sm me-2"></span>ĐANG KHỞI TẠO...</>
                 ) : (
