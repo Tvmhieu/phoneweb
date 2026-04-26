@@ -244,15 +244,15 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: P
                 <div className="card card-product product-card-hover h-100 shadow-sm border-0 position-relative">
                   
                   {/* Ảnh sản phẩm (Cập nhật: Hiện ảnh nếu có, ngược lại hiện ID) */}
-                  <div className="bg-light text-center rounded-top d-flex align-items-center justify-content-center border-bottom overflow-hidden" style={{ height: "220px" }}>
+                  <div className="bg-light text-center rounded-top border-bottom overflow-hidden position-relative" style={{ height: "240px" }}>
                     {(p.imageUrl || p.images?.[0]?.url) ? (
                       <Image 
                         src={p.imageUrl || p.images?.[0]?.url || ""} 
                         alt={p.name} 
-                        width={300} 
-                        height={220} 
-                        className="w-100 h-100 product-image-zoom" 
-                        style={{ objectFit: "cover" }} 
+                        fill
+                        sizes="(max-width: 576px) 50vw, 25vw"
+                        className="p-3 product-image-zoom" 
+                        style={{ objectFit: "contain", mixBlendMode: "multiply" }} 
                       />
                     ) : (
                       <div className="text-center">

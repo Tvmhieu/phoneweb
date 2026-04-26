@@ -203,8 +203,8 @@ export default async function HomePage() {
                     {(p.imageUrl || p.images?.[0]?.url) ? (
                       <Image 
                         src={p.imageUrl || p.images?.[0]?.url || ""} 
-                        className="w-100 h-100 p-4" 
-                        style={{ objectFit: "contain" }} 
+                        className="w-100 h-100 p-3 product-image-zoom" 
+                        style={{ objectFit: "contain", mixBlendMode: "multiply" }} 
                         alt={p.name} 
                         fill
                         sizes="(max-width: 768px) 50vw, 25vw"
