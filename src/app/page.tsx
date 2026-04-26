@@ -167,14 +167,13 @@ export default async function HomePage() {
             <p className="text-muted">Lựa chọn thương hiệu điện thoại yêu thích của bạn</p>
           </div>
           <div className="row g-4 justify-content-center">
-            {['IPHONE', 'SAMSUNG', 'XIAOMI', 'OPPO', 'TABLET', 'PHỤ KIỆN'].map((cat, idx) => (
+            {['IPHONE', 'SAMSUNG', 'XIAOMI', 'OPPO', 'TABLET'].map((cat, idx) => (
               <div className="col-6 col-md-4 col-lg-2" key={cat}>
                 <Link href={`/products?category=${cat}`} className="text-decoration-none text-dark">
                   <div className="category-item border text-center shadow-sm">
                     <i className={`bi ${
                         cat === 'IPHONE' ? 'bi-apple' : 
-                        cat === 'TABLET' ? 'bi-tablet' : 
-                        cat === 'PHỤ KIỆN' ? 'bi-headphones' : 'bi-phone'
+                        cat === 'TABLET' ? 'bi-tablet' : 'bi-phone'
                     } display-5 text-info mb-3 d-block`}></i>
                     <h6 className="fw-bold mb-0">{cat}</h6>
                   </div>
