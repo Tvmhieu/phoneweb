@@ -1315,7 +1315,6 @@ export default function AdminDashboard() {
                         <tr>
                           <SortHeader label="KHÁCH HÀNG" sortKey="name" currentSort={customerSort} onSort={handleSortCustomer} className="px-4" />
                           <SortHeader label="EMAIL" sortKey="email" currentSort={customerSort} onSort={handleSortCustomer} />
-                          <SortHeader label="CÔNG TY" sortKey="companyName" currentSort={customerSort} onSort={handleSortCustomer} />
                           <th className="py-3 px-2 text-dark fw-bold">PHONE</th>
                           <th className="py-3 px-2 text-dark fw-bold">ĐỊA CHỈ</th>
                           <SortHeader label="NGÀY TẠO" sortKey="createdAt" currentSort={customerSort} onSort={handleSortCustomer} />
@@ -1327,7 +1326,6 @@ export default function AdminDashboard() {
                           <tr key={u.id}>
                             <td className="px-4 fw-bold">{u.name || `Khách hàng #${u.id}`}</td>
                             <td>{u.email}</td>
-                            <td>{u.companyName || "-"}</td>
                             <td>{u.phone || "-"}</td>
                             <td><small className="text-muted">{u.address || "—"}</small></td>
                             <td><small className="text-muted">{new Date(u.createdAt).toLocaleDateString('vi-VN')}</small></td>
