@@ -449,7 +449,7 @@ export default function AdminDashboard() {
               <div className="d-inline-flex p-2 rounded-4 bg-primary bg-opacity-10 mb-2">
                 <i className="bi bi-cpu-fill fs-2 text-primary"></i>
               </div>
-              <h5 className="mb-0 fw-bold text-dark" style={{ letterSpacing: '0.5px' }}>ABC <span className="text-primary">XYZ</span></h5>
+              <h5 className="mb-0 fw-bold text-dark" style={{ letterSpacing: '0.5px' }}>Phone<span className="text-primary">Store</span></h5>
               <div className="mt-2">
                 <span className="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-10 px-3 py-1 rounded-pill x-small">
                   <i className="bi bi-shield-check me-1"></i> {userRole}
@@ -472,7 +472,7 @@ export default function AdminDashboard() {
                 <li className="nav-item">
                   <button className={`nav-link w-100 text-start border-0 bg-transparent py-2 px-4 d-flex align-items-center transition-premium ${activeTab === "PRODUCTS" ? "active-premium-light" : "text-secondary"}`} onClick={() => setActiveTab("PRODUCTS")}>
                     <i className={`bi bi-box-seam-fill me-3 ${activeTab === "PRODUCTS" ? "text-primary" : "text-muted"}`}></i>
-                    <span className="small fw-bold">Quản lý kho máy</span>
+                    <span className="small fw-bold">Quản lý kho điện thoại</span>
                   </button>
                 </li>
                 <li className="nav-item">
@@ -550,7 +550,7 @@ export default function AdminDashboard() {
         <div className="col-lg-10 offset-lg-2 pt-0 pt-lg-4 px-0 px-md-4 d-flex flex-column min-vh-100">
             {/* Mobile Header Bar */}
             <div className="d-lg-none bg-white p-3 shadow-sm sticky-top d-flex justify-content-between align-items-center mb-3" style={{ zIndex: 1040 }}>
-                <h5 className="mb-0 fw-bold"><i className="bi bi-cpu-fill text-primary me-2"></i>Admin Panel</h5>
+                <h5 className="mb-0 fw-bold"><i className="bi bi-smartphone text-primary me-2"></i>PhoneStore Admin</h5>
                 <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminSidebar">
                     <i className="bi bi-list"></i>
                 </button>
@@ -588,7 +588,7 @@ export default function AdminDashboard() {
                             </div>
                             <span className="badge text-bg-light border small text-muted">Tháng này</span>
                         </div>
-                        <h6 className="text-secondary fw-bold text-uppercase mb-2" style={{ fontSize: '11px', letterSpacing: '1px' }}>Tổng doanh thu dự án</h6>
+                        <h6 className="text-secondary fw-bold text-uppercase mb-2" style={{ fontSize: '11px', letterSpacing: '1px' }}>Tổng doanh thu bán lẻ</h6>
                         <h3 className="fw-bold text-dark mb-1">{(stats?.revenue || 0).toLocaleString()} <small className="fs-6">đ</small></h3>
                         <div className="d-flex flex-column gap-1 mt-3">
                             <div className="small text-muted"><i className="bi bi-cart-check-fill text-info me-1"></i> Bán: <strong>{(stats?.salesRevenue || 0).toLocaleString()} đ</strong></div>
@@ -617,7 +617,7 @@ export default function AdminDashboard() {
                                 <i className="bi bi-people-fill fs-3"></i>
                             </div>
                         </div>
-                        <h6 className="text-secondary fw-bold text-uppercase mb-2" style={{ fontSize: '11px', letterSpacing: '1px' }}>Đối tác Doanh nghiệp</h6>
+                        <h6 className="text-secondary fw-bold text-uppercase mb-2" style={{ fontSize: '11px', letterSpacing: '1px' }}>Khách hàng đăng ký</h6>
                         <h3 className="fw-bold text-dark mb-auto">{stats?.totalCustomers || 0} <small className="fs-6">Khách hàng</small></h3>
                         <div className="mt-3 small text-muted"><i className="bi bi-database-fill me-1"></i> Kho: <strong>{stats?.totalProducts || 0} SP</strong></div>
                       </div>
@@ -705,13 +705,13 @@ export default function AdminDashboard() {
                   
                   {editingProduct && (
                      <div className="card border-0 shadow mb-4">
-                         <div className="card-header bg-primary text-white fw-bold py-3"><i className="bi bi-pencil-square me-2"></i>{editingProduct.id ? `Sửa Thiết Bị #${editingProduct.id}` : "Nhập Thiết Bị Mới Vào Kho"}</div>
+                         <div className="card-header bg-primary text-white fw-bold py-3"><i className="bi bi-pencil-square me-2"></i>{editingProduct.id ? `Sửa Điện Thoại #${editingProduct.id}` : "Nhập Điện Thoại Mới Vào Kho"}</div>
                          <div className="card-body p-4">
                              <form onSubmit={saveProduct}>
                                  <div className="row g-3">
                                      <div className="col-md-6">
                                          <label className="form-label small fw-bold">Tên thiết bị (Model)</label>
-                                         <input type="text" className="form-control" value={editingProduct.name || ""} onChange={e => setEditingProduct({...editingProduct, name: e.target.value})} required placeholder="Ví dụ: Dell PowerEdge R440"/>
+                                         <input type="text" className="form-control" value={editingProduct.name || ""} onChange={e => setEditingProduct({...editingProduct, name: e.target.value})} required placeholder="Ví dụ: iPhone 15 Pro Max..."/>
                                      </div>
                                      <div className="col-md-6">
                                          <label className="form-label small fw-bold"><i className="bi bi-images me-1"></i>Bộ sưu tập ảnh (Tối đa 10 ảnh)</label>

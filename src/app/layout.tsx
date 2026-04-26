@@ -6,8 +6,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "ABC XYZ - Giải pháp & Thiết bị Công Nghệ",
-  description: "Trang bị doanh nghiệp với máy chủ, máy tính và các giải pháp hạ tầng công nghệ hiện đại",
+  title: "PhoneStore - Hệ Thống Bán Lẻ Điện Thoại Di Động Chính Hãng",
+  description: "Chuyên cung cấp các dòng điện thoại iPhone, Samsung, Xiaomi chính hãng với chính sách bảo hành hậu mãi tốt nhất.",
 };
 
 export default function RootLayout({

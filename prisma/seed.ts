@@ -21,69 +21,78 @@ async function main() {
   // 1. Tạo Tài khoản Admin
   await prisma.user.create({
     data: {
-      email: 'admin@nhanviet.com',
-      password: 'hashed_password_mock',
-      name: 'Giám Đốc Nhân Việt',
+      email: 'admin@phonestore.com.vn',
+      password: 'adminpassword',
+      name: 'Quản trị viên PhoneStore',
       role: 'ADMIN',
     },
   });
 
   await prisma.user.create({
     data: {
-      email: 'admin@pnl.com',
-      password: 'admin123',
-      name: 'Quản trị viên PNL',
+      email: 'manager@phonestore.com.vn',
+      password: 'managerpassword',
+      name: 'Quản lý cửa hàng',
+      role: 'MANAGER',
+    },
+  });
+
+  await prisma.user.create({
+    data: {
+      email: '1@1',
+      password: '1',
+      name: 'Super Admin Test',
       role: 'ADMIN',
     },
   });
 
-  // 2. Tạo 1 số Thiết bị mẫu (Sản phẩm Bàn và Thuê)
+  // 2. Tạo 1 số Điện thoại mẫu
   await prisma.product.createMany({
     data: [
       {
-        name: 'Máy Chủ Dell PowerEdge R440',
-        brand: 'Dell',
-        category: 'SERVER',
-        imageUrl: 'https://placehold.co/600x400/000000/FFFFFF/png?text=Dell+Server',
-        stock: 5,
-        price: 45000000,
-        warrantyMonths: 36,
-      },
-      {
-        name: 'Máy In HP LaserJet Pro',
-        brand: 'HP',
-        category: 'PRINTER',
-        imageUrl: 'https://placehold.co/600x400/222222/FFFFFF/png?text=HP+Printer',
-        stock: 12,
-        price: 4200000,
+        name: 'iPhone 15 Pro Max 256GB Chính hãng VN/A',
+        brand: 'Apple',
+        category: 'IPHONE',
+        imageUrl: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&q=80&w=800',
+        stock: 50,
+        price: 30990000,
         warrantyMonths: 12,
       },
       {
-        name: 'Switch Cisco Catalyst 2960',
-        brand: 'Cisco',
-        category: 'NETWORK',
-        imageUrl: 'https://placehold.co/600x400/333333/FFFFFF/png?text=Cisco+Switch',
-        stock: 8,
-        price: 9500000,
-        warrantyMonths: 24,
-      },
-      {
-        name: 'Máy POS Quản Lý Bán Hàng Sunmi',
-        brand: 'Sunmi',
-        category: 'POS',
-        imageUrl: 'https://placehold.co/600x400/444444/FFFFFF/png?text=POS+Sunmi',
-        stock: 15,
-        price: 12000000,
+        name: 'Samsung Galaxy S24 Ultra 12GB/256GB',
+        brand: 'Samsung',
+        category: 'SAMSUNG',
+        imageUrl: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&q=80&w=800',
+        stock: 35,
+        price: 28490000,
         warrantyMonths: 12,
       },
       {
-        name: 'Laptop ThinkPad T14s',
-        brand: 'Lenovo',
-        category: 'LAPTOP',
-        imageUrl: 'https://placehold.co/600x400/555555/FFFFFF/png?text=ThinkPad',
+        name: 'Xiaomi 14 Ultra 5G (16GB/512GB)',
+        brand: 'Xiaomi',
+        category: 'XIAOMI',
+        imageUrl: 'https://images.unsplash.com/photo-1598327105666-5b89351af963?auto=format&fit=crop&q=80&w=800',
         stock: 20,
-        price: 28000000,
-        warrantyMonths: 24,
+        price: 22990000,
+        warrantyMonths: 18,
+      },
+      {
+        name: 'Oppo Find X7 Ultra 5G',
+        brand: 'Oppo',
+        category: 'OPPO',
+        imageUrl: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&q=80&w=800',
+        stock: 15,
+        price: 19990000,
+        warrantyMonths: 12,
+      },
+      {
+        name: 'iPad Pro M4 11-inch (2024) WiFi 256GB',
+        brand: 'Apple',
+        category: 'TABLET',
+        imageUrl: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&q=80&w=800',
+        stock: 25,
+        price: 26990000,
+        warrantyMonths: 12,
       }
     ],
   });
@@ -96,10 +105,10 @@ async function main() {
     const customer1 = await prisma.user.create({
       data: {
         email: 'khachhang1@gmail.com',
-        password: 'hashed_password_mock',
-        name: 'Nguyễn Văn A',
+        password: 'password123',
+        name: 'Nguyễn Văn An',
         phone: '0901234567',
-        address: '123 Lê Lợi, TP.HCM',
+        address: '123 Lê Lợi, Quận 1, TP.HCM',
         role: 'CUSTOMER',
       },
     });
@@ -107,10 +116,10 @@ async function main() {
     const customer2 = await prisma.user.create({
       data: {
         email: 'khachhang2@gmail.com',
-        password: 'hashed_password_mock',
-        name: 'Trần Thị B',
+        password: 'password123',
+        name: 'Trần Thị Bình',
         phone: '0987654321',
-        address: '456 Nguyễn Trãi, Hà Nội',
+        address: '456 Nguyễn Trãi, Thanh Xuân, Hà Nội',
         role: 'CUSTOMER',
       },
     });
@@ -119,15 +128,15 @@ async function main() {
     await prisma.saleOrder.create({
       data: {
         userId: customer1.id,
-        total: products[0].price * 2,
-        status: 'COMPLETED',
-        shippingAddress: '123 Lê Lợi, TP.HCM',
-        adminNotes: 'Khách hàng VIP, giao hàng nhanh',
+        total: products[0].price * 1,
+        status: 'DELIVERED',
+        shippingAddress: '123 Lê Lợi, Quận 1, TP.HCM',
+        adminNotes: 'Khách hàng thanh toán qua thẻ, giao hàng gấp',
         items: {
           create: [
             {
               productId: products[0].id,
-              quantity: 2,
+              quantity: 1,
               price: products[0].price,
             }
           ]
@@ -158,74 +167,46 @@ async function main() {
       }
     });
 
-    await prisma.saleOrder.create({
-      data: {
-        userId: customer1.id,
-        total: products[4].price * 1,
-        status: 'SHIPPING',
-        shippingAddress: '789 Trần Hưng Đạo, Đà Nẵng',
-        adminNotes: 'Đang giao hàng qua Giao Hàng Tiết Kiệm',
-        items: {
-          create: [
-            {
-              productId: products[4].id,
-              quantity: 1,
-              price: products[4].price,
-            }
-          ]
-        }
-      }
-    });
+    // 4.5. Massive Historical Data for Revenue Chart
+    console.log('Đang tạo dữ liệu lịch sử doanh thu cho 6 tháng gần nhất...');
+    for (let i = 0; i < 6; i++) {
+        const monthsAgo = i;
+        const baseDate = new Date();
+        baseDate.setMonth(baseDate.getMonth() - monthsAgo);
 
-    await prisma.saleOrder.create({
-      data: {
-        userId: customer2.id,
-        total: products[0].price * 1 + products[3].price * 2,
-        status: 'CANCELLED',
-        shippingAddress: 'Ki-ốt 12, Chợ Bến Thành, TP.HCM',
-        adminNotes: 'Khách hàng đổi ý, yêu cầu hủy đơn',
-        items: {
-          create: [
-            {
-              productId: products[0].id,
-              quantity: 1,
-              price: products[0].price,
-            },
-            {
-              productId: products[3].id,
-              quantity: 2,
-              price: products[3].price,
-            }
-          ]
-        }
-      }
-    });
+        // Tạo 5-8 đơn mỗi tháng cho đa dạng
+        const ordersPerMonth = Math.floor(Math.random() * 4) + 5;
+        for (let j = 0; j < ordersPerMonth; j++) {
+            const randomProduct = products[Math.floor(Math.random() * products.length)];
+            const randomQty = Math.floor(Math.random() * 2) + 1;
+            const orderDate = new Date(baseDate);
+            orderDate.setDate(Math.floor(Math.random() * 28) + 1);
 
-    await prisma.saleOrder.create({
-      data: {
-        userId: customer1.id,
-        total: products[2].price * 3,
-        status: 'PROCESSING',
-        shippingAddress: 'Tòa nhà Bitexco, Q1, TP.HCM',
-        adminNotes: 'Đơn hàng số lượng lớn, cần kiểm tra kỹ trước khi xuất',
-        items: {
-          create: [
-            {
-              productId: products[2].id,
-              quantity: 3,
-              price: products[2].price,
-            }
-          ]
+            await prisma.saleOrder.create({
+                data: {
+                    userId: j % 2 === 0 ? customer1.id : customer2.id,
+                    total: randomProduct.price * randomQty,
+                    status: 'DELIVERED',
+                    shippingAddress: `Địa chỉ mẫu ${j + 1}, Khu vực ${i + 1}`,
+                    createdAt: orderDate,
+                    items: {
+                        create: [{
+                            productId: randomProduct.id,
+                            quantity: randomQty,
+                            price: randomProduct.price
+                        }]
+                    }
+                }
+            });
         }
-      }
-    });
+    }
 
     // 5. Tạo Yêu cầu bảo hành (Warranty Claims)
     await prisma.warrantyClaim.create({
       data: {
         userId: customer1.id,
-        productId: products[3].id,
-        issueDetail: 'Máy thỉnh thoảng tự khởi động lại khi đang sử dụng',
+        productId: products[0].id,
+        issueDetail: 'Màn hình bị sọc xanh sau khi cập nhật iOS mới',
         status: 'PENDING',
       }
     });
@@ -234,15 +215,15 @@ async function main() {
       data: {
         userId: customer2.id,
         productId: products[4].id,
-        issueDetail: 'Màn hình bị sọc viền ở góc trái',
-        resolution: 'Đổi màn hình mới theo chính sách BH',
-        status: 'PROCESSING',
-        techNote: 'Chờ linh kiện từ hãng gửi về',
+        issueDetail: 'Sạc không vào điện, có mùi khét nhẹ ở cổng sạc',
+        resolution: 'Đổi mới combo sạc cáp và kiểm tra chân sạc máy',
+        status: 'DONE',
+        techNote: 'Vệ sinh máy và bàn giao cho khách',
       }
     });
   }
 
-  console.log('Bơm dữ liệu thành công! Đã thêm Admin, Thiết bị, Khách hàng, Đơn mua hàng và Bảo hành vào Hệ thống.');
+  console.log('Bơm dữ liệu thành công! Đã chuyển đổi sang hệ thống bán lẻ Điện thoại di động PhoneStore.');
 }
 
 main()

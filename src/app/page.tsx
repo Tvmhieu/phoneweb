@@ -19,10 +19,10 @@ interface Product {
 export const dynamic = "force-dynamic";
 
 const fallbackProducts = [
-  { id: 1, name: "Máy Chủ Dell PowerEdge R440", brand: "Dell", category: "SERVER", price: 45000000, imageUrl: "" },
-  { id: 2, name: "Máy In HP LaserJet Pro", brand: "HP", category: "PRINTER", price: 4200000, imageUrl: "" },
-  { id: 3, name: "Switch Cisco Catalyst 2960", brand: "Cisco", category: "NETWORK", price: 9500000, imageUrl: "" },
-  { id: 4, name: "Laptop ThinkPad T14s Gen 3", brand: "Lenovo", category: "LAPTOP", price: 28500000, imageUrl: "" },
+  { id: 1, name: "iPhone 15 Pro Max 256GB", brand: "Apple", category: "IPHONE", price: 30990000, imageUrl: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&q=80&w=800" },
+  { id: 2, name: "Samsung Galaxy S24 Ultra", brand: "Samsung", category: "SAMSUNG", price: 28490000, imageUrl: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&q=80&w=800" },
+  { id: 3, name: "Xiaomi 14 Ultra 5G", brand: "Xiaomi", category: "XIAOMI", price: 22990000, imageUrl: "https://images.unsplash.com/photo-1598327105666-5b89351af963?auto=format&fit=crop&q=80&w=800" },
+  { id: 4, name: "iPad Pro M4 11-inch (2024)", brand: "Apple", category: "TABLET", price: 26990000, imageUrl: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&q=80&w=800" },
 ];
 
 export default async function HomePage() {
@@ -48,121 +48,110 @@ export default async function HomePage() {
     <div className="homepage">
       <style>{`
         .hero-gradient {
-            background: linear-gradient(135deg, #0d6efd 0%, #003d99 100%);
+            background: linear-gradient(135deg, #121212 0%, #1e1e1e 100%);
             position: relative;
             overflow: hidden;
             color: white;
-            padding: 100px 0;
+            padding: 120px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         @media (max-width: 768px) {
-            .hero-gradient { padding: 60px 0; }
-            .display-3 { font-size: 2.5rem; }
+            .hero-gradient { padding: 80px 0; }
+            .display-3 { font-size: 2.8rem; }
         }
-        .hero-gradient::after {
-            content: "";
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 800px;
-            height: 800px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 50%;
-            z-index: 0;
+        .hero-floating-elements div {
+          position: absolute;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(13, 110, 253, 0.2) 0%, transparent 70%);
+          z-index: 0;
         }
-        .category-card {
-            transition: all 0.3s ease;
-            border: 1px solid #eee;
-            border-radius: 12px;
-            background: white;
-            padding: 24px;
-            text-align: center;
+        .hero-btn {
+          padding: 15px 40px;
+          border-radius: 100px;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .category-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            border-color: #0d6efd;
+        .hero-btn:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        .category-item {
+          transition: all 0.3s ease;
+          border-radius: 20px;
+          background: white;
+          padding: 30px 20px;
+          height: 100%;
+        }
+        .category-item:hover {
+          background: #0d6efd;
+          color: white !important;
+          transform: translateY(-8px);
+          box-shadow: 0 20px 40px rgba(13,110,253,0.15);
+        }
+        .category-item:hover i { color: white !important; }
+        
+        .glass-card {
+          background: rgba(255, 255, 255, 0.05);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 24px;
         }
         .product-card {
-            border: none;
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.3s ease;
+          background: white;
+          border-radius: 24px;
+          overflow: hidden;
+          transition: all 0.4s ease;
+          border: 1px solid #f0f0f0;
         }
         .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+          transform: scale(1.02);
+          box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+          border-color: transparent;
         }
-        .btn-premium {
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s;
+        .price-tag {
+          font-weight: 800;
+          color: #121212;
+          font-size: 1.25rem;
         }
-        .section-title {
-            position: relative;
-            padding-bottom: 15px;
-            margin-bottom: 40px;
-            font-weight: 800;
-        }
-        .section-title::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: #0d6efd;
-            border-radius: 2px;
-        }
-        .brand-logo {
-            filter: grayscale(100%);
-            opacity: 0.5;
-            transition: all 0.3s;
-            max-height: 40px;
-        }
-        .brand-logo:hover {
-            filter: grayscale(0%);
-            opacity: 1;
+        .section-heading {
+          font-weight: 800;
+          letter-spacing: -1px;
         }
       `}</style>
 
       {/* Hero Section */}
       <section className="hero-gradient">
+        <div className="hero-floating-elements">
+          <div style={{ width: '400px', height: '400px', top: '-100px', left: '-100px' }}></div>
+          <div style={{ width: '300px', height: '300px', bottom: '-50px', right: '10%' }}></div>
+        </div>
         <div className="container position-relative" style={{ zIndex: 1 }}>
           <div className="row align-items-center">
-            <div className="col-lg-7">
-              <span className="badge bg-warning text-dark mb-3 px-3 py-2 fw-bold text-uppercase">B2B TECHNOLOGY SOLUTIONS</span>
-              <h1 className="display-3 fw-bold mb-4">
-                Hạ tầng thiết bị IT <br/>
-                <span className="text-info">Chuyên nghiệp & Toàn diện</span>
+            <div className="col-lg-6 text-center text-lg-start">
+              <span className="badge rounded-pill bg-info bg-opacity-10 text-info mb-4 px-3 py-2 fw-bold text-uppercase" style={{ letterSpacing: '2px' }}>New Arrival: iPhone 15 Pro</span>
+              <h1 className="display-3 fw-extrabold mb-4">
+                Siêu phẩm công nghệ <br/>
+                <span className="text-info">Trong tầm tay bạn</span>
               </h1>
-              <p className="lead fs-4 mb-5 opacity-90">
-                ABC XYZ cung cấp cấu hình máy chủ, máy trạm và hạ tầng mạng theo yêu cầu doanh nghiệp. 
-                Sản phẩm chính hãng với chính sách bảo hành ưu việt.
+              <p className="lead fs-4 mb-5 opacity-75">
+                Khám phá bộ sưu tập điện thoại mới nhất từ Apple, Samsung, Xiaomi với ưu đãi trả góp 0% và bảo hành chính hãng lên đến 18 tháng.
               </p>
-              <div className="d-flex gap-3">
-                <Link href="/products" className="btn btn-light btn-lg btn-premium text-primary">Xem Sản phẩm</Link>
-                <Link href="/contact" className="btn btn-outline-light btn-lg btn-premium">Yêu cầu Tư vấn</Link>
+              <div className="d-flex gap-3 justify-content-center justify-content-lg-start">
+                <Link href="/products" className="btn btn-info btn-lg hero-btn text-white">Mua ngay</Link>
+                <Link href="/warranty" className="btn btn-outline-light btn-lg hero-btn">Bảo hành</Link>
               </div>
             </div>
-            <div className="col-lg-5 d-none d-lg-block text-center">
-               <div className="p-4 bg-white bg-opacity-10 rounded-4 shadow-lg backdrop-blur">
-                  <i className="bi bi-hdd-rack display-1 text-white opacity-50"></i>
-                  <div className="mt-4">
-                    <div className="d-flex align-items-center mb-3">
-                        <i className="bi bi-shield-check fs-3 me-3 text-info"></i>
-                        <span className="fw-bold">Cam kết chính hãng 100%</span>
-                    </div>
-                    <div className="d-flex align-items-center mb-3 text-start">
-                        <i className="bi bi-patch-check fs-3 me-3 text-info"></i>
-                        <span className="fw-bold">Bảo hành linh hoạt đến 36 tháng</span>
-                    </div>
-                    <div className="d-flex align-items-center text-start">
-                        <i className="bi bi-headset fs-3 me-3 text-info"></i>
-                        <span className="fw-bold">Hỗ trợ kỹ thuật 24/7 onsite</span>
-                    </div>
+            <div className="col-lg-6 d-none d-lg-block">
+               <div className="glass-card p-2 p-md-4 text-center">
+                  <div className="position-relative" style={{ height: "450px" }}>
+                     <Image 
+                        src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&q=80&w=800" 
+                        alt="Featured Phone" 
+                        fill 
+                        style={{ objectFit: 'contain' }}
+                        className="drop-shadow"
+                      />
                   </div>
                </div>
             </div>
@@ -170,93 +159,75 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Featured Categories */}
-      <section className="py-5 bg-white">
-        <div className="container pt-4">
-          <h2 className="section-title">Danh mục Thiết bị</h2>
-          <div className="row g-4">
-            <div className="col-6 col-md-4 col-lg-2 mt-4">
-              <Link href="/products?category=SERVER" className="text-decoration-none text-dark">
-                <div className="category-card">
-                  <i className="bi bi-hdd-network-fill display-5 text-primary mb-3 d-block"></i>
-                  <h6 className="fw-bold mb-0">Máy Chủ</h6>
-                </div>
-              </Link>
-            </div>
-            <div className="col-6 col-md-4 col-lg-2 mt-4">
-              <Link href="/products?category=NETWORK" className="text-decoration-none text-dark">
-                <div className="category-card">
-                  <i className="bi bi-router-fill display-5 text-primary mb-3 d-block"></i>
-                  <h6 className="fw-bold mb-0">Thiết Bị Mạng</h6>
-                </div>
-              </Link>
-            </div>
-            <div className="col-6 col-md-4 col-lg-2 mt-4">
-              <Link href="/products?category=LAPTOP" className="text-decoration-none text-dark">
-                <div className="category-card">
-                  <i className="bi bi-laptop display-5 text-primary mb-3 d-block"></i>
-                  <h6 className="fw-bold mb-0">Máy Trạm</h6>
-                </div>
-              </Link>
-            </div>
-            <div className="col-6 col-md-4 col-lg-2 mt-4">
-              <Link href="/products?category=PRINTER" className="text-decoration-none text-dark">
-                <div className="category-card">
-                  <i className="bi bi-printer-fill display-5 text-primary mb-3 d-block"></i>
-                  <h6 className="fw-bold mb-0">Máy In</h6>
-                </div>
-              </Link>
-            </div>
-            <div className="col-6 col-md-4 col-lg-2 mt-4">
-              <Link href="/products?category=POS" className="text-decoration-none text-dark">
-                <div className="category-card">
-                  <i className="bi bi-phone-fill display-5 text-primary mb-3 d-block"></i>
-                  <h6 className="fw-bold mb-0">Máy POS</h6>
-                </div>
-              </Link>
-            </div>
+      {/* Categories */}
+      <section className="py-5 bg-light">
+        <div className="container py-4">
+          <div className="text-center mb-5">
+            <h2 className="section-heading display-6 mb-3">Danh mục nổi bật</h2>
+            <p className="text-muted">Lựa chọn thương hiệu điện thoại yêu thích của bạn</p>
+          </div>
+          <div className="row g-4 justify-content-center">
+            {['IPHONE', 'SAMSUNG', 'XIAOMI', 'OPPO', 'TABLET', 'PHỤ KIỆN'].map((cat, idx) => (
+              <div className="col-6 col-md-4 col-lg-2" key={cat}>
+                <Link href={`/products?category=${cat}`} className="text-decoration-none text-dark">
+                  <div className="category-item border text-center shadow-sm">
+                    <i className={`bi ${
+                        cat === 'IPHONE' ? 'bi-apple' : 
+                        cat === 'TABLET' ? 'bi-tablet' : 
+                        cat === 'PHỤ KIỆN' ? 'bi-headphones' : 'bi-phone'
+                    } display-5 text-info mb-3 d-block`}></i>
+                    <h6 className="fw-bold mb-0">{cat}</h6>
+                  </div>
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Featured Products */}
-      <section className="py-5" style={{ backgroundColor: "#f8f9fa" }}>
-        <div className="container py-4">
-          <div className="d-flex justify-content-between align-items-end mb-5">
+      <section className="py-5 bg-white">
+        <div className="container py-5">
+          <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5 gap-3">
             <div>
-              <h2 className="section-title mb-0">Thiết bị Nổi bật</h2>
-              <p className="text-muted mt-2">Được nhiều doanh nghiệp tin dùng & cấu hình sẵn sàng</p>
+              <h2 className="section-heading display-6 mb-0">Sản phẩm mới nhất</h2>
+              <p className="text-muted mt-2">Cập nhật những model flagship vừa ra mắt trên thị trường</p>
             </div>
-            <Link href="/products" className="btn btn-outline-primary fw-bold">Xem tất cả <i className="bi bi-chevron-right small"></i></Link>
+            <Link href="/products" className="btn btn-dark rounded-pill px-4 fw-bold">Xem tất cả sản phẩm</Link>
           </div>
 
-          <div className="row g-3 g-md-4">
+          <div className="row g-4">
             {featuredProducts.map((p) => (
               <div className="col-6 col-md-4 col-lg-3" key={p.id}>
-                <div className="card h-100 shadow-sm product-card border-0">
-                  <div className="position-relative overflow-hidden bg-light d-flex align-items-center justify-content-center" style={{ height: "200px" }}>
+                <div className="card h-100 product-card">
+                  <div className="position-relative overflow-hidden bg-light d-flex align-items-center justify-content-center" style={{ height: "260px" }}>
                     {(p.imageUrl || p.images?.[0]?.url) ? (
                       <Image 
                         src={p.imageUrl || p.images?.[0]?.url || ""} 
-                        className="w-100 h-100" 
-                        style={{ objectFit: "cover" }} 
+                        className="w-100 h-100 p-4" 
+                        style={{ objectFit: "contain" }} 
                         alt={p.name} 
                         fill
                         sizes="(max-width: 768px) 50vw, 25vw"
                       />
                     ) : (
-                      <i className={`bi ${p.category === 'SERVER' ? 'bi-hdd-network' : p.category === 'PRINTER' ? 'bi-printer' : 'bi-laptop'} display-3 text-muted`}></i>
+                      <i className="bi bi-smartphone display-1 text-muted opacity-25"></i>
                     )}
+                    <div className="position-absolute top-0 end-0 p-3">
+                      <button className="btn btn-white btn-sm rounded-circle shadow-sm"><i className="bi bi-heart"></i></button>
+                    </div>
                   </div>
                   <div className="card-body p-4 d-flex flex-column">
-                    <small className="text-muted text-uppercase fw-bold mb-1" style={{ fontSize: '11px', letterSpacing: '1px' }}>{p.brand}</small>
-                    <h5 className="card-title fw-bold text-dark mb-3 h6" style={{ height: "40px", overflow: "hidden" }}>{p.name}</h5>
+                    <div className="d-flex justify-content-between align-items-center mb-2">
+                      <small className="text-info fw-bold text-uppercase" style={{ fontSize: '11px' }}>{p.brand}</small>
+                      <span className="badge text-bg-light border-0 text-muted small">{p.category}</span>
+                    </div>
+                    <h5 className="card-title fw-bold text-dark mb-3 h6" style={{ height: "40px", overflow: "hidden", lineHeight: "1.4" }}>{p.name}</h5>
                     <div className="mt-auto">
-                      <div className="d-flex justify-content-between align-items-center mb-3">
-                        <span className="text-danger fw-extrabold fs-5">{(p.price || 0).toLocaleString()} <small>đ</small></span>
-                        <span className="badge text-bg-light border small">{p.category}</span>
+                      <div className="mb-3">
+                        <span className="price-tag">{(p.price || 0).toLocaleString()} <small className="fw-normal fs-6">đ</small></span>
                       </div>
-                      <Link href={`/products/${p.id}`} className="btn btn-outline-primary btn-sm w-100 fw-bold">Xem Chi Tiết</Link>
+                      <Link href={`/products/${p.id}`} className="btn btn-dark w-100 rounded-pill fw-bold py-2">Chi tiết</Link>
                     </div>
                   </div>
                 </div>
@@ -266,37 +237,63 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Trust & Partners */}
-      <section className="py-5 bg-white border-top border-bottom">
-        <div className="container">
-          <div className="row align-items-center justify-content-center text-center g-5">
-            <div className="col-12 mb-2">
-                <p className="text-muted fw-bold small text-uppercase">Đối tác chiến lược</p>
+      {/* Benefits */}
+      <section className="py-5 bg-light border-top">
+        <div className="container py-4">
+          <div className="row g-4">
+            <div className="col-md-4 text-center">
+              <div className="p-4">
+                <i className="bi bi-truck display-4 text-info mb-3"></i>
+                <h5 className="fw-bold">Giao hàng siêu tốc</h5>
+                <p className="text-muted">Nhận máy trong 2h tại TP.HCM và Hà Nội. Miễn phí giao hàng toàn quốc.</p>
+              </div>
             </div>
-            <div className="col-6 col-md-2 mt-0"><span className="fw-bold fs-3 text-muted">DELL</span></div>
-            <div className="col-6 col-md-2 mt-0"><span className="fw-bold fs-3 text-muted">CISCO</span></div>
-            <div className="col-6 col-md-2 mt-0"><span className="fw-bold fs-3 text-muted">HP</span></div>
-            <div className="col-6 col-md-2 mt-0"><span className="fw-bold fs-3 text-muted">LENOVO</span></div>
-            <div className="col-6 col-md-2 mt-0"><span className="fw-bold fs-3 text-muted">SUNMI</span></div>
-            <div className="col-6 col-md-2 mt-0"><span className="fw-bold fs-3 text-muted">IBM</span></div>
+            <div className="col-md-4 text-center">
+              <div className="p-4">
+                <i className="bi bi-patch-check display-4 text-info mb-3"></i>
+                <h5 className="fw-bold">Bảo hành 1 đổi 1</h5>
+                <p className="text-muted">Chính sách bảo hành lỗi là đổi mới trong 30 ngày đầu tiên sử dụng.</p>
+              </div>
+            </div>
+            <div className="col-md-4 text-center">
+              <div className="p-4">
+                <i className="bi bi-credit-card-2-back display-4 text-info mb-3"></i>
+                <h5 className="fw-bold">Trả góp 0% lãi suất</h5>
+                <p className="text-muted">Hỗ trợ trả góp qua thẻ tín dụng và các công ty tài chính phổ biến.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-5 my-5">
+      {/* Brands */}
+      <section className="py-5 bg-white">
         <div className="container">
-            <div className="card border-0 shadow-lg p-5 bg-dark text-white rounded-5 overflow-hidden position-relative">
-                <div className="position-absolute top-0 end-0 opacity-10" style={{ transform: 'translate(20%, -20%)' }}>
-                    <i className="bi bi-gear-fill" style={{ fontSize: '250px' }}></i>
-                </div>
-                <div className="row position-relative" style={{ zIndex: 1 }}>
-                    <div className="col-lg-8">
-                        <h2 className="display-5 fw-bold mb-3">Sẵn sàng nâng cấp hạ tầng doanh nghiệp?</h2>
-                        <p className="lead opacity-75 mb-0">Liên hệ ngay để nhận báo giá dự án và ưu đãi đặc biệt cho đối tác lâu năm.</p>
+          <div className="row align-items-center justify-content-center text-center g-5 opacity-50">
+            <div className="col-4 col-md-2"><i className="bi bi-apple fs-1"></i></div>
+            <div className="col-4 col-md-2"><span className="fw-bold fs-3">SAMSUNG</span></div>
+            <div className="col-4 col-md-2"><span className="fw-bold fs-3">XIAOMI</span></div>
+            <div className="col-4 col-md-2"><span className="fw-bold fs-4">OPPO</span></div>
+            <div className="col-4 col-md-2"><span className="fw-bold fs-4">VIVO</span></div>
+            <div className="col-4 col-md-2"><span className="fw-bold fs-4">REALME</span></div>
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter */}
+      <section className="py-5">
+        <div className="container">
+            <div className="card border-0 shadow-lg p-5 bg-info text-white rounded-5 overflow-hidden position-relative" style={{ background: 'linear-gradient(45deg, #0d6efd, #0dcaf0)' }}>
+                <div className="row align-items-center">
+                    <div className="col-lg-7 mb-4 mb-lg-0">
+                        <h2 className="display-6 fw-bold mb-3">Đăng ký nhận ưu đãi mới nhất</h2>
+                        <p className="lead opacity-75 mb-0">Chúng tôi sẽ gửi thông báo cho bạn khi có các đợt giảm giá lớn và model mới về.</p>
                     </div>
-                    <div className="col-lg-4 d-flex align-items-center justify-content-lg-end mt-4 mt-lg-0">
-                        <Link href="/contact" className="btn btn-info btn-lg btn-premium fw-bold px-5">LIÊN HỆ NGAY</Link>
+                    <div className="col-lg-5">
+                        <div className="input-group input-group-lg shadow-sm">
+                            <input type="text" className="form-control border-0 rounded-start-pill" placeholder="Email của bạn..." />
+                            <button className="btn btn-dark rounded-end-pill px-4 fw-bold">Đăng ký</button>
+                        </div>
                     </div>
                 </div>
             </div>

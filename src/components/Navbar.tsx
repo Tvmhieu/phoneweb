@@ -45,18 +45,17 @@ export default function Navbar() {
       `}</style>
       <div className="container">
         <Link href="/" className="navbar-brand fw-bold d-flex align-items-center">
-          <i className="bi bi-cpu-fill me-2 fs-3 text-info"></i>
-          <span>ABC <span className="text-info">XYZ</span></span>
+          <i className="bi bi-smartphone me-2 fs-3 text-info"></i>
+          <span>Phone<span className="text-info">Store</span></span>
         </Link>
         <button className="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
           <span className="navbar-toggler-icon"></span>
         </button>
-
         <div className="collapse navbar-collapse" id="navMenu">
           <ul className="navbar-nav me-auto ps-lg-4">
-            <li className="nav-item"><Link href="/products" className={`nav-link ${pathname === '/products' ? 'active fw-bold' : ''}`}>Danh mục thiết bị</Link></li>
-            <li className="nav-item"><Link href="/warranty" className={`nav-link ${pathname === '/warranty' ? 'active fw-bold' : ''}`}><i className="bi bi-tools me-1"></i>Bảo hành</Link></li>
-            <li className="nav-item"><Link href="/contact" className={`nav-link ${pathname === '/contact' ? 'active fw-bold' : ''}`}>Liên hệ hỗ trợ</Link></li>
+            <li className="nav-item"><Link href="/products" className={`nav-link ${pathname === '/products' ? 'active fw-bold' : ''}`}>Danh mục sản phẩm</Link></li>
+            <li className="nav-item"><Link href="/warranty" className={`nav-link ${pathname === '/warranty' ? 'active fw-bold' : ''}`}><i className="bi bi-shield-check me-1"></i>Bảo hành</Link></li>
+            <li className="nav-item"><Link href="/contact" className={`nav-link ${pathname === '/contact' ? 'active fw-bold' : ''}`}>Liên hệ</Link></li>
           </ul>
 
           <div className="d-flex align-items-center gap-2">

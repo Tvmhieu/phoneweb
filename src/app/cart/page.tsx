@@ -96,7 +96,7 @@ export default function CartPage() {
                 <i className="bi bi-chevron-left"></i>
             </Link>
             <h1 className="fw-bold mb-0">Giỏ hàng của bạn</h1>
-            <span className="ms-3 badge bg-white text-dark border shadow-sm px-3 py-2 rounded-pill">{items.length} Thiết bị</span>
+            <span className="ms-3 badge bg-white text-dark border shadow-sm px-3 py-2 rounded-pill">{items.length} Sản phẩm</span>
         </div>
 
         {items.length === 0 ? (
@@ -105,8 +105,8 @@ export default function CartPage() {
                 <i className="bi bi-cart3"></i>
             </div>
             <h3 className="fw-bold text-dark">Chưa có thiết bị nào</h3>
-            <p className="text-muted fs-5 mb-4">Hãy bắt đầu lựa chọn cấu hình máy chủ hoặc giải pháp mạng bạn đang cần.</p>
-            <Link href="/products" className="btn btn-primary px-5 py-3 rounded-pill fw-bold fs-5">TIẾP TỤC CHỌN THIẾT BỊ</Link>
+            <p className="text-muted fs-5 mb-4">Hãy bắt đầu lựa chọn những chiếc smartphone đẳng cấp cho bộ sưu tập của bạn.</p>
+            <Link href="/products" className="btn btn-primary px-5 py-3 rounded-pill fw-bold fs-5">TIẾP TỤC CHỌN SẢN PHẨM</Link>
           </div>
         ) : (
           <div className="row g-4">
@@ -212,7 +212,7 @@ export default function CartPage() {
                   )}
                   
                   <p className="text-center text-muted small mt-4">
-                    Bằng cách đặt hàng, bạn đồng ý với <Link href="#" className="text-primary">Điều khoản dịch vụ</Link> của Nhân Việt.
+                    Bằng cách đặt hàng, bạn đồng ý với <Link href="#" className="text-primary">Điều khoản dịch vụ</Link> của PhoneStore.
                   </p>
                </div>
             </div>
