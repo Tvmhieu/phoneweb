@@ -796,7 +796,7 @@ export default function AdminDashboard() {
                                      </div>
                                       <div className="col-md-3">
                                           <label className="form-label small fw-bold">ThÆ°Æ¡ng hiá»‡u</label>
-                                          <input type="text" className="form-control" value={editingProduct.brand || ""} onChange={e => setEditingProduct({...editingProduct, brand: e.target.value})} required placeholder="Dell, HP, Cisco..."/>
+                                          <input type="text" className="form-control" value={editingProduct.brand || ""} onChange={e => setEditingProduct({...editingProduct, brand: e.target.value})} required placeholder="iPhone, Samsung, Xiaomi..."/>
                                       </div>
                                       <div className="col-md-3">
                                           <label className="form-label small fw-bold">Loáº¡i MÃ¡y</label>

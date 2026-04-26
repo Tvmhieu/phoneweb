@@ -83,7 +83,7 @@ export default function ContactPage() {
       <section className="contact-hero">
         <div className="container text-center">
             <h1 className="display-4 fw-bold mb-3">Liên Hệ & Hỗ Trợ</h1>
-            <p className="lead opacity-75">Chúng tôi luôn sẵn sàng hỗ trợ bạn tối ưu hạ tầng IT cho doanh nghiệp.</p>
+            <p className="lead opacity-75">Chúng tôi luôn sẵn sàng hỗ trợ bạn lựa chọn những sản phẩm công nghệ ưng ý nhất.</p>
         </div>
       </section>
 
@@ -99,15 +99,15 @@ export default function ContactPage() {
             <div className="col-md-4">
                 <div className="info-box text-center">
                     <div className="icon-circle mx-auto"><i className="bi bi-telephone-fill"></i></div>
-                    <h5>Hotline Kỹ Thuật</h5>
-                    <p className="text-muted mb-0">Hỗ trợ 24/7 chuyên sâu:<br/><span className="fw-bold text-primary">(+84) 28 3535 xxxx</span></p>
+                    <h5>Hotline Hỗ Trợ</h5>
+                    <p className="text-muted mb-0">Hỗ trợ khách hàng 24/7:<br/><span className="fw-bold text-primary">1900 8888</span></p>
                 </div>
             </div>
             <div className="col-md-4">
                 <div className="info-box text-center">
                     <div className="icon-circle mx-auto"><i className="bi bi-envelope-fill"></i></div>
-                    <h5>Email Dự Án</h5>
-                    <p className="text-muted mb-0">Gửi yêu cầu báo giá dự án:<br/><span className="fw-bold text-primary">hotro@nhanviet.com</span></p>
+                    <h5>Email Hỗ Trợ</h5>
+                    <p className="text-muted mb-0">Gửi thắc mắc hoặc góp ý:<br/><span className="fw-bold text-primary">support@phonestore.com.vn</span></p>
                 </div>
             </div>
         </div>
@@ -117,20 +117,20 @@ export default function ContactPage() {
                 <div className="card contact-card">
                     <div className="row g-0">
                         <div className="col-md-5 d-none d-md-block bg-primary p-5 text-white d-flex flex-column justify-content-center">
-                            <h3 className="fw-bold mb-4">Gửi tin nhắn cho đội ngũ chuyên gia</h3>
-                            <p className="opacity-75">Điền vào form bên cạnh, chuyên viên giải pháp của chúng tôi sẽ phản hồi trong vòng 2 giờ làm việc.</p>
+                            <h3 className="fw-bold mb-4">Gửi tin nhắn cho PhoneStore</h3>
+                            <p className="opacity-75">Điền vào form bên cạnh, đội ngũ chăm sóc khách hàng của chúng tôi sẽ phản hồi sớm nhất.</p>
                             <div className="mt-4">
                                 <div className="d-flex align-items-center mb-3">
                                     <i className="bi bi-check-circle-fill me-2"></i>
-                                    <span>Tư vấn cấu hình Server miễn phí</span>
+                                    <span>Tư vấn chọn mua Smartphone & Tablet</span>
                                 </div>
                                 <div className="d-flex align-items-center mb-3">
                                     <i className="bi bi-check-circle-fill me-2"></i>
-                                    <span>Tư vấn trang bị máy chủ dự án lớn</span>
+                                    <span>Hỗ trợ cài đặt phần mềm di động</span>
                                 </div>
                                 <div className="d-flex align-items-center">
                                     <i className="bi bi-check-circle-fill me-2"></i>
-                                    <span>Hỗ trợ kỹ thuật On-site 24/7</span>
+                                    <span>Chế độ bảo hành 12 tháng chính hãng</span>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +141,7 @@ export default function ContactPage() {
                                         <i className="bi bi-check2-circle"></i>
                                     </div>
                                     <h2 className="fw-bold mb-3">Gửi thành công!</h2>
-                                    <p className="text-muted mb-4">Cảm ơn bạn đã tin tưởng Nhân Việt. Yêu cầu của bạn đã được chuyển đến bộ phận chuyên trách.</p>
+                                    <p className="text-muted mb-4">Cảm ơn bạn đã tin tưởng PhoneStore. Yêu cầu của bạn đã được chuyển đến bộ phận chuyên trách.</p>
                                     <button className="btn btn-primary px-4 py-2 rounded-pill fw-bold" onClick={() => setSent(false)}>GỬI YÊU CẦU MỚI</button>
                                 </div>
                             ) : (
@@ -159,7 +159,7 @@ export default function ContactPage() {
                                             />
                                         </div>
                                         <div className="col-md-6">
-                                            <label className="form-label small fw-bold">Email Công Ty</label>
+                                            <label className="form-label small fw-bold">Email Cá Nhân</label>
                                             <input
                                                 type="email"
                                                 className="form-control form-control-lg bg-light border-0 fs-6"
@@ -184,7 +184,7 @@ export default function ContactPage() {
                                             <textarea
                                                 className="form-control bg-light border-0 fs-6"
                                                 rows={4}
-                                                placeholder="Mô tả nhu cầu của bạn (VD: Cần trang bị máy chủ cho dự án SAP...)"
+                                                placeholder="Mô tả nhu cầu của bạn (VD: Cần tư vấn mua iPhone 15 Pro Max tặng người thân...)"
                                                 value={formData.message}
                                                 onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))}
                                                 required
