@@ -1413,7 +1413,10 @@ export default function AdminDashboard() {
                                               </select>
                                           </td>
                                           <td className="text-end px-4">
-                                              <button className="btn btn-sm btn-success shadow-sm fw-bold" onClick={() => updateWarrantyStatus(w.id, 'DONE')}><i className="bi bi-check-circle me-1"></i>Hoàn tất</button>
+                                              <div className="d-flex justify-content-end gap-2">
+                                                <button className="btn btn-sm btn-success shadow-sm fw-bold" onClick={() => updateWarrantyStatus(w.id, 'DONE')}><i className="bi bi-check-circle me-1"></i>Hoàn tất</button>
+                                                <button className="btn btn-sm btn-danger shadow-sm fw-bold" onClick={() => updateWarrantyStatus(w.id, 'REJECTED')}><i className="bi bi-x-circle me-1"></i>Từ chối</button>
+                                              </div>
                                           </td>
                                       </tr>
                                   ))}
@@ -1425,7 +1428,7 @@ export default function AdminDashboard() {
 
                   {/* Stage 3: Hoàn tất */}
                   <div className="card shadow-sm border-0 rounded-3 mb-5 overflow-hidden border-start border-4 border-success">
-                      <div className="card-header bg-success text-white fw-bold py-3"><i className="bi bi-clipboard2-check me-2"></i>3. Đã Khắc Phục Xong & Sẵn Sàng Trả Máy</div>
+                      <div className="card-header bg-success text-white fw-bold py-3"><i className="bi bi-clipboard2-check me-2"></i>3. Đã Khắc Phục Xong / Xử Lý Xong</div>
                       <div className="table-responsive">
                           <table className="table align-middle mb-0">
                               <thead className="bg-light">
@@ -1438,18 +1441,24 @@ export default function AdminDashboard() {
                                   </tr>
                               </thead>
                               <tbody>
-                                  {getFilteredWarranties(warranties.filter(w => w.status === "DONE")).map(w => (
+                                  {getFilteredWarranties(warranties.filter(w => w.status === "DONE" || w.status === "REJECTED")).map(w => (
                                       <tr key={w.id}>
                                           <td className="px-4 fw-bold">#W-{w.id}</td>
                                           <td>{w.product?.name}</td>
                                           <td>{w.user?.name}</td>
-                                          <td className="small italic text-success">{w.resolution || "Đã xử lý tốt"}</td>
+                                          <td>
+                                            {w.status === "REJECTED" ? (
+                                                <div><span className="badge bg-danger mb-1">Từ chối bảo hành</span><div className="small italic text-muted">{w.resolution || "Không đủ điều kiện bảo hành"}</div></div>
+                                            ) : (
+                                                <span className="small italic text-success">{w.resolution || "Đã xử lý tốt"}</span>
+                                            )}
+                                          </td>
                                           <td className="text-end px-4">
                                               <button className="btn btn-sm btn-outline-danger" onClick={() => deleteWarranty(w.id)}><i className="bi bi-trash"></i> Xóa lịch sử</button>
                                           </td>
                                       </tr>
                                   ))}
-                                  {warranties.filter(w => w.status === "DONE").length === 0 && <tr><td colSpan={5} className="text-center p-4 text-muted small">Chưa có máy nào sửa chữa hoàn tất.</td></tr>}
+                                  {warranties.filter(w => w.status === "DONE" || w.status === "REJECTED").length === 0 && <tr><td colSpan={5} className="text-center p-4 text-muted small">Chưa có máy nào xử lý hoàn tất.</td></tr>}
                               </tbody>
                           </table>
                       </div>

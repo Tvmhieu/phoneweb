@@ -77,8 +77,9 @@ export default function WarrantyPage() {
 
   const statusBadge = (status: string) => {
     if (status === "PENDING") return <span className="badge bg-warning text-dark px-3 py-2 rounded-pill"><i className="bi bi-hourglass-split me-1"></i>Chờ xử lý</span>;
-    if (status === "CHECKING") return <span className="badge bg-info text-white px-3 py-2 rounded-pill"><i className="bi bi-tools me-1"></i>Đang kiểm tra</span>;
+    if (status === "CHECKING" || status === "PROCESSING") return <span className="badge bg-info text-white px-3 py-2 rounded-pill"><i className="bi bi-tools me-1"></i>Đang kiểm tra/Sửa chữa</span>;
     if (status === "DONE") return <span className="badge bg-success text-white px-3 py-2 rounded-pill"><i className="bi bi-check-circle me-1"></i>Đã xử lý xong</span>;
+    if (status === "REJECTED") return <span className="badge bg-danger text-white px-3 py-2 rounded-pill"><i className="bi bi-x-circle me-1"></i>Từ chối bảo hành</span>;
     return <span className="badge bg-secondary px-3 py-2 rounded-pill">{status}</span>;
   };
 
