@@ -56,8 +56,11 @@ export default function CartPage() {
         .item-img {
             width: 100px;
             height: 100px;
-            object-fit: cover;
+            object-fit: contain;
+            mix-blend-mode: multiply;
+            background: transparent;
             border-radius: 12px;
+            padding: 5px;
         }
         .summary-card {
             border: none;

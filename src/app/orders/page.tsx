@@ -85,8 +85,8 @@ export default function OrdersPage() {
 
       <div className="container">
         <div className="mb-5">
-          <h2 className="fw-bold mb-1">Lịch sử đơn hàng</h2>
-          <p className="text-muted">Theo dõi và quản lý các đơn hàng mua thiết bị của bạn.</p>
+          <h2 className="fw-bold mb-1">Lịch sử mua hàng</h2>
+          <p className="text-muted">Quản lý và theo dõi các đơn hàng điện thoại đã đặt tại PhoneStore.</p>
         </div>
 
         <div className="row g-4">
@@ -102,7 +102,7 @@ export default function OrdersPage() {
                 <div className="order-card shadow-sm">
                   <div className="card-header bg-white py-3 px-4 border-bottom d-flex justify-content-between align-items-center">
                     <div>
-                      <span className="fw-bold text-primary">MÃ ĐƠN: #SALE-{sale.id}</span>
+                      <span className="fw-bold text-primary">MÃ ĐƠN: #DH-{sale.id}</span>
                       <span className="text-muted ms-3 small"><i className="bi bi-calendar3 me-1"></i>{new Date(sale.createdAt).toLocaleDateString("vi-VN")}</span>
                     </div>
                     {getSaleStatusBadge(sale.status)}
@@ -110,13 +110,13 @@ export default function OrdersPage() {
                   <div className="card-body p-4">
                     {sale.items.map(item => (
                       <div key={item.id} className="d-flex align-items-center mb-3">
-                        <div className="item-img me-3 overflow-hidden position-relative" style={{ width: "60px", height: "60px" }}>
+                        <div className="item-img me-3 overflow-hidden position-relative bg-light" style={{ width: "60px", height: "60px", padding: '5px' }}>
                           <Image 
                             src={item.product.imageUrl || "https://placehold.co/100x100?text=Product"} 
                             alt={item.product.name} 
                             fill
                             sizes="60px"
-                            style={{ objectFit: "cover" }} 
+                            style={{ objectFit: "contain", mixBlendMode: "multiply" }} 
                           />
                         </div>
                         <div className="flex-grow-1">
