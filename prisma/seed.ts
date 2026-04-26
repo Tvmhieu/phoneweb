@@ -60,7 +60,7 @@ async function main() {
       stock: 15,
       warrantyMonths: 12,
       description: 'Chip Apple A17 Pro 3nm\nRAM 8GB, bộ nhớ 256GB\nCamera 48MP + 12MP + 12MP, zoom quang 5x\nPin 4422mAh, sạc MagSafe 15W\nMàn hình Super Retina XDR 6.7" ProMotion 120Hz\nKhung titan cấp hàng không vũ trụ, cổng USB-C USB 3.0',
-      imageUrl: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&q=80&w=800'
+      imageUrl: 'https://cdn.tgdd.vn/Products/Images/42/305658/iphone-15-pro-max-blue-thumbnew-600x600.jpg'
     },
     {
       name: 'iPhone 15 Pro 128GB Titan Đen',
@@ -70,7 +70,7 @@ async function main() {
       stock: 20,
       warrantyMonths: 12,
       description: 'Chip Apple A17 Pro 3nm\nRAM 8GB, bộ nhớ 128GB\nCamera 48MP + 12MP + 12MP, zoom quang 3x\nPin 3274mAh, sạc nhanh USB-C 27W\nMàn hình 6.1" ProMotion 120Hz\nDynamic Island, cổng USB-C USB 3.0',
-      imageUrl: 'https://images.unsplash.com/photo-1696446701796-da61225697cc?auto=format&fit=crop&q=80&w=800'
+      imageUrl: 'https://cdn.tgdd.vn/Products/Images/42/289691/iphone-15-pro-black-thumbnew-600x600.jpg'
     },
     {
       name: 'iPhone 15 Plus 256GB Hồng',
@@ -80,7 +80,7 @@ async function main() {
       stock: 12,
       warrantyMonths: 12,
       description: 'Chip Apple A16 Bionic\nRAM 6GB, bộ nhớ 256GB\nCamera 48MP + 12MP\nPin 4383mAh, sạc nhanh 20W\nMàn hình Super Retina XDR 6.7"\nHỗ trợ MagSafe, Dynamic Island',
-      imageUrl: 'https://images.unsplash.com/photo-1695048064627-ef3933c46755?auto=format&fit=crop&q=80&w=800'
+      imageUrl: 'https://cdn.tgdd.vn/Products/Images/42/303833/iphone-15-plus-pink-thumb-600x600.jpg'
     },
     {
       name: 'iPhone 15 128GB Xanh Lá',
@@ -90,7 +90,7 @@ async function main() {
       stock: 25,
       warrantyMonths: 12,
       description: 'Chip Apple A16 Bionic\nRAM 6GB, bộ nhớ 128GB\nCamera 48MP + 12MP\nPin 3349mAh, sạc nhanh 20W\nMàn hình 6.1" Super Retina XDR\nDynamic Island, cổng USB-C',
-      imageUrl: 'https://images.unsplash.com/photo-1695048132832-73602526543b?auto=format&fit=crop&q=80&w=800'
+      imageUrl: 'https://cdn.tgdd.vn/Products/Images/42/281570/iphone-15-green-thumb-600x600.jpg'
     },
     {
       name: 'iPhone 14 128GB Tím Lavender',
@@ -100,7 +100,7 @@ async function main() {
       stock: 8,
       warrantyMonths: 12,
       description: 'Chip Apple A15 Bionic\nRAM 6GB, bộ nhớ 128GB\nCamera 12MP + 12MP, chụp đêm tốt, Action Mode\nPin 3279mAh, sạc MagSafe 15W\nMàn hình 6.1" Super Retina XDR\nNotch, Lightning',
-      imageUrl: 'https://images.unsplash.com/photo-1663499482523-1c0c1bae4ce1?auto=format&fit=crop&q=80&w=800'
+      imageUrl: 'https://cdn.tgdd.vn/Products/Images/42/289700/iphone-14-pro-max-purple-thumb-600x600.jpg'
     },
 
     // SAMSUNG
@@ -112,7 +112,7 @@ async function main() {
       stock: 10,
       warrantyMonths: 12,
       description: 'Chip Snapdragon 8 Elite for Galaxy\nRAM 12GB, bộ nhớ 256GB\nCamera 200MP + 50MP + 10MP + 10MP\nPin 5000mAh, sạc nhanh 45W\nMàn hình Dynamic AMOLED 6.9" 120Hz\nTích hợp bút S Pen, Galaxy AI',
-      imageUrl: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&q=80&w=800'
+      imageUrl: 'https://cdn.tgdd.vn/Products/Images/42/307174/samsung-galaxy-s24-ultra-grey-thumb-600x600.jpg'
     },
     {
       name: 'Samsung Galaxy Z Fold 6 256GB Silver Shadow',
@@ -122,7 +122,7 @@ async function main() {
       stock: 5,
       warrantyMonths: 12,
       description: 'Chip Snapdragon 8 Gen 3\nRAM 12GB, bộ nhớ 256GB\nCamera 50MP + 10MP + 10MP\nPin 4400mAh, sạc nhanh 25W\nMàn hình trong gập 7.6" Dynamic AMOLED 120Hz\nMàn hình ngoài 6.3" 120Hz, điện thoại gập cao cấp',
-      imageUrl: 'https://images.unsplash.com/photo-1678911820864-e2c567c655d7?auto=format&fit=crop&q=80&w=800'
+      imageUrl: 'https://cdn.tgdd.vn/Products/Images/42/313620/samsung-galaxy-z-fold6-xam-thumb-1-600x600.jpg'
     },
     {
       name: 'Samsung Galaxy A55 5G 128GB Awesome Lilac',
@@ -132,7 +132,7 @@ async function main() {
       stock: 30,
       warrantyMonths: 12,
       description: 'Chip Exynos 1480\nRAM 8GB, bộ nhớ 128GB\nCamera 50MP + 12MP + 5MP\nPin 5000mAh, sạc nhanh 25W\nMàn hình Super AMOLED 6.6" 120Hz\nChống nước IP67',
-      imageUrl: 'https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?auto=format&fit=crop&q=80&w=800'
+      imageUrl: 'https://cdn.tgdd.vn/Products/Images/42/322096/samsung-galaxy-a55-5g-tim-thumb-1-600x600.jpg'
     },
 
     // XIAOMI
@@ -144,7 +144,7 @@ async function main() {
       stock: 8,
       warrantyMonths: 12,
       description: 'Chip Snapdragon 8 Gen 3\nRAM 16GB, bộ nhớ 512GB\nCamera Leica 50MP (LYT-900) + 50MP + 50MP + 50MP\nPin 5000mAh, sạc nhanh 90W + không dây 80W\nMàn hình LTPO AMOLED 6.73" 120Hz\nCamera periscope zoom quang học 5x',
-      imageUrl: 'https://images.unsplash.com/photo-1598327105666-5b89351af963?auto=format&fit=crop&q=80&w=800'
+      imageUrl: 'https://cdn.tgdd.vn/Products/Images/42/323332/xiaomi-14-ultra-black-thumb-600x600.jpg'
     },
     {
       name: 'Xiaomi Redmi Note 13 Pro+ 5G 256GB',
@@ -154,7 +154,7 @@ async function main() {
       stock: 25,
       warrantyMonths: 12,
       description: 'Chip Dimensity 7200 Ultra\nRAM 12GB, bộ nhớ 256GB\nCamera 200MP + 8MP + 2MP\nPin 5000mAh, sạc nhanh HyperCharge 120W\nMàn hình AMOLED 6.67" 120Hz\nChống nước IP68, sạc siêu nhanh',
-      imageUrl: 'https://images.unsplash.com/photo-1605170439002-90f450c9515d?auto=format&fit=crop&q=80&w=800'
+      imageUrl: 'https://cdn.tgdd.vn/Products/Images/42/311246/xiaomi-redmi-note-13-pro-plus-5g-thumb-1-600x600.jpg'
     },
 
     // OPPO
@@ -166,7 +166,7 @@ async function main() {
       stock: 7,
       warrantyMonths: 12,
       description: 'Chip Dimensity 9400\nRAM 16GB, bộ nhớ 256GB\nCamera Hasselblad 50MP + 50MP + 50MP\nPin 5910mAh, sạc nhanh 80W + không dây 50W\nMàn hình LTPO AMOLED 6.78" 120Hz\nChống nước IP68, AI camera hàng đầu',
-      imageUrl: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&q=80&w=800'
+      imageUrl: 'https://cdn.tgdd.vn/Products/Images/42/302824/oppo-find-x6-pro-thumb-600x600.jpg'
     },
 
     // TABLET
@@ -178,7 +178,7 @@ async function main() {
       stock: 25,
       warrantyMonths: 12,
       description: 'Chip Apple M4 cực mạnh\nMàn hình Ultra Retina XDR OLED\nSiêu mỏng chỉ 5.3mm\nHỗ trợ Apple Pencil Pro và Magic Keyboard mới',
-      imageUrl: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&q=80&w=800'
+      imageUrl: 'https://cdn.tgdd.vn/Products/Images/52/324634/ipad-pro-m4-11-inch-wifi-space-black-thumb-600x600.jpg'
     },
     {
       name: 'Samsung Galaxy Tab S9 Ultra',
@@ -188,7 +188,7 @@ async function main() {
       stock: 10,
       warrantyMonths: 12,
       description: 'Màn hình Dynamic AMOLED 2X 14.6 inch\nChip Snapdragon 8 Gen 2 for Galaxy\nBút S Pen đi kèm chống nước IP68\nDung lượng pin khủng 11.200 mAh',
-      imageUrl: 'https://images.unsplash.com/photo-1589739900243-4b52cd9b104e?auto=format&fit=crop&q=80&w=800'
+      imageUrl: 'https://cdn.tgdd.vn/Products/Images/52/310328/samsung-galaxy-tab-s9-ultra-xám-thumb-600x600.png'
     }
   ];
 
