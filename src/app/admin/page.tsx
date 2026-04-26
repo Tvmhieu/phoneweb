@@ -796,20 +796,20 @@ export default function AdminDashboard() {
                                      </div>
                                       <div className="col-md-3">
                                           <label className="form-label small fw-bold">Thương hiệu</label>
-                                          <input type="text" className="form-control" value={editingProduct.brand || ""} onChange={e => setEditingProduct({...editingProduct, brand: e.target.value})} required placeholder="Dell, HP, Cisco..."/>
+                                          <input type="text" className="form-control" value={editingProduct.brand || ""} onChange={e => setEditingProduct({...editingProduct, brand: e.target.value})} required placeholder="Apple, Samsung..."/>
                                       </div>
                                       <div className="col-md-3">
-                                          <label className="form-label small fw-bold">Loại Máy</label>
-                                          <select className="form-select" value={editingProduct.category || "SERVER"} onChange={e => setEditingProduct({...editingProduct, category: e.target.value})}>
-                                              <option value="SERVER">SERVER</option>
-                                              <option value="LAPTOP">LAPTOP</option>
-                                              <option value="PRINTER">PRINTER</option>
-                                              <option value="NETWORK">NETWORK</option>
-                                              <option value="POS">POS</option>
+                                          <label className="form-label small fw-bold">Phân loại sản phẩm</label>
+                                          <select className="form-select" value={editingProduct.category || "IPHONE"} onChange={e => setEditingProduct({...editingProduct, category: e.target.value})}>
+                                              <option value="IPHONE">Điện thoại iPhone</option>
+                                              <option value="SAMSUNG">Điện thoại Samsung</option>
+                                              <option value="XIAOMI">Điện thoại Xiaomi</option>
+                                              <option value="OPPO">Điện thoại Oppo</option>
+                                              <option value="TABLET">Máy tính bảng</option>
                                           </select>
                                       </div>
                                       <div className="col-md-3">
-                                          <label className="form-label small fw-bold text-info">Hiển thị Storefront</label>
+                                          <label className="form-label small fw-bold text-info">Hiển thị trên Web</label>
                                           <select className="form-select border-info fw-bold" value={editingProduct.isVisible !== false ? "SHOW" : "HIDE"} onChange={e => setEditingProduct({...editingProduct, isVisible: e.target.value === "SHOW"})}>
                                               <option value="SHOW">Hiển thị</option>
                                               <option value="HIDE">Ẩn</option>
