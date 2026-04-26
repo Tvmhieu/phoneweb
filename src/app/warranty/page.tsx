@@ -112,10 +112,6 @@ export default function WarrantyPage() {
             background: #fff;
             border-left-color: #0d6efd;
         }
-        .form-sticky {
-            position: sticky;
-            top: 20px;
-        }
       `}</style>
 
       <section className="warranty-hero shadow-sm">
@@ -201,7 +197,7 @@ export default function WarrantyPage() {
 
             {/* FORM GỬI BẢO HÀNH & LỊCH SỬ */}
             <div className="col-lg-5">
-                <div className="card shadow-lg border-0 mb-5 form-sticky">
+                <div className="card shadow-lg border-0 mb-5">
                     <div className="card-header bg-primary text-white py-3 fw-bold fs-5"><i className="bi bi-pencil-square me-2"></i>PHIẾU BÁO LỖI</div>
                     <div className="card-body p-4">
                         {!userInfo ? (
