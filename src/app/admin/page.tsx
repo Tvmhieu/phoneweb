@@ -704,8 +704,12 @@ export default function AdminDashboard() {
                   </div>
                   
                   {editingProduct && (
-                     <div className="card border-0 shadow mb-4">
-                         <div className="card-header bg-primary text-white fw-bold py-3"><i className="bi bi-pencil-square me-2"></i>{editingProduct.id ? `Sửa Điện Thoại #${editingProduct.id}` : "Nhập Điện Thoại Mới Vào Kho"}</div>
+                     <div className="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-flex justify-content-center align-items-center" style={{ zIndex: 3000, padding: '1rem' }} onClick={() => setEditingProduct(null)}>
+                       <div className="card border-0 shadow-lg w-100" style={{ maxWidth: '1000px', maxHeight: '95vh', overflowY: 'auto', animation: 'fadeIn 0.2s' }} onClick={e => e.stopPropagation()}>
+                         <div className="card-header bg-primary text-white fw-bold py-3 sticky-top d-flex justify-content-between align-items-center" style={{ zIndex: 10 }}>
+                           <span><i className="bi bi-pencil-square me-2"></i>{editingProduct.id ? `Sửa Điện Thoại #${editingProduct.id}` : "Nhập Điện Thoại Mới Vào Kho"}</span>
+                           <button type="button" className="btn-close btn-close-white" onClick={() => setEditingProduct(null)}></button>
+                         </div>
                          <div className="card-body p-4">
                              <form onSubmit={saveProduct}>
                                  <div className="row g-3">
@@ -839,6 +843,7 @@ export default function AdminDashboard() {
                                  </div>
                              </form>
                          </div>
+                       </div>
                      </div>
                   )}
 
