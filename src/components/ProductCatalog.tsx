@@ -141,7 +141,7 @@ export default function ProductCatalog({ initialProducts }: { initialProducts: P
           <input 
             type="search" 
             className="form-control border-start-0" 
-            placeholder="Tìm theo tên sản phẩm, hãng (Dell, Cisco, HP)..."
+            placeholder="Tìm theo tên sản phẩm, hãng (iPhone, Samsung, Xiaomi)..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             autoComplete="off"
