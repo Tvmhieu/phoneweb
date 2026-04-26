@@ -1441,24 +1441,52 @@ export default function AdminDashboard() {
                                   </tr>
                               </thead>
                               <tbody>
-                                  {getFilteredWarranties(warranties.filter(w => w.status === "DONE" || w.status === "REJECTED")).map(w => (
+                                  {getFilteredWarranties(warranties.filter(w => w.status === "DONE")).map(w => (
+                                      <tr key={w.id}>
+                                          <td className="px-4 fw-bold">#W-{w.id}</td>
+                                          <td>{w.product?.name}</td>
+                                          <td>{w.user?.name}</td>
+                                          <td className="small italic text-success">{w.resolution || "Đã xử lý tốt"}</td>
+                                          <td className="text-end px-4">
+                                              <button className="btn btn-sm btn-outline-danger" onClick={() => deleteWarranty(w.id)}><i className="bi bi-trash"></i> Xóa lịch sử</button>
+                                          </td>
+                                      </tr>
+                                  ))}
+                                  {warranties.filter(w => w.status === "DONE").length === 0 && <tr><td colSpan={5} className="text-center p-4 text-muted small">Chưa có máy nào sửa chữa hoàn tất.</td></tr>}
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+
+                  {/* Stage 4: Từ chối */}
+                  <div className="card shadow-sm border-0 rounded-3 mb-5 overflow-hidden border-start border-4 border-danger">
+                      <div className="card-header bg-danger text-white fw-bold py-3"><i className="bi bi-x-octagon-fill me-2"></i>4. Máy Bị Từ Chối Bảo Hành</div>
+                      <div className="table-responsive">
+                          <table className="table align-middle mb-0">
+                              <thead className="bg-light">
+                                  <tr>
+                                      <SortHeader label="TICKET" sortKey="id" currentSort={warrantySort} onSort={handleSortWarranty} className="px-4" />
+                                      <th>SẢN PHẨM</th>
+                                      <th>KHÁCH HÀNG</th>
+                                      <th>LÝ DO TỪ CHỐI</th>
+                                      <th className="text-end px-4 py-3">THAO TÁC</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  {getFilteredWarranties(warranties.filter(w => w.status === "REJECTED")).map(w => (
                                       <tr key={w.id}>
                                           <td className="px-4 fw-bold">#W-{w.id}</td>
                                           <td>{w.product?.name}</td>
                                           <td>{w.user?.name}</td>
                                           <td>
-                                            {w.status === "REJECTED" ? (
-                                                <div><span className="badge bg-danger mb-1">Từ chối bảo hành</span><div className="small italic text-muted">{w.resolution || "Không đủ điều kiện bảo hành"}</div></div>
-                                            ) : (
-                                                <span className="small italic text-success">{w.resolution || "Đã xử lý tốt"}</span>
-                                            )}
+                                            <div><span className="badge bg-danger mb-1 border border-white">Từ chối bảo hành</span><div className="small text-danger fw-bold">{w.resolution || "Không đủ điều kiện bảo hành"}</div></div>
                                           </td>
                                           <td className="text-end px-4">
                                               <button className="btn btn-sm btn-outline-danger" onClick={() => deleteWarranty(w.id)}><i className="bi bi-trash"></i> Xóa lịch sử</button>
                                           </td>
                                       </tr>
                                   ))}
-                                  {warranties.filter(w => w.status === "DONE" || w.status === "REJECTED").length === 0 && <tr><td colSpan={5} className="text-center p-4 text-muted small">Chưa có máy nào xử lý hoàn tất.</td></tr>}
+                                  {warranties.filter(w => w.status === "REJECTED").length === 0 && <tr><td colSpan={5} className="text-center p-4 text-muted small">Chưa có máy nào bị từ chối.</td></tr>}
                               </tbody>
                           </table>
                       </div>
