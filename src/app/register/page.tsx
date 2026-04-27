@@ -116,7 +116,7 @@ export default function RegisterPage() {
             <div className="text-center mb-5 d-md-none">
                 <h3 className="fw-bold text-primary">PhoneStore</h3>
             </div>
-            <h3 className="fw-bold mb-4">Đăng Ký Tài Khoản Tôn Trọng</h3>
+            <h3 className="fw-bold mb-4">Đăng Ký Tài Khoản</h3>
             <form onSubmit={handleRegister}>
               <div className="row g-3">
                 <div className="col-md-12 mb-2">
